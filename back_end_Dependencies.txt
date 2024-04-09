@@ -1,0 +1,7 @@
+1. Spring Web
+2. Lombok
+3. Spring Data JPA
+4. H2 Database
+5. Spring Security
+6. jsonwebtoken jjwt V 0.11.2
+
