@@ -34,6 +34,7 @@ coverage/
 
 # production
 build/
+.gradle/
 
 # misc
 .env.local
@@ -49,3 +50,4 @@ yarn-error.log*
 
 ### MAC OS ###
 *.DS_Store
+Thumbs.db
