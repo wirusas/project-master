@@ -17,7 +17,7 @@ public class Project {
     private String id;
     private String projectName;
     private String description;
-    private ArrayList<String> projectState;
+    private String projectState;
 //    private Task tasks;
 
 
@@ -27,16 +27,14 @@ public class Project {
 
     private ZonedDateTime createdAt;
 
-    public Project(String description, String projectName, ArrayList projectState, Task tasks) {
+    public Project(String description, String projectName, String projectState) {
         this.description = description;
         this.projectName = projectName;
-        this.projectState = getProjectState();
+        this.projectState = projectState;
 //        this.tasks = tasks;
     }
 
-    public Project(String description) {
-        this.description = description;
-    }
+
 
 
     @PrePersist

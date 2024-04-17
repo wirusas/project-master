@@ -5,14 +5,14 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class CreateProjectRequest {
-@Schema(example = "Project description")
+public class EditProjectRequest {
+    @Schema(example = "new Project description")
     @NotBlank
     private String description;
-    @Schema(example = "Project name")
+    @Schema(example = "new Project name")
     @NotBlank
     private String projectName;
-    @Schema(example = "Project status")
+    @Schema(example = "new Project status")
     @NotBlank
     private String projectStatus;
 

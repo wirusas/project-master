@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -29,22 +30,34 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.save(project);
     }
 
-//    @Override
-//    public Project editProject(String projectName, Project updatedProject) {
-//
-//        if (projectRepository.findByName(projectName) != null) {
-//            Project existingProject = (Project) projectRepository.findByName(projectName);
-//            existingProject.setProjectName(updatedProject.getProjectName());
-//            existingProject.setDescription(updatedProject.getDescription());
-//            existingProject.setProjectState(updatedProject.getProjectState());
-//            return projectRepository.save(existingProject);
-//        }
-//
-//        return null;
-//    }
+
+    @Override
+    public Project editProject(UUID id, Project updatedProject) {
+        Optional<Project> optionalProject = projectRepository.findById(String.valueOf(id));
+
+        if (optionalProject.isPresent()) {
+            Project existingProject = optionalProject.get();
+            existingProject.setProjectName(updatedProject.getProjectName());
+            existingProject.setDescription(updatedProject.getDescription());
+            existingProject.setProjectState(updatedProject.getProjectState());
+            return projectRepository.save(existingProject);
+        }
+
+        return null;
+    }
+
 
     @Override
     public void deleteProject(Project project) {
         projectRepository.delete(project);
     }
+
+    @Override
+    public List<Project> getAllProjects() {
+        return projectRepository.findAll();
+    }
+
+
+
+
 }

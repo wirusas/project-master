@@ -1,19 +1,21 @@
 package lt.httpstatusok.projectmanager.controllers.backend.services;
 
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
-
 import java.util.List;
+import java.util.UUID;
 
 public interface ProjectService {
-List<Project> getProjects();
+    List<Project> getProjects();
 
-Project validateAndGetProject(String id);
+    Project validateAndGetProject(String id);
 
-Project saveProject(Project project);
+    Project saveProject(Project project);
 
-//Project editProject(String projectName, Project updatedProject);
+    Project editProject(UUID id, Project project);
 
-void deleteProject(Project project);
+    void deleteProject(Project project);
+
+    List<Project> getAllProjects();
 
 
 }
