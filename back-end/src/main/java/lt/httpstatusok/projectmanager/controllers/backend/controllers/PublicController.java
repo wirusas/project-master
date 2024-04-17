@@ -20,8 +20,8 @@ public class PublicController {
         return userService.getUsers().size();
     }
 
-    @GetMapping("/numberOfOrders")
-    public Integer getNumberOfOrders() {
+    @GetMapping("/numberOfProjects")
+    public Integer getNumberOfProjects() {
         return projectService.getProjects().size();
     }
 }

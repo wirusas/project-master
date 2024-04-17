@@ -24,14 +24,26 @@ public class User {
     private String email;
     private String role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Project> projects = new ArrayList<>();
 
-    public User(String username, String password, String name, String email, String role){
+    @ManyToMany
+    @JoinTable(
+            name = "users_projects",
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "projects_id")
+
+    )
+    private List<Project> followedProjects = new ArrayList<>();
+
+
+    public User(String username, String password, String name, String email, String role) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.role = role;
+    }
+
+    public void followProject(Project project) {
+        followedProjects.add(project);
     }
 }

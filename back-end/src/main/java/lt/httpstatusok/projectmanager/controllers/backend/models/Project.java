@@ -18,12 +18,9 @@ public class Project {
     private String projectName;
     private String description;
     private String projectState;
-//    private Task tasks;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToMany(mappedBy = "followedProjects")
+    private List<User> users = new ArrayList<>();
 
     private ZonedDateTime createdAt;
 
@@ -31,14 +28,15 @@ public class Project {
         this.description = description;
         this.projectName = projectName;
         this.projectState = projectState;
-//        this.tasks = tasks;
     }
-
-
-
 
     @PrePersist
     public void onPrePersist() {
         createdAt = ZonedDateTime.now();
+    }
+
+    public void addUser(User user){
+        users.add(user);
+        user.getFollowedProjects().add(this);
     }
 }
