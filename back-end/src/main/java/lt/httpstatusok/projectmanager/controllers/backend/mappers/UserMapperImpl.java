@@ -6,6 +6,7 @@ import lt.httpstatusok.projectmanager.controllers.backend.models.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserMapperImpl implements UserMapper {
@@ -14,13 +15,19 @@ public class UserMapperImpl implements UserMapper {
         if (user == null) {
             return null;
         }
-        List<UserDto.ProjectDto> projects = user.getProjects().stream().map(this::toUserDtoProjectDto).toList();
-        return  new UserDto(user.getId(), user.getUsername(), user.getName(), user.getEmail(), user.getRole(), projects);
+
+        List<UserDto.ProjectDto> projects = user.getFollowedProjects().stream()
+                .map(this::toUserDtoProjectDto)
+                .collect(Collectors.toList());
+
+        return new UserDto(user.getId(), user.getUsername(), user.getName(), user.getEmail(), user.getRole(), projects);
     }
-    private UserDto.ProjectDto toUserDtoProjectDto (Project project){
-        if (project == null){
-            return  null;
+
+    private UserDto.ProjectDto toUserDtoProjectDto(Project project) {
+        if (project == null) {
+            return null;
         }
+
         return new UserDto.ProjectDto(project.getId(), project.getDescription(), project.getProjectName(), project.getCreatedAt());
     }
 }

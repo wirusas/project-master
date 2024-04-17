@@ -4,9 +4,12 @@ import lt.httpstatusok.projectmanager.controllers.backend.dto.CreateProjectReque
 import lt.httpstatusok.projectmanager.controllers.backend.dto.EditProjectRequest;
 import lt.httpstatusok.projectmanager.controllers.backend.dto.ProjectDto;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
+import lt.httpstatusok.projectmanager.controllers.backend.models.User;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectMapperImpl implements ProjectMapper {
@@ -33,16 +36,19 @@ public class ProjectMapperImpl implements ProjectMapper {
             return null;
         }
 
-        // Handle null values gracefully
+
         String id = project.getId() != null ? project.getId() : "";
         String description = project.getDescription() != null ? project.getDescription() : "";
         String projectName = project.getProjectName() != null ? project.getProjectName() : "";
         String projectState = project.getProjectState() != null ? project.getProjectState() : "";
-        // Assuming UserDto is also nullable
-        ProjectDto.UserDto userDto = project.getUser() != null ? new ProjectDto.UserDto(project.getUser().getUsername()) : null;
         // Assuming createdAt is not nullable
         ZonedDateTime createdAt = project.getCreatedAt() != null ? project.getCreatedAt() : ZonedDateTime.now();
 
-        return new ProjectDto(id, description, projectName, projectState, userDto, createdAt);
+
+        List<ProjectDto.UserDto> userDtos = project.getUsers().stream()
+                .map(user -> new ProjectDto.UserDto(user.getUsername()))
+                .collect(Collectors.toList());
+
+        return new ProjectDto(id, description, projectName, projectState, userDtos, createdAt);
     }
 }

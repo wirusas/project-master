@@ -31,7 +31,6 @@ public class ProjectController {
     private final ProjectService projectService;
     private final ProjectMapper projectMapper;
 
-
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
@@ -40,7 +39,7 @@ public class ProjectController {
         User user = userService.validateAndGetUserByUsername(currentUser.getUsername());
         Project project = projectMapper.toProject(createProjectRequest);
         project.setId(UUID.randomUUID().toString());
-        project.setUser(user);
+        project.addUser(user);
 
         return projectMapper.toProjectDto(projectService.saveProject(project));
     }
@@ -53,7 +52,7 @@ public class ProjectController {
                                   @PathVariable UUID id) {
         User user = userService.validateAndGetUserByUsername(currentUser.getUsername());
         Project project = projectMapper.toProject(editProjectRequest);
-        project.setUser(user);
+        project.addUser(user);
         return projectMapper.toProjectDto(projectService.editProject(id, project));
     }
 
@@ -72,6 +71,4 @@ public class ProjectController {
                 .map(projectMapper::toProjectDto)
                 .collect(Collectors.toList());
     }
-
-
-}
+} // Closing brace for the class
