@@ -33,7 +33,7 @@ public class ProjectController {
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/create")
+    @PostMapping
     public ProjectDto createProject(@AuthenticationPrincipal CustomUserDetails currentUser,
                                     @Valid @RequestBody CreateProjectRequest createProjectRequest) {
         User user = userService.validateAndGetUserByUsername(currentUser.getUsername());
@@ -46,18 +46,17 @@ public class ProjectController {
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @ResponseStatus(HttpStatus.CREATED)
-    @PutMapping("/edit/{id}")
+    @PutMapping("/{id}")
     public ProjectDto editProject(@AuthenticationPrincipal CustomUserDetails currentUser,
                                   @Valid @RequestBody EditProjectRequest editProjectRequest,
                                   @PathVariable UUID id) {
         User user = userService.validateAndGetUserByUsername(currentUser.getUsername());
         Project project = projectMapper.toProject(editProjectRequest);
-        project.addUser(user);
         return projectMapper.toProjectDto(projectService.editProject(id, project));
     }
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ProjectDto deleteProject(@PathVariable UUID id) {
         Project project = projectService.validateAndGetProject(id.toString());
         projectService.deleteProject(project);
@@ -71,4 +70,4 @@ public class ProjectController {
                 .map(projectMapper::toProjectDto)
                 .collect(Collectors.toList());
     }
-} // Closing brace for the class
+}
