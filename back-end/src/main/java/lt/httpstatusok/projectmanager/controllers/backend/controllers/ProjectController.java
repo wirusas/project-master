@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lt.httpstatusok.projectmanager.controllers.backend.dto.CreateProjectRequest;
+import lt.httpstatusok.projectmanager.controllers.backend.dto.EditProjectRequest;
 import lt.httpstatusok.projectmanager.controllers.backend.dto.ProjectDto;
 import lt.httpstatusok.projectmanager.controllers.backend.mappers.ProjectMapper;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
@@ -31,10 +32,9 @@ public class ProjectController {
     private final ProjectMapper projectMapper;
 
 
-
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping("/create")
     public ProjectDto createProject(@AuthenticationPrincipal CustomUserDetails currentUser,
                                     @Valid @RequestBody CreateProjectRequest createProjectRequest) {
         User user = userService.validateAndGetUserByUsername(currentUser.getUsername());
@@ -46,10 +46,32 @@ public class ProjectController {
     }
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping("/edit/{id}")
+    public ProjectDto editProject(@AuthenticationPrincipal CustomUserDetails currentUser,
+                                  @Valid @RequestBody EditProjectRequest editProjectRequest,
+                                  @PathVariable UUID id) {
+        User user = userService.validateAndGetUserByUsername(currentUser.getUsername());
+        Project project = projectMapper.toProject(editProjectRequest);
+        project.setUser(user);
+        return projectMapper.toProjectDto(projectService.editProject(id, project));
+    }
+
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @DeleteMapping("/delete/{id}")
     public ProjectDto deleteProject(@PathVariable UUID id) {
         Project project = projectService.validateAndGetProject(id.toString());
         projectService.deleteProject(project);
         return projectMapper.toProjectDto(project);
     }
+
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @GetMapping("/allprojects")
+    List<ProjectDto> getAllProjects() {
+        return projectService.getAllProjects().stream()
+                .map(projectMapper::toProjectDto)
+                .collect(Collectors.toList());
+    }
+
+
 }
