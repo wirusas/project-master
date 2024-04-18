@@ -1,6 +1,7 @@
 package lt.httpstatusok.projectmanager.controllers.backend.services;
 
 import lombok.RequiredArgsConstructor;
+import lt.httpstatusok.projectmanager.controllers.backend.exceptions.NoProjectsFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.User;
 import lt.httpstatusok.projectmanager.controllers.backend.repositories.ProjectRepository;
@@ -69,4 +70,13 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
-}
+
+    @Override
+    public List<Project> getProjectsByUser(User user) throws NoProjectsFoundException {
+        List<Project> projects = user.getFollowedProjects();
+        if (projects.isEmpty()) {
+            throw new NoProjectsFoundException("No projects found for user: " + user.getUsername());
+        }
+        return projects;
+    }
+   }
