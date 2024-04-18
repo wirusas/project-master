@@ -25,7 +25,7 @@ public class User {
     private String role;
 
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "users_projects",
             joinColumns = @JoinColumn(name = "users_id"),
