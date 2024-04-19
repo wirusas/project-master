@@ -7,6 +7,7 @@ import img2 from "../assets/logo1.svg";
 import img3 from "../assets/logo-kompiuteris.png";
 import { ToastContainer, toast } from "react-toastify";
 import "../styles/ReactToastify.css";
+import {useNavigate} from "react-router-dom";
 
 const RegisterComponent = () => {
   const [name, setName] = useState("");
@@ -19,6 +20,7 @@ const RegisterComponent = () => {
   const [usernameError, setUsernameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [nameEmptyError, setNameEmptyError] = useState("");
+  const navigator = useNavigate();
 
   //validation
   const validateName = () => {
@@ -90,6 +92,9 @@ const RegisterComponent = () => {
           setPassword("");
           setRepeatPassword("");
           toast.success("Registration successful!");
+          setTimeout(() => {
+            navigator("/login");
+          }, 5500);
         })
         .catch((error) => {
           console.error(error);
@@ -219,7 +224,7 @@ const RegisterComponent = () => {
                   <p>Allready a member ?</p>
                 </div>
                 <div className="Login-link">
-                  <a href="">Login</a>
+                  <a href="http://localhost:3000/login">Login</a>
                 </div>
               </form>
             </div>

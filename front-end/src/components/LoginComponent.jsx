@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import { loginAPICall, saveLoggedInUser, storeToken } from '../services/AuthService';
+import {useNavigate} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
 import img2 from "../assets/logo1.svg";
@@ -9,9 +11,31 @@ const LoginComponent = () => {
 
    const [password, setPassword] = useState('')
 
+    const navigator = useNavigate();
 
     async function handleLoginForm(e){
 
+        e.preventDefault();
+
+       await loginAPICall(username, password).then((response) =>{
+            console.log(response.data);
+
+            const token = 'Basic ' + window.btoa(username + ":" + password);
+            storeToken(token);
+            
+            saveLoggedInUser(username);
+            
+            navigator("/projects")
+
+            window.location.reload(false);
+            console.log(username);
+    }).catch(error => {
+        console.error(error);
+        if (error.response && error.response.status === 401) {
+          alert("Unauthorized account !");
+        }
+        
+    })
 
     }
   return (
@@ -80,7 +104,7 @@ const LoginComponent = () => {
                   <p>Dont have an account ?</p>
                 </div>
                 <div className="Login-link">
-                  <a href="">Register Here</a>
+                  <a href="http://localhost:3000/register">Register Here</a>
                 </div>
               </form>
             </div>
