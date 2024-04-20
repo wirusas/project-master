@@ -9,11 +9,11 @@ function App() {
   
   <Routes>
    
-     {/* //http://localhost:3000//register */}
+     {/* /http://localhost:3000/register */}
      <Route path='/register' element={<RegisterComponent/>} ></Route>
-     {/* //http://localhost:3000//login */}
+     {/* /http://localhost:3000/login */}
      <Route path='/login' element={<LoginComponent/>} ></Route>
-     {/* //http://localhost:3000//projects */}
+     {/* /http://localhost:3000/projects */}
      <Route path='/projects' element={<ProjectsComponent/>} ></Route>
     
   </Routes>
