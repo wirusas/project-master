@@ -10,12 +10,17 @@ import java.util.Objects;
 
 public final class UserDto {
     private final Long id;
+<<<<<<< Updated upstream
     @NotNull
     private final String username;
     @Size(min = 2,max=30, message = "Name should be between 2 and 30 characters!")
     private final String name;
     @NotNull
     @Email(message = "Email should be valid !")
+=======
+    private final String username;
+    private final String name;
+>>>>>>> Stashed changes
     private final String email;
     private final String role;
     private final List<ProjectDto> projects;
