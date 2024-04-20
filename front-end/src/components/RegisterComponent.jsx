@@ -44,12 +44,17 @@ const RegisterComponent = () => {
       setEmailError("Email address must be unique and formatted correctly.");
       return false;
     }
+    const [, domain] = value.split('@');
+    if (domain.includes('..')) {
+      setEmailError("Email address must formatted correctly");
+      return false;
+    }
     setEmailError("");
     return true;
   };
   const validatePassword = (value) => {
-    if (value.length < 8 || !/\d/.test(value) || !/[a-zA-Z]/.test(value)) {
-      setPasswordError("Required 8 characters long with letters and numbers");
+    if (value.length < 8 || value.length >20 || !/\d/.test(value) || !/[a-zA-Z]/.test(value)) {
+      setPasswordError("Required 8-20 characters with letters and numbers");
       return false;
     }
     setPasswordError("");
@@ -99,8 +104,10 @@ const RegisterComponent = () => {
         .catch((error) => {
           console.error(error);
           if (error.response && error.response.status === 409) {
-            alert("This email or username is already registered");
+            toast.error("This email or username is already registered");
           }
+          setUsername("");
+          setEmail("");
         });
     }
   }

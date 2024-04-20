@@ -1,7 +1,9 @@
 import React, {useState} from "react";
 import { loginAPICall, saveLoggedInUser, storeToken } from '../services/AuthService';
+import { ToastContainer, toast } from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/RegisterComponentStyle.css";
 import "../App.css";
 import img2 from "../assets/logo1.svg";
 import img3 from "../assets/logo-kompiuteris.png";
@@ -32,14 +34,17 @@ const LoginComponent = () => {
     }).catch(error => {
         console.error(error);
         if (error.response && error.response.status === 401) {
-          alert("Unauthorized account !");
+          toast.error("Unauthorized account !");
         }
-        
+        setUsername("");
+        setPassword("");
     })
 
     }
   return (
+    
     <div className="container">
+      <ToastContainer></ToastContainer>
       <div className="logo-1">
         <img src={img2} alt="" />
       </div>
