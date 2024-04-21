@@ -1,9 +1,15 @@
 import React from 'react'
+import {Header} from "./Header"
+import{SideBar} from "./SideBar"
+import 'bootstrap/dist/js/bootstrap.bundle'
+import{Footer} from "./Footer"
 
 const ProjectsComponent = () => {
-  return (<>
-    <h1>WELCOME!</h1>
-    <div>ProjectsComponent</div>
+  return (
+    <>
+      <Header></Header>
+      <SideBar></SideBar>
+      <Footer></Footer>
     </>
   )
 }
