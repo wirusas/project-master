@@ -3,6 +3,7 @@ import { BrowserRouter, Route,Routes } from "react-router-dom"
 import RegisterComponent from "./components/RegisterComponent"
 import LoginComponent from "./components/LoginComponent"
 import ProjectsComponent from "./components/ProjectsComponent"
+
 function App() {
   return (<>
   <BrowserRouter>
