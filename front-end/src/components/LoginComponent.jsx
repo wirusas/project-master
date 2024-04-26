@@ -7,6 +7,7 @@ import "../styles/RegisterComponentStyle.css";
 import "../App.css";
 import img2 from "../assets/logo1.svg";
 import img3 from "../assets/logo-kompiuteris.png";
+import { jwtDecode } from 'jwt-decode';
 
 const LoginComponent = () => {
     const [username, setUsername] = useState('')
@@ -15,32 +16,30 @@ const LoginComponent = () => {
 
     const navigator = useNavigate();
 
-    async function handleLoginForm(e){
-
-        e.preventDefault();
-
-       await loginAPICall(username, password).then((response) =>{
-            console.log(response.data);
-
-            const token = 'Basic ' + window.btoa(username + ":" + password);
-            storeToken(token);
-            
-            saveLoggedInUser(username);
-            
-            navigator("/projects")
-
-            window.location.reload(false);
-            console.log(username);
-    }).catch(error => {
-        console.error(error);
-        if (error.response && error.response.status === 401) {
-          toast.error("Unauthorized account !");
-        }
-        setUsername("");
-        setPassword("");
-    })
-
-    }
+    async function handleLoginForm(e) {
+      e.preventDefault();
+      await loginAPICall(username, password)
+          .then((response) => {
+              console.log(response.data); 
+              const token = response.data.accsessToken;
+              storeToken(token);
+              const decodedToken = jwtDecode(token);
+              const roles = decodedToken.rol;
+              console.log(roles);
+              saveLoggedInUser(username);
+              localStorage.setItem('userRoles', JSON.stringify(roles));
+              navigator("/projects");
+              window.location.reload(false);
+              console.log(username);
+          }).catch(error => {
+              console.error(error);
+              if (error.response && error.response.status === 401) {
+                  toast.error("Unauthorized account !");
+              }
+              setUsername("");
+              setPassword("");
+          });
+  }
   return (
     
     <div className="container">
