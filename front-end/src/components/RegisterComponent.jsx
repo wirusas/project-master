@@ -127,7 +127,7 @@ const RegisterComponent = () => {
         <div className="col-md-7 align-items-start">
           <div className="card">
             <div>
-              <h2 className="text-start fs-1 fw-bold m-2 px-3 py-2">Sign in</h2>
+              <h2 className="text-start fs-1 fw-bold m-2 px-3 py-2">Register</h2>
             </div>
 
             <div className="card-body">
