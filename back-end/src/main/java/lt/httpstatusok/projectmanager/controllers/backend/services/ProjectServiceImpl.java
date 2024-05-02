@@ -71,6 +71,11 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.findAll();
     }
 
+
+
+}
+
+=======
     @Override
     public List<Project> getProjectsByUser(User user) throws NoProjectsFoundException {
         List<Project> projects = user.getFollowedProjects();
@@ -80,3 +85,4 @@ public class ProjectServiceImpl implements ProjectService {
         return projects;
     }
    }
+

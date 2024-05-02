@@ -37,6 +37,7 @@ export const ProjectsList = () => {
           createdAt: formatDate(project.createdAt),
         }));
         setProjectList(formattedProjects);
+
       })
       .catch((error) => {
         console.error("Error fetching projects:", error);

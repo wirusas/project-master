@@ -51,8 +51,11 @@ export const CreateProject = () => {
       });
       // Hide success message after a delay
       setTimeout(() => {
+        window.location.reload(false);
         setShowSuccessMessage(false);
-      }, 3000);
+      }, 900);
+
+ 
     } catch (error) {
       console.error("Error creating project:", error);
       // Handle error, show error message, etc.

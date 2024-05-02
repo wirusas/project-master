@@ -21,8 +21,7 @@ public interface ProjectService {
     List<Project> getAllProjects();
 
 
+
     List<Project> getProjectsByUser(User user) throws NoProjectsFoundException;
-
-
 
 }
