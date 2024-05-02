@@ -1,19 +1,17 @@
-// IMPORTS
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "../styles/ProjectList.css";
 import { SideBar } from "./SideBar";
 import { CreateProject } from "./CreateProject";
-// IMPORTS
 
 // Main base URL
 const BASE_URL = "http://localhost:8080";
+
 // MAIN EXPORT
 export const ProjectsList = () => {
   // SET project LIST
   const [projectList, setProjectList] = useState([]);
-  // SET project LIST
 
   // Function to format the timestamp to YYYY-MM-DD
   const formatDate = (timestamp) => {
@@ -39,15 +37,11 @@ export const ProjectsList = () => {
           createdAt: formatDate(project.createdAt),
         }));
         setProjectList(formattedProjects);
-        console.log("projects", formattedProjects);
       })
       .catch((error) => {
         console.error("Error fetching projects:", error);
       });
   }, []);
-  // FETCH DATA
-
-  console.log("projectList", projectList);
 
   // Function to calculate progress value
   const getProgressValue = (state) => {
@@ -80,9 +74,9 @@ export const ProjectsList = () => {
   // RETURN
   return (
     <>
-    <div className="create-project">
-    <CreateProject />
-    </div>
+      <div className="create-project">
+        <CreateProject />
+      </div>
       <section className="sidebar-projects-container">
         <SideBar />
         <div className="project-list">
@@ -91,14 +85,14 @@ export const ProjectsList = () => {
             {projectList.map((project) => (
               <div className="project-card-div" key={project.id}>
                 <ProgressBar
-                  className="progres-bar"
+                  className="progress-bar"
                   now={getProgressValue(project.projectState)}
                   label={project.projectState}
                   variant={getVariant(project.projectState)}
                 />
                 <div className="project-name-description-container">
-                  <h2>{project.projectName}</h2>
-                  <p>{project.description}</p>
+                  <h2>{project.description}</h2>
+                  <p>{project.projectName}</p>
                 </div>
                 <div className="time-stamp"><span>Task:</span> {project.createdAt}</div>
               </div>

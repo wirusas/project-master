@@ -31,7 +31,7 @@
   height: 0.8rem;
   border-radius: 0.25rem;
   background: var(--Primary-50, #f9f5ff);
-  margin-bottom: 0.8rem;
+  margin-bottom: 2rem;
 }
 
 .project-name-description-container {
@@ -44,6 +44,7 @@
   font-size: 0.8125rem;
   margin-bottom: 0.8rem;
   text-wrap: balance;
+  margin-top: .8rem;
 
 }
 

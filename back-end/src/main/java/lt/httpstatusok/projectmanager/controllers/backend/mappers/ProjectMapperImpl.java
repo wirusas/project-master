@@ -19,7 +19,7 @@ public class ProjectMapperImpl implements ProjectMapper {
         if (createProjectRequest == null) {
             return null;
         }
-        return new Project(createProjectRequest.getDescription(), createProjectRequest.getDescription(), createProjectRequest.getProjectStatus());
+        return new Project( createProjectRequest.getDescription(), createProjectRequest.getProjectName(), createProjectRequest.getProjectStatus());
     }
 
     @Override

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import "../styles/CreateProject.css"
+import "../styles/CreateProject.css";
 
 // Main base URL
 const BASE_URL = "http://localhost:8080";
@@ -22,46 +22,49 @@ export const CreateProject = () => {
   // Success message
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  // HANDLE FORM
-  const handlerForm = (event) => {
+  // HANDLE FORM CHANGE
+  const handleFormChange = (event) => {
     const { name, value } = event.target;
-    setForm((prevData) => ({
-      ...prevData,
+    setForm((prevForm) => ({
+      ...prevForm,
       [name]: value,
     }));
   };
 
+  // HANDLE FORM SUBMISSION
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post(`${BASE_URL}/api/projects`, form, {
+    try {
+      const response = await axios.post(`${BASE_URL}/api/projects`, form, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
-      })
-      .then((response) => {
-        toggleForm(); // Close the modal after successful submission
-        setShowSuccessMessage(true); // Show success message
-        // Clear form fields after successful submission
-        setForm({
-          projectName: "",
-          description: "",
-          projectStatus: "",
-        });
-        // Hide success message after a delay
-        setTimeout(() => {
-          setShowSuccessMessage(false);
-        }, 3000);
       });
+      toggleForm(); // Close the modal after successful submission
+      setShowSuccessMessage(true); // Show success message
+      // Clear form fields after successful submission
+      setForm({
+        projectName: "",
+        description: "",
+        projectStatus: "",
+      });
+      // Hide success message after a delay
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Error creating project:", error);
+      // Handle error, show error message, etc.
+    }
   };
 
-  // Toggle form visibility
+  // TOGGLE FORM VISIBILITY
   const toggleForm = () => {
     setShowModal(!showModal);
   };
 
-  // Button text
+  // BUTTON TEXT
   const buttonText = showSuccessMessage ? "Project created successfully" : "New Project   +";
 
   // RETURN
@@ -84,7 +87,8 @@ export const CreateProject = () => {
                 type="text"
                 name="projectName"
                 value={form.projectName}
-                onChange={handlerForm}
+                onChange={handleFormChange}
+                maxLength={20}
               />
             </label>
             <br />
@@ -95,7 +99,7 @@ export const CreateProject = () => {
                 required
                 name="description"
                 value={form.description}
-                onChange={handlerForm}
+                onChange={handleFormChange}
                 rows={5}
                 cols={50}
                 style={{ resize: "none" }}
@@ -111,7 +115,7 @@ export const CreateProject = () => {
                   required
                   name="projectStatus"
                   value={form.projectStatus}
-                  onChange={handlerForm}
+                  onChange={handleFormChange}
                 >
                   <option value="">Select</option>
                   <option value="TO DO">TO DO</option>
