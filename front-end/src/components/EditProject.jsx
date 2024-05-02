@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import "../styles/CreateProject.css";
+import editlogo from "../assets/editlogo.svg";
 
 // Main base URL
 const BASE_URL = "http://localhost:8080";
 
 // MAIN EXPORT
-export const CreateProject = () => {
+export const EditProject = ({ projectId }) => {
   // FORM DATA
   const [form, setForm] = useState({
     projectName: "",
@@ -16,11 +15,9 @@ export const CreateProject = () => {
     projectStatus: "",
   });
 
-  // MODAL STATE
+  // MODAL STATES
   const [showModal, setShowModal] = useState(false);
-
-  // Success message
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   // HANDLE FORM CHANGE
   const handleFormChange = (event) => {
@@ -34,28 +31,32 @@ export const CreateProject = () => {
   // HANDLE FORM SUBMISSION
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    // Show confirmation modal
+    setShowConfirmModal(true);
+  };
+
+  // Function to submit form after confirmation
+  const confirmFormSubmission = async () => {
     try {
-      const response = await axios.post(`${BASE_URL}/api/projects`, form, {
+      await axios.put(`${BASE_URL}/api/projects/${projectId}`, form, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
       });
-      toggleForm(); // Close the modal after successful submission
-      setShowSuccessMessage(true); // Show success message
+      // Close the modal after successful submission
+      toggleForm();
       // Clear form fields after successful submission
       setForm({
         projectName: "",
         description: "",
         projectStatus: "",
       });
-      // Hide success message after a delay
-      setTimeout(() => {
-        window.location.reload(false);
-        setShowSuccessMessage(false);
-      }, 900);
+      // Reload the page to reflect changes
+      window.location.reload(false);
     } catch (error) {
-      console.error("Error creating project:", error);
+      console.error("Error updating project:", error);
+      // Handle error, show error message, etc.
     }
   };
 
@@ -64,30 +65,22 @@ export const CreateProject = () => {
     setShowModal(!showModal);
   };
 
-  // BUTTON TEXT
-  const buttonText = showSuccessMessage
-    ? "Project created successfully"
-    : "New Project   +";
-
   // RETURN
   return (
     <>
-      {/* Button to toggle form */}
-      <Button className="new-project-button" type="button" onClick={toggleForm}>
-        {buttonText}
-      </Button>
+      {/* Image to toggle form */}
+      <img src={editlogo} alt="Edit Project" onClick={toggleForm} />
 
       {/* Modal */}
       <Modal show={showModal} onHide={toggleForm}>
         <Modal.Header closeButton>
-          <Modal.Title>Create Project</Modal.Title>
+          <Modal.Title>Edit Project</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleFormSubmit}>
             <label>
               <p>* Project Name:</p>
               <input
-                required
                 type="text"
                 name="projectName"
                 value={form.projectName}
@@ -98,9 +91,8 @@ export const CreateProject = () => {
             <br />
             <br />
             <label>
-              <p>* Project Description:</p>
+              <p>* Project Description</p>
               <textarea
-                required
                 name="description"
                 value={form.description}
                 onChange={handleFormChange}
@@ -129,13 +121,33 @@ export const CreateProject = () => {
               </label>
             </div>
             <br />
-            <Button className="submit-button" type="submit">
-              Submit
-            </Button>
+            <button className="submit-button" type="submit">
+              Edit Project
+            </button>
           </form>
         </Modal.Body>
       </Modal>
-      {/* Modal */}
+
+      {/* Confirmation modal */}
+      <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Submission</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Are you sure you want to submit the changes?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="submit-button" onClick={confirmFormSubmission}>
+            Yes
+          </button>
+          <button
+            className="cancel-button"
+            onClick={() => setShowConfirmModal(false)}
+          >
+            No
+          </button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

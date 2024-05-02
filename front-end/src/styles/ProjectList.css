@@ -27,7 +27,7 @@
 }
 
 .progres-bar {
-  width: 70%;
+  width: 60%;
   height: 0.8rem;
   border-radius: 0.25rem;
   background: var(--Primary-50, #f9f5ff);
@@ -58,6 +58,22 @@
   
 }
 
+.progress-bar-edit-project {
+  display: grid;
+  grid-template-columns: 9fr 1fr 1fr;
+  
+}
+
+.progress-bar-edit-project img {
+  height: 1.2rem;
+  padding: 0;
+  margin-left: 8px;
+ 
+}
+
+.progress-bar-edit-project img:hover{
+  height: 1.4rem;
+}
 .time-stamp {
   display: flex;
   justify-content: space-between;

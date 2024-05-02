@@ -4,6 +4,8 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import "../styles/ProjectList.css";
 import { SideBar } from "./SideBar";
 import { CreateProject } from "./CreateProject";
+import { EditProject } from "./EditProject";
+import { DeleteProject } from "./DeleteProject";
 
 // Main base URL
 const BASE_URL = "http://localhost:8080";
@@ -37,7 +39,6 @@ export const ProjectsList = () => {
           createdAt: formatDate(project.createdAt),
         }));
         setProjectList(formattedProjects);
-
       })
       .catch((error) => {
         console.error("Error fetching projects:", error);
@@ -85,17 +86,24 @@ export const ProjectsList = () => {
           <div className="project-cards-container">
             {projectList.map((project) => (
               <div className="project-card-div" key={project.id}>
-                <ProgressBar
-                  className="progress-bar"
-                  now={getProgressValue(project.projectState)}
-                  label={project.projectState}
-                  variant={getVariant(project.projectState)}
-                />
+                <div className="progress-bar-edit-project">
+                  <ProgressBar
+                    className="progress-bar"
+                    now={getProgressValue(project.projectState)}
+                    label={project.projectState}
+                    variant={getVariant(project.projectState)}
+                  />
+                  <EditProject projectId={project.id} />
+                  <DeleteProject projectId={project.id} />
+                </div>
+
                 <div className="project-name-description-container">
                   <h2>{project.description}</h2>
                   <p>{project.projectName}</p>
                 </div>
-                <div className="time-stamp"><span>Task:</span> {project.createdAt}</div>
+                <div className="time-stamp">
+                  <span>Task:</span> {project.createdAt}
+                </div>
               </div>
             ))}
           </div>
@@ -104,5 +112,4 @@ export const ProjectsList = () => {
       </section>
     </>
   );
-  // RETURN
 };
