@@ -1,6 +1,7 @@
 package lt.httpstatusok.projectmanager.controllers.backend.services;
 
 import lombok.RequiredArgsConstructor;
+import lt.httpstatusok.projectmanager.controllers.backend.exceptions.NoProjectsFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.User;
 import lt.httpstatusok.projectmanager.controllers.backend.repositories.ProjectRepository;

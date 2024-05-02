@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lt.httpstatusok.projectmanager.controllers.backend.dto.CreateProjectRequest;
 import lt.httpstatusok.projectmanager.controllers.backend.dto.EditProjectRequest;
 import lt.httpstatusok.projectmanager.controllers.backend.dto.ProjectDto;
+import lt.httpstatusok.projectmanager.controllers.backend.exceptions.NoProjectsFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.mappers.ProjectMapper;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.User;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;

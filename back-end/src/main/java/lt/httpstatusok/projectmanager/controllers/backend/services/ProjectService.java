@@ -1,6 +1,9 @@
 package lt.httpstatusok.projectmanager.controllers.backend.services;
 
+import lt.httpstatusok.projectmanager.controllers.backend.exceptions.NoProjectsFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
+import lt.httpstatusok.projectmanager.controllers.backend.models.User;
+
 import java.util.List;
 import java.util.UUID;
 

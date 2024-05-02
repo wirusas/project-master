@@ -1,17 +1,28 @@
 
-import React from 'react';
+import React, {useState} from 'react';
 import logo from '../assets/logo.png'
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../styles/UsersInitials.css'
-import { getLoggedInUser } from '../services/AuthService';
+import { getLoggedInUser, logout} from '../services/AuthService';
+import { Modal, Button } from 'react-bootstrap';
+
 
 export const Header = () =>{
 
   const loggedInUser = getLoggedInUser();
 
+  const [showModal, setShowModal] = useState(false);
+  const [showModalSecond, setShowModalTwoSecond] = useState(false);
+
+  function handleLogout(){
+    logout();
+    setShowModal(false);
+
+  }
+
   const getInitials = (name) => {
     if (name && name.length >= 2) {
-      return name.substring(0, 2).toUpperCase(); // Grąžina dvi pirmas raides ir paverčia jas didžiąja
+      return name.substring(0, 2).toUpperCase();
     }
     return '';
   };
@@ -36,13 +47,45 @@ return(
     <form className="d-flex" role="search">
         <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" style={{borderColor:"#8540F5", boxShadow:"0px 0px 0px 3px rgba(102, 16, 242, 0.15)"}}/>
         <button className="btn btn-outline-success text-white" type="submit" style={{borderColor:"#8540F5", backgroundColor:"#7749F8", boxShadow:"0px 0px 0px 3px rgba(102, 16, 242, 0.15)"}}>Search</button>
-        <div className='users-initials'>{getInitials(loggedInUser)}</div>
+        <button className='users-initials'onClick={() => setShowModal(true)}>{getInitials(loggedInUser)}</button>
       </form>
   </header>
 </div>
-    
-    
-    </>
+<Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton className='modal-header' >
+          <Modal.Title>Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to log out?
+        </Modal.Body>
+        <Modal.Footer className='modal-footer'>
+          <Button variant="secondary" id='cancel-button' onClick={() => setShowModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" id='yes-button'onClick={handleLogout}>
+            Yes, log out
+          </Button>
+        </Modal.Footer>
+
+      </Modal>
+    <Modal show={showModalSecond} onHide={() => setShowModal(false)}>
+    <Modal.Header closeButton className='modal-header' >
+      <Modal.Title>Confirmation</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      Are you sure you want to log out?
+    </Modal.Body>
+    <Modal.Footer className='modal-footer'>
+      <Button variant="secondary" id='cancel-button' onClick={() => setShowModalTwoSecond(false)}>
+        Cancel
+      </Button>
+      <Button variant="danger" id='yes-button'onClick={handleLogout}>
+        Yes, log out
+      </Button>
+    </Modal.Footer>
+  </Modal>
+
+</>
 )
 
 }
