@@ -54,6 +54,8 @@ export const CreateProject = () => {
         window.location.reload(false);
         setShowSuccessMessage(false);
       }, 900);
+
+ 
     } catch (error) {
       console.error("Error creating project:", error);
       // Handle error, show error message, etc.

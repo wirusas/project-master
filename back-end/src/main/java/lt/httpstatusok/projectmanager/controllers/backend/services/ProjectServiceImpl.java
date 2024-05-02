@@ -72,5 +72,17 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
 
+
 }
+
+=======
+    @Override
+    public List<Project> getProjectsByUser(User user) throws NoProjectsFoundException {
+        List<Project> projects = user.getFollowedProjects();
+        if (projects.isEmpty()) {
+            throw new NoProjectsFoundException("No projects found for user: " + user.getUsername());
+        }
+        return projects;
+    }
+   }
 

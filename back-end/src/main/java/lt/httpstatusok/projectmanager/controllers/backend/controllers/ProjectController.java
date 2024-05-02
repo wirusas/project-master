@@ -72,4 +72,17 @@ public class ProjectController {
                 .map(projectMapper::toProjectDto)
                 .collect(Collectors.toList());
     }
+
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @GetMapping("/myprojects")
+    List<ProjectDto> getMyProjects(@AuthenticationPrincipal CustomUserDetails currentUser) {
+        User user = userService.validateAndGetUserByUsername(currentUser.getUsername());
+        try {
+            return projectService.getProjectsByUser(user).stream()
+                    .map(projectMapper::toProjectDto)
+                    .collect(Collectors.toList());
+        } catch (NoProjectsFoundException e) {
+            return Collections.emptyList();
+        }
 }
+    }
