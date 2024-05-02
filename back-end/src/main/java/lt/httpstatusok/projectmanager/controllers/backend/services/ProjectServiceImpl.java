@@ -1,6 +1,7 @@
 package lt.httpstatusok.projectmanager.controllers.backend.services;
 
 import lombok.RequiredArgsConstructor;
+import lt.httpstatusok.projectmanager.controllers.backend.exceptions.ProjectNotFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.exceptions.NoProjectsFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.User;
@@ -10,12 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class ProjectServiceImpl implements ProjectService {
+
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
 
@@ -26,8 +27,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project validateAndGetProject(String id) {
-        return projectRepository.findById(id)
-                .orElse(null);
+        return projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException("Project not found with ID: " + id));
     }
 
     @Override
@@ -36,32 +36,27 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public Project editProject(UUID id, Project updatedProject) {
-        Optional<Project> optionalProject = projectRepository.findById(String.valueOf(id));
+        Project existingProject = projectRepository.findById(id.toString())
+                .orElseThrow(() -> new ProjectNotFoundException("Project not found with ID: " + id));
 
-        if (optionalProject.isPresent()) {
-            Project existingProject = optionalProject.get();
-            existingProject.setProjectName(updatedProject.getProjectName());
-            existingProject.setDescription(updatedProject.getDescription());
-            existingProject.setProjectState(updatedProject.getProjectState());
-            return projectRepository.save(existingProject);
-        }
+        existingProject.setProjectName(updatedProject.getProjectName());
+        existingProject.setDescription(updatedProject.getDescription());
+        existingProject.setProjectState(updatedProject.getProjectState());
 
-        return null;
+        return projectRepository.save(existingProject);
     }
 
     @Override
     @Transactional
     public void deleteProject(Project project) {
-
         List<User> users = project.getUsers();
-
 
         for (User user : users) {
             user.getFollowedProjects().remove(project);
             userRepository.save(user);
         }
-
 
         projectRepository.delete(project);
     }
@@ -71,18 +66,12 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.findAll();
     }
 
-
-
-}
-
-=======
     @Override
-    public List<Project> getProjectsByUser(User user) throws NoProjectsFoundException {
+    public List<Project> getProjectsByUser(User user) {
         List<Project> projects = user.getFollowedProjects();
         if (projects.isEmpty()) {
             throw new NoProjectsFoundException("No projects found for user: " + user.getUsername());
         }
         return projects;
     }
-   }
-
+}
