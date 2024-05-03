@@ -1,21 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { isUserLoggedIn, logout } from '../services/AuthService'
+import { isUserLoggedIn } from '../services/AuthService'
 import {useNavigate} from 'react-router-dom'
-import { Modal, Button } from 'react-bootstrap';
-import '../styles/LogOutModalStyle.css'
+
+
 
 export const SideBar = () =>{
   const isAuth = isUserLoggedIn();
   const navigator = useNavigate();
-
-  const [showModal, setShowModal] = useState(false);
-
-  function handleLogout(){
-    logout();
-    setShowModal(false);
-    navigator("/login")
-  }
   
 
     return(
@@ -73,30 +65,14 @@ export const SideBar = () =>{
             <li><a href="#" className="link-body-emphasis d-inline-flex text-decoration-none rounded" style={{marginLeft:"15px"}}>New...</a></li>
             <li><a href="#" className="link-body-emphasis d-inline-flex text-decoration-none rounded" style={{marginLeft:"15px"}}>Profile</a></li>
             <li><a href="#" className="link-body-emphasis d-inline-flex text-decoration-none rounded" style={{marginLeft:"15px"}}>Settings</a></li>
-            <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" onClick={() => setShowModal(true)} style={{color:"#7749F8"}}>
+            {/* <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" onClick={() => setShowModal(true)} style={{color:"#7749F8"}}>
               Log out
-            </button>
+            </button> */}
           </ul>
         </div>
       </li>
     </ul>
   </div>
-  <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton className='modal-header' >
-          <Modal.Title>Confirmation</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Are you sure you want to log out?
-        </Modal.Body>
-        <Modal.Footer className='modal-footer'>
-          <Button variant="secondary" id='cancel-button' onClick={() => setShowModal(false)}>
-            Cancel
-          </Button>
-          <Button variant="danger" id='yes-button' onClick={handleLogout}>
-            Yes, log out
-          </Button>
-        </Modal.Footer>
-      </Modal>
         </>
 
 

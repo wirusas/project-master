@@ -1,19 +1,29 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.png";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/UsersInitials.css";
-import { getLoggedInUser, logout } from "../services/AuthService";
-import { Modal, Button } from "react-bootstrap";
+import '../styles/UsersInitials.css'
+import { getLoggedInUser, logout} from '../services/AuthService';
+import { Modal, Button } from 'react-bootstrap';
+import {useNavigate} from 'react-router-dom'
+import '../styles/UserModalStyle.css'
+import '../styles/LogOutModalStyle.css'
 
-export const Header = () => {
+
+
+export const Header = () =>{
+  const navigator = useNavigate();
   const loggedInUser = getLoggedInUser();
+  const storedRoles = JSON.parse(localStorage.getItem('userRoles'));
 
+
+  const [showModalUser, setShowModalUser] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [showModalSecond, setShowModalTwoSecond] = useState(false);
+
 
   function handleLogout() {
     logout();
     setShowModal(false);
+    navigator("/login")
   }
 
   const getInitials = (name) => {
@@ -22,8 +32,14 @@ export const Header = () => {
     }
     return "";
   };
+  const getUserName = (name) => {
+    return name.toUpperCase();
+  };
 
-  return (
+
+  
+return(
+
     <>
       <div className="container" padding-top="60">
         <header
@@ -72,39 +88,43 @@ export const Header = () => {
       <li className="nav-item"><a href="#" className="nav-link px-2 text-body-secondary">About</a></li> */}
           </ul>
 
-          <form className="d-flex" role="search">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              style={{
-                borderColor: "#8540F5",
-                boxShadow: "0px 0px 0px 3px rgba(102, 16, 242, 0.15)",
-              }}
-            />
-            <button
-              className="btn btn-outline-success text-white"
-              type="submit"
-              style={{
-                borderColor: "#8540F5",
-                backgroundColor: "#7749F8",
-                boxShadow: "0px 0px 0px 3px rgba(102, 16, 242, 0.15)",
-              }}
-            >
-              Search
-            </button>
-            <button
-              className="users-initials"
-              onClick={() => setShowModal(true)}
-            >
-              {getInitials(loggedInUser)}
-            </button>
-          </form>
-        </header>
+    <form className="d-flex" role="search">
+        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" style={{borderColor:"#8540F5", boxShadow:"0px 0px 0px 3px rgba(102, 16, 242, 0.15)"}}/>
+        <button className="btn btn-outline-success text-white" type="submit" style={{borderColor:"#8540F5", backgroundColor:"#7749F8", boxShadow:"0px 0px 0px 3px rgba(102, 16, 242, 0.15)"}}>Search</button>
+      </form>
+      <button className='users-initials'onClick={() => setShowModalUser(true)}>{getInitials(loggedInUser)}</button>
+  </header>
+</div>
+      <Modal show={showModalUser} onHide={() => setShowModalUser(false)} className='user-modal'>
+        <Modal.Header closeButton className='user-modal-header' >
+          <Modal.Title></Modal.Title>
+        </Modal.Header>
+        <Modal.Body className='user-modal-body'>
+        <button className='users-initials'>{getInitials(loggedInUser)}</button>
+        <div className='users-text'>{getUserName(loggedInUser)}</div>
+        </Modal.Body>
+        <div>
+        {storedRoles && (
+      <div className='users-modal-role'>
+        <p>Role:</p>
+        {storedRoles.map((role, index) => (
+          <div key={index}>{role}</div>
+        ))}
       </div>
+    )}
+        </div>
+        <Modal.Footer className='user-modal-footer'>
+          <Button variant="secondary" id='cancel-button' onClick={() => setShowModalUser(false)}>
+            Back
+          </Button>
+          <Button variant="danger" id='yes-button'onClick={() => setShowModal(true)}>
+            Log Out
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton className="modal-header">
+        <Modal.Header closeButton className='modal-header' >
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are you sure you want to log out?</Modal.Body>
@@ -116,29 +136,13 @@ export const Header = () => {
           >
             Cancel
           </Button>
-          <Button variant="danger" id="yes-button" onClick={handleLogout}>
+          <Button variant="danger" id='yes-button' onClick={handleLogout}>
             Yes, log out
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal show={showModalSecond} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton className="modal-header">
-          <Modal.Title>Confirmation</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure you want to log out?</Modal.Body>
-        <Modal.Footer className="modal-footer">
-          <Button
-            variant="secondary"
-            id="cancel-button"
-            onClick={() => setShowModalTwoSecond(false)}
-          >
-            Cancel
-          </Button>
-          <Button variant="danger" id="yes-button" onClick={handleLogout}>
-            Yes, log out
-          </Button>
-        </Modal.Footer>
-      </Modal>
+    
     </>
-  );
-};
+)
+
+}
