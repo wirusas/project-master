@@ -1,26 +1,26 @@
-import React from 'react'
-import  {TaskDesktop} from "./TaskDekstop";
+import React from "react";
+import { TaskDesktop } from "./TaskDekstop";
 import { Header } from "./Header";
-import { SideBar } from "./SideBar";
-import { Footer } from "./Footer"
-import '../styles/TasksComponentStyle.css'
-
-
+// import { SideBar } from "./SideBar";
+import { Footer } from "./Footer";
+import "../styles/TasksComponentStyle.css";
+import { SideBarTask } from "./SideBarTask";
 
 const TaskComponent = () => {
-  return (<>
-    <Header />
-        <div className="task-container">
-          <div className="sidebar">
-            <SideBar />
-          </div>
-          <div className="task-desktop">
-            <TaskDesktop />
-          </div>
+  return (
+    <>
+      <Header />
+      <div className="task-container">
+        <div className="sidebar">
+          <SideBarTask />
         </div>
-        <Footer />
-        </>
-  )
-}
+        <div className="task-desktop">
+          <TaskDesktop />
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
+};
 
-export default TaskComponent
+export default TaskComponent;

@@ -69,17 +69,20 @@ export const TaskDesktop = () => {
       className="column-div"
       style={{
         // border: "2px solid red",
-        width: "1190px",
-        minHeight: "730px",
+        width: "1100px",
+        height: "735px",
         marginLeft: "auto",
         marginRight: "30px",
+        marginTop: "15px",
+        marginBottom: "15px",
       }}
     >
       <Container>
         <Row>
           <Col
             style={{
-              width: "368px",
+              width: "350px",
+              height: "735px",
               // border: "2px solid red",
               backgroundColor: "#f473401a",
             }}
@@ -94,8 +97,8 @@ export const TaskDesktop = () => {
                 <Card
                   key={task.id}
                   style={{
-                    width: "359px",
-                    height: "224px",
+                    width: "330px",
+                    height: "220px",
                     border: "4px solid #F47340",
                     backgroundColor: "white",
                     marginBottom: "15px",
@@ -126,7 +129,7 @@ export const TaskDesktop = () => {
                       style={{
                         borderTop: "2px solid #F47340",
                         borderBottom: "2px solid #F47340",
-                        width: "355px",
+                        width: "325px",
                         height: "105px",
                       }}
                     >
@@ -181,7 +184,8 @@ export const TaskDesktop = () => {
 
           <Col
             style={{
-              width: "368px",
+              width: "350px",
+              height: "735px",
               //   border: "2px solid red",
               backgroundColor: "#ffba091a",
               marginLeft: "20px",
@@ -196,8 +200,8 @@ export const TaskDesktop = () => {
                 <Card
                   key={task.id}
                   style={{
-                    width: "359px",
-                    height: "224px",
+                    width: "330px",
+                    height: "220px",
                     border: "4px solid #FFC107",
                     backgroundColor: "white",
                     marginBottom: "15px",
@@ -227,7 +231,7 @@ export const TaskDesktop = () => {
                       style={{
                         borderTop: "2px solid #FFC107",
                         borderBottom: "2px solid #FFC107",
-                        width: "355px",
+                        width: "325px",
                         height: "105px",
                       }}
                     >
@@ -282,7 +286,8 @@ export const TaskDesktop = () => {
           </Col>
           <Col
             style={{
-              width: "368px",
+              width: "350px",
+              height: "735px",
               //   border: "2px solid red",
               backgroundColor: "#20c9971a",
               marginLeft: "20px",
@@ -297,11 +302,11 @@ export const TaskDesktop = () => {
                 <Card
                   key={task.id}
                   style={{
-                    width: "359px",
-                    height: "224px",
+                    width: "330px",
+                    height: "220px",
                     border: "4px solid #20C997",
                     backgroundColor: "white",
-                    marginBottom: "15px",
+                    marginBottom: "10px",
                   }}
                   className="card-done rounded"
                   bsPrefix
@@ -328,7 +333,7 @@ export const TaskDesktop = () => {
                       style={{
                         borderTop: "2px solid #20C997",
                         borderBottom: "2px solid #20C997",
-                        width: "355px",
+                        width: "325px",
                         height: "105px",
                       }}
                     >
