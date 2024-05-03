@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import personplus from "../assets/person-plus.svg";
+import "../styles/CreateTask.css";
 // import Modal from 'react-bootstrap/Modal';
 
 export const CreateTask = () => {
@@ -84,7 +85,7 @@ export const CreateTask = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Control
+              {/* <Form.Control
                 style={{
                   width: "300px",
                   height: "38px",
@@ -95,7 +96,20 @@ export const CreateTask = () => {
                 type="text"
                 placeholder="Priority"
                 autoFocus
-              />
+              /> */}
+              <div>
+                <select
+                  required
+                  name="taskPriority"
+                  // value={task.taskPriority}
+                  // onChange={handleFormChange}
+                >
+                  <option value="">Task Priority</option>
+                  <option value="1">Low</option>
+                  <option value="2">Medium</option>
+                  <option value="3">High</option>
+                </select>
+              </div>
             </Form.Group>
           </Form>
 
