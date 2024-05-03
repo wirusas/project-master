@@ -89,3 +89,11 @@
   display: flex;
         justify-content: flex-end;
 }
+
+@media (max-width: 680px) {
+
+  .sidebar {
+    display:  none;
+  }
+  .project-list{ width: 162%;
+  }}
