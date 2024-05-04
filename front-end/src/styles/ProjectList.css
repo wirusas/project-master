@@ -87,7 +87,20 @@
   
   display: flex;
         justify-content: flex-end;
+
+
+
 }
+
+.project-name-description-container{
+  text-decoration: underline white;
+}
+
+.project-name-description-container:hover, .project-name-description-container:hover {
+  background-color: #f0f0f0;
+  text-decoration: underline  #f0f0f0;
+}
+
 
 @media (max-width: 680px) {
 
@@ -96,3 +109,7 @@
   }
   .project-list{ width: 162%;
   }}
+
+  
+ 
+  
