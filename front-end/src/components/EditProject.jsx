@@ -123,7 +123,8 @@ export const EditProject = ({ projectId }) => {
               <Button
                 className="submit-button edit-project-button"
                 type="submit"
-                style={{ marginLeft: "7px" }} >
+                style={{ marginLeft: "7px" }}
+              >
                 Edit Project
               </Button>
             </div>
@@ -131,7 +132,6 @@ export const EditProject = ({ projectId }) => {
         </Modal.Body>
       </Modal>
 
-      {/* Button wrapped inside the Button */}
       <Button
         variant="link"
         onClick={toggleForm}
