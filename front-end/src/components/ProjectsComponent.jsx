@@ -10,7 +10,7 @@ const ProjectsComponent = () => {
   return (
     <>
       <Header></Header>
-
+<br />
       <ProjectsList />
 
       <Footer></Footer>
