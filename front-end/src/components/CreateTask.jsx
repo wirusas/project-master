@@ -3,7 +3,6 @@ import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import personplus from "../assets/person-plus.svg";
-// import Modal from 'react-bootstrap/Modal';
 
 export const CreateTask = () => {
   const [formTask, setForTask] = useState({
@@ -27,16 +26,7 @@ export const CreateTask = () => {
         Launch demo modal
       </Button>
 
-      <Modal
-        show={show}
-        onHide={handleClose}
-        size="lg"
-        style={
-          {
-            //   border: "4px solid 5227cce0",
-          }
-        }
-      >
+      <Modal show={show} onHide={handleClose} size="lg">
         {/* <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header> */}
@@ -59,7 +49,6 @@ export const CreateTask = () => {
                   borderStyle: "solid",
                   borderColor: "#5227cce0",
                   borderWidth: "2px",
-                  //   border: "4px solid red",
                 }}
                 type="text"
                 placeholder="Task Name"
