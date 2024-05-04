@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 import "../styles/CreateProject.css";
 
 // Main base URL
@@ -83,10 +84,10 @@ export const CreateProject = () => {
           <Modal.Title>Create Project</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleFormSubmit}>
-            <label>
-              <p>* Project Name:</p>
-              <input
+          <Form onSubmit={handleFormSubmit}>
+            <Form.Group controlId="projectName">
+              <Form.Label>* Project Name:</Form.Label>
+              <Form.Control
                 required
                 type="text"
                 name="projectName"
@@ -94,45 +95,46 @@ export const CreateProject = () => {
                 onChange={handleFormChange}
                 maxLength={20}
               />
-            </label>
-            <br />
-            <br />
-            <label>
-              <p>* Project Description:</p>
-              <textarea
+            </Form.Group>
+            <Form.Group controlId="description">
+              <Form.Label>* Project Description:</Form.Label>
+              <Form.Control
+                as="textarea"
                 required
                 name="description"
                 value={form.description}
                 onChange={handleFormChange}
                 rows={5}
-                cols={50}
                 style={{ resize: "none" }}
                 maxLength={200}
               />
-            </label>
-            <br />
-            <br />
-            <div>
-              <label>
-                <p>* Project Status:</p>
-                <select
-                  required
-                  name="projectStatus"
-                  value={form.projectStatus}
-                  onChange={handleFormChange}
-                >
-                  <option value="">Select</option>
-                  <option value="TO DO">TO DO</option>
-                  <option value="IN PROGRESS">IN PROGRESS</option>
-                  <option value="DONE">DONE</option>
-                </select>
-              </label>
+            </Form.Group>
+            <Form.Group controlId="projectStatus">
+              <Form.Label>* Project Status:</Form.Label>
+              <Form.Control
+                as="select"
+                required
+                name="projectStatus"
+                value={form.projectStatus}
+                onChange={handleFormChange}
+              >
+                <option value="">Select</option>
+                <option value="TO DO">TO DO</option>
+                <option value="IN PROGRESS">IN PROGRESS</option>
+                <option value="DONE">DONE</option>
+              </Form.Control>
+            </Form.Group>
+            {/* Add space below select field */}
+            <div style={{ height: "20px" }}></div>
+            <div className="d-flex justify-content-end">
+              <Button variant="secondary" onClick={toggleForm} className="mr-2">
+                Cancel
+              </Button>
+              <Button className="submit-button" type="submit" style={{ marginLeft: "7px" }}>
+                Save
+              </Button>
             </div>
-            <br />
-            <Button className="submit-button" type="submit">
-              Submit
-            </Button>
-          </form>
+          </Form>
         </Modal.Body>
       </Modal>
       {/* Modal */}

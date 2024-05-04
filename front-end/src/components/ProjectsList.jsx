@@ -80,7 +80,8 @@ export const ProjectsList = () => {
         <CreateProject />
       </div>
       <section className="sidebar-projects-container">
-        <SideBar />
+       <div className="sidebar">   <SideBar />
+       </div>
         <div className="project-list">
           {/* MAP projects */}
           <div className="project-cards-container">
