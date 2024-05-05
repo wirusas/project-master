@@ -5,13 +5,16 @@ import Card from "react-bootstrap/Card";
 import CardHeader from "react-bootstrap/CardHeader";
 import { Button } from "react-bootstrap";
 import carddate from "../assets/card-date.svg";
+import { CreateTask } from "./CreateTask";
+import "../styles/TaskDesktop.css";
+import Form from "react-bootstrap/Form";
 
 const initialTasks = [
   {
     id: 1,
     title: "Task 1",
     subtitle: "1 subtask",
-    status: "todo",
+    status: "to do",
     priority: 2,
     link1: "Link 1",
     link2: "Link 2",
@@ -20,7 +23,7 @@ const initialTasks = [
     id: 2,
     title: "Task 2",
     subtitle: "2 subtask",
-    status: "todo",
+    status: "to do",
     priority: 1,
     link1: "Link 1",
     link2: "Link 2",
@@ -91,7 +94,7 @@ export const TaskDesktop = () => {
             <h3 style={{ textAlign: "left" }}>To Do</h3>
 
             {initialTasks
-              .filter((task) => task.status === "todo")
+              .filter((task) => task.status === "to do")
               .sort((a, b) => b.priority - a.priority)
               .map((task) => (
                 <Card
@@ -365,6 +368,36 @@ export const TaskDesktop = () => {
                       >
                         Change
                       </Button>
+                      {/* <Button
+                        style={{
+                          width: "54px",
+                          height: "25px",
+                          fontSize: "10px",
+                          lineHeight: "16px",
+                          fontFamily: "Inter",
+                          textAlign: "left",
+                          color: "#6610F2",
+                          backgroundColor: "#EBE5FC",
+                          paddingBottom: "20px",
+                          border: "none",
+                        }}
+                      >
+                        <div>
+                          <select
+                            style={{
+                              border: "none",
+                              backgroundColor: "#EBE5FC",
+                              color: "#6610F2",
+                            }}
+                          >
+                            <option value="">Change</option>
+                            <option value="to do">To Do</option>
+                            <option value="in progress">In Progress</option>
+                            <option value="done">Done</option>
+                          </select>
+                        </div>
+                      </Button> */}
+
                       <Button
                         style={{
                           width: "54px",
