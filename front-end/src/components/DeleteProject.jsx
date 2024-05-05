@@ -9,16 +9,16 @@ const BASE_URL = "http://localhost:8080";
 
 // MAIN EXPORT
 export const DeleteProject = ({ projectId }) => {
-  // States to manage modals
+  // manage modals
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showUnauthorizedModal, setShowUnauthorizedModal] = useState(false);
 
-  // Function to show the confirmation modal
+  // show the confirmation modal
   const handleDeleteClick = () => {
     setShowConfirmModal(true);
   };
 
-  // Function to delete project
+  // delete project
   const deleteProject = async () => {
     try {
       // Send DELETE request to the server to delete the project by ID
@@ -29,11 +29,11 @@ export const DeleteProject = ({ projectId }) => {
       });
       // Close the confirmation modal
       setShowConfirmModal(false);
-      // Reload the page after successful deletion
+      // Reload the page
       window.location.reload(false);
     } catch (error) {
       if (error.response && error.response.status === 403) {
-        // Show unauthorized message modal if the user is not authorized
+        // unauthorized message modal
         setShowUnauthorizedModal(true);
       } else {
         console.error("Error deleting project:", error);

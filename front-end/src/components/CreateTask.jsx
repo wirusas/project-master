@@ -72,7 +72,6 @@ export const CreateTask = () => {
                   borderStyle: "solid",
                   borderColor: "#5227cce0",
                   borderWidth: "2px",
-                  //   border: "4px solid red",
                 }}
                 type="text"
                 placeholder="Task Name"

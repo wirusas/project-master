@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 import editlogo from "../assets/editlogo.svg";
 
 // Main base URL
@@ -68,9 +69,6 @@ export const EditProject = ({ projectId }) => {
   // RETURN
   return (
     <>
-      {/* Image to toggle form */}
-      <img src={editlogo} alt="Edit Project" onClick={toggleForm} />
-
       {/* Modal */}
       <Modal show={showModal} onHide={toggleForm}>
         <Modal.Header closeButton>
@@ -78,55 +76,69 @@ export const EditProject = ({ projectId }) => {
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleFormSubmit}>
-            <label>
-              <p>* Project Name:</p>
+            <div className="form-group">
+              <label style={{ marginBottom: "7px" }}>* Project Name:</label>
               <input
                 type="text"
+                className="form-control"
                 name="projectName"
                 value={form.projectName}
                 onChange={handleFormChange}
                 maxLength={20}
               />
-            </label>
-            <br />
-            <br />
-            <label>
-              <p>* Project Description</p>
+            </div>
+            <div className="form-group">
+              <label style={{ marginBottom: "7px" }}>
+                * Project Description
+              </label>
               <textarea
+                className="form-control"
                 name="description"
                 value={form.description}
                 onChange={handleFormChange}
                 rows={5}
-                cols={50}
                 style={{ resize: "none" }}
                 maxLength={200}
               />
-            </label>
-            <br />
-            <br />
-            <div>
-              <label>
-                <p>* Project Status:</p>
-                <select
-                  required
-                  name="projectStatus"
-                  value={form.projectStatus}
-                  onChange={handleFormChange}
-                >
-                  <option value="">Select</option>
-                  <option value="TO DO">TO DO</option>
-                  <option value="IN PROGRESS">IN PROGRESS</option>
-                  <option value="DONE">DONE</option>
-                </select>
-              </label>
             </div>
-            <br />
-            <button className="submit-button" type="submit">
-              Edit Project
-            </button>
+            <div className="form-group" style={{ marginBottom: "20px" }}>
+              <label style={{ marginBottom: "7px" }}>* Project Status:</label>
+              <select
+                className="form-control"
+                required
+                name="projectStatus"
+                value={form.projectStatus}
+                onChange={handleFormChange}
+              >
+                <option value="">Select</option>
+                <option value="TO DO">TO DO</option>
+                <option value="IN PROGRESS">IN PROGRESS</option>
+                <option value="DONE">DONE</option>
+              </select>
+            </div>
+            <div className="d-flex justify-content-end">
+              <Button variant="secondary" onClick={toggleForm} className="mr-2">
+                Close
+              </Button>
+              <Button
+                className="submit-button edit-project-button"
+                type="submit"
+                style={{ marginLeft: "7px" }}
+              >
+                Edit Project
+              </Button>
+            </div>
           </form>
         </Modal.Body>
       </Modal>
+
+      <Button
+        variant="link"
+        onClick={toggleForm}
+        style={{ marginTop: "-12px" }}
+      >
+        <img src={editlogo} alt="Edit Project" />
+      </Button>
 
       {/* Confirmation modal */}
       <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
@@ -137,15 +149,15 @@ export const EditProject = ({ projectId }) => {
           <p>Are you sure you want to submit the changes?</p>
         </Modal.Body>
         <Modal.Footer>
-          <button className="submit-button" onClick={confirmFormSubmission}>
+          <Button className="submit-button" onClick={confirmFormSubmission}>
             Yes
-          </button>
-          <button
+          </Button>
+          <Button
             className="cancel-button"
             onClick={() => setShowConfirmModal(false)}
           >
             No
-          </button>
+          </Button>
         </Modal.Footer>
       </Modal>
     </>

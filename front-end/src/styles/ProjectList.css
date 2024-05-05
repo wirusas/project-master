@@ -67,8 +67,7 @@
 .progress-bar-edit-project img {
   height: 1.2rem;
   padding: 0;
-  margin-left: 8px;
- 
+   
 }
 
 .progress-bar-edit-project img:hover{
@@ -88,4 +87,39 @@
   
   display: flex;
         justify-content: flex-end;
+
+
+
 }
+
+.project-name-description-container{
+  text-decoration: underline white;
+}
+
+.project-name-description-container:hover, .project-name-description-container:hover {
+  background-color: #f0f0f0;
+  text-decoration: underline  #f0f0f0;
+}
+
+
+@media (max-width: 680px) {
+
+  .sidebar {
+    display:  none;
+  }
+  .project-list{ width: 162%;
+  }}
+  .project-name-description-container h2 {
+    color: var(--Neutral-600, #5c5c5c);
+    font-family: Poppins;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    word-break: break-all; /* Add this line */
+  }
+  
+
+  
+ 
+  

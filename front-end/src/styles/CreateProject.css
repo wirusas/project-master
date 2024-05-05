@@ -1,4 +1,4 @@
-.new-project-button {
+.new-project-button, edit-project-button {
   display: flex;
   justify-content: flex-end;
   width: 10.75rem;
