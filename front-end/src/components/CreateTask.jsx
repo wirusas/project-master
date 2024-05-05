@@ -4,15 +4,17 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import personplus from "../assets/person-plus.svg";
 import "../styles/CreateTask.css";
-// import Modal from 'react-bootstrap/Modal';
+import { Navigate, useNavigate } from "react-router-dom";
+import { TaskDesktop } from "./TaskDekstop";
 
 export const CreateTask = () => {
-  const [formTask, setForTask] = useState({
-    id: 1,
-    title: " ",
-    subtitle: " ",
-    status: " ",
-    priority: "",
+  const navigator = useNavigate();
+  const [formTask, setFormTask] = useState({
+    id: "",
+    title: "",
+    subtitle: "",
+    status: "",
+    taskPriority: "",
     link1: "Link 1",
     link2: "Link 2",
   });
@@ -22,13 +24,26 @@ export const CreateTask = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // naujo tasko pildymo formos valdymas
+  const handleForm = (e) => {
+    const { name, value } = e.target;
+    setFormTask({ ...formTask, [name]: value });
+    console.log("Form data:", formTask);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // <TaskDesktop initialTasks={formTask} />;
+  };
+
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      {/* <Button variant="primary" onClick={handleShow}>
         Launch demo modal
-      </Button>
+      </Button> */}
 
       <Modal
+        backdrop="static"
         show={show}
         onHide={handleClose}
         size="lg"
@@ -38,9 +53,6 @@ export const CreateTask = () => {
           }
         }
       >
-        {/* <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header> */}
         <Modal.Body
           className="rounded"
           style={{
@@ -51,7 +63,7 @@ export const CreateTask = () => {
               "linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(119, 73, 248, 0.19))  ",
           }}
         >
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Control
                 style={{
@@ -64,6 +76,11 @@ export const CreateTask = () => {
                 }}
                 type="text"
                 placeholder="Task Name"
+                name="title"
+                value={formTask.title}
+                onChange={handleForm}
+                required
+                maxLength={28}
                 autoFocus
               />
             </Form.Group>
@@ -79,29 +96,39 @@ export const CreateTask = () => {
                   borderColor: "#5227cce0",
                   borderWidth: "2px",
                 }}
+                type="text"
                 placeholder="Task Description"
                 as="textarea"
                 rows={3}
+                name="subtitle"
+                value={formTask.subtitle}
+                onChange={handleForm}
+                required
+                maxLength={200}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              {/* <Form.Control
-                style={{
-                  width: "300px",
-                  height: "38px",
-                  borderStyle: "solid",
-                  borderColor: "#5227cce0",
-                  borderWidth: "2px",
-                }}
+
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              {/* Pasetiname visiems naujiems projektams to do statusa */}
+              <Form
                 type="text"
-                placeholder="Priority"
-                autoFocus
-              /> */}
+                name="status"
+                value="to do"
+                onChange={handleForm}
+                // required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <div>
                 <select
                   required
                   name="taskPriority"
-                  // value={task.taskPriority}
+                  value={formTask.taskPriority}
+                  onChange={handleForm}
                   // onChange={handleFormChange}
                 >
                   <option value="">Task Priority</option>
@@ -111,57 +138,42 @@ export const CreateTask = () => {
                 </select>
               </div>
             </Form.Group>
-          </Form>
 
-          <Modal.Footer>
-            <Button
-              style={{
-                width: "90px",
-                height: "38px",
-                border: "none",
-                backgroundColor: "#dc3535c2",
-              }}
-              onClick={handleClose}
-            >
-              Close
-            </Button>
-            <Button
-              style={{
-                width: "90px",
-                height: "38px",
-                border: "none",
-                backgroundColor: "#5227cce0",
-              }}
-              onClick={handleClose}
-            >
-              Save
-            </Button>
-          </Modal.Footer>
+            <Modal.Footer>
+              <Button
+                style={{
+                  width: "90px",
+                  height: "38px",
+                  border: "none",
+                  backgroundColor: "#dc3535c2",
+                }}
+                onClick={() => {
+                  handleClose();
+                  navigator("/tasks");
+                }}
+              >
+                Close
+              </Button>
+              <Button
+                type="submit"
+                style={{
+                  width: "90px",
+                  height: "38px",
+                  border: "none",
+                  backgroundColor: "#5227cce0",
+                }}
+                onClick={() => {
+                  // handleSubmit();
+                  // handleClose();
+                  // navigator("/tasks");
+                  handleSubmit();
+                }}
+              >
+                Save
+              </Button>
+            </Modal.Footer>
+          </Form>
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button
-            style={{
-              width: "90px",
-              height: "38px",
-              border: "none",
-              backgroundColor: "#dc3535c2",
-            }}
-            onClick={handleClose}
-          >
-            Close
-          </Button>
-          <Button
-            style={{
-              width: "90px",
-              height: "38px",
-              border: "none",
-              backgroundColor: "#5227cce0",
-            }}
-            onClick={handleClose}
-          >
-            Save
-          </Button>
-        </Modal.Footer> */}
       </Modal>
     </>
   );
