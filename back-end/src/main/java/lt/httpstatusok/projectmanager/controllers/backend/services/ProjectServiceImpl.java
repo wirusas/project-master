@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -74,4 +75,15 @@ public class ProjectServiceImpl implements ProjectService {
         }
         return projects;
     }
+
+
+    @Override
+    public Optional<Project> getProjectById(UUID id) {
+        if (id == null){
+            throw new IllegalArgumentException("ID cannot be null");
+        }
+
+        return projectRepository.findById(id.toString());
+    }
+
 }

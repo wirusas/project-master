@@ -92,8 +92,8 @@ export const ProjectsList = () => {
 
                 <Link to={`/tasks/${project.id}`} className="project-link">
                   <div className="project-name-description-container">
-                    <h2>{project.description}</h2>
-                    <p>{project.projectName}</p>
+                    <h2>{project.projectName}</h2>
+                    <p>{project.description}</p>
                   </div>
                 </Link>
 

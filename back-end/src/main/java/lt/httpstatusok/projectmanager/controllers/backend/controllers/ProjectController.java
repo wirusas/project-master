@@ -85,4 +85,12 @@ public class ProjectController {
             return Collections.emptyList();
         }
 }
+
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @GetMapping("/{id}")
+    public ProjectDto getProjectById(@PathVariable UUID id) {
+        Project project = projectService.validateAndGetProject(id.toString());
+        projectService.getProjectById(id);
+        return projectMapper.toProjectDto(project);
+    }
     }

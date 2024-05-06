@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -19,6 +19,30 @@ export const EditProject = ({ projectId }) => {
   // MODAL STATES
   const [showModal, setShowModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  // FETCH PROJECT DETAILS BY ID WHEN COMPONENT MOUNTS
+  useEffect(() => {
+    const fetchProjectDetails = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/api/projects/${projectId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        const projectData = response.data;
+        // Update the form state with fetched project data
+        setForm({
+          projectName: projectData.projectName,
+          description: projectData.description,
+          projectStatus: projectData.projectStatus,
+        });
+      } catch (error) {
+        console.error("Error fetching project details:", error);
+        // Handle error, show error message, etc.
+      }
+    };
+    fetchProjectDetails();
+  }, [projectId]);
 
   // HANDLE FORM CHANGE
   const handleFormChange = (event) => {
@@ -79,6 +103,7 @@ export const EditProject = ({ projectId }) => {
             <div className="form-group">
               <label style={{ marginBottom: "7px" }}>* Project Name:</label>
               <input
+              required
                 type="text"
                 className="form-control"
                 name="projectName"
@@ -92,13 +117,14 @@ export const EditProject = ({ projectId }) => {
                 * Project Description
               </label>
               <textarea
+              required
                 className="form-control"
                 name="description"
                 value={form.description}
                 onChange={handleFormChange}
-                rows={5}
+                rows={6}
                 style={{ resize: "none" }}
-                maxLength={200}
+                maxLength={500}
               />
             </div>
             <div className="form-group" style={{ marginBottom: "20px" }}>
