@@ -29,6 +29,7 @@ import static lt.httpstatusok.projectmanager.controllers.backend.config.SwaggerC
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
+
     private final UserService userService;
     private final ProjectService projectService;
     private final ProjectMapper projectMapper;
@@ -84,13 +85,20 @@ public class ProjectController {
         } catch (NoProjectsFoundException e) {
             return Collections.emptyList();
         }
-}
+    }
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/{id}")
     public ProjectDto getProjectById(@PathVariable UUID id) {
         Project project = projectService.validateAndGetProject(id.toString());
-        projectService.getProjectById(id);
         return projectMapper.toProjectDto(project);
     }
+
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @GetMapping("/sorting/{field}")
+    List<ProjectDto> getProjectWithSorting(@PathVariable String field) {
+        return projectService.findProjectWithSorting(field).stream()
+                .map(projectMapper::toProjectDto)
+                .collect(Collectors.toList());
     }
+}

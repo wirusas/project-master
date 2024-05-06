@@ -26,4 +26,6 @@ public interface ProjectService {
     List<Project> getProjectsByUser(User user) throws NoProjectsFoundException;
 Optional <Project> getProjectById(UUID id);
 
+List<Project> findProjectWithSorting(String field);
+
 }
