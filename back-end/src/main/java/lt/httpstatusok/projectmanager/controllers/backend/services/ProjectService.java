@@ -5,6 +5,7 @@ import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ProjectService {
@@ -23,5 +24,6 @@ public interface ProjectService {
 
 
     List<Project> getProjectsByUser(User user) throws NoProjectsFoundException;
+Optional <Project> getProjectById(UUID id);
 
 }

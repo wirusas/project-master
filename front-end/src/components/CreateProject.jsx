@@ -104,9 +104,9 @@ export const CreateProject = () => {
                 name="description"
                 value={form.description}
                 onChange={handleFormChange}
-                rows={5}
+                rows={6}
                 style={{ resize: "none" }}
-                maxLength={200}
+                maxLength={500}
               />
             </Form.Group>
             <Form.Group controlId="projectStatus">
