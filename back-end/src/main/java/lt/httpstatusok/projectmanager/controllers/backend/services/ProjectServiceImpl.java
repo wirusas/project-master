@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
@@ -91,4 +94,11 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> findProjectWithSorting(String field) {
         return projectRepository.findAll(Sort.by(Sort.Direction.ASC, field));
     }
+
+    @Override
+    public Page<Project> getAllPagedProjects(Pageable pageable) {
+        return projectRepository.findAll(pageable);
+    }
+
+
 }

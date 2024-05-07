@@ -9,9 +9,13 @@ import { EditProject } from "./EditProject";
 import { DeleteProject } from "./DeleteProject";
 
 const BASE_URL = "http://localhost:8080";
+const PROJECTS_PER_PAGE = 8; // Number of projects to display per page
 
 export const ProjectsList = () => {
   const [projectList, setProjectList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const [hasPrevPage, setHasPrevPage] = useState(false);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -23,7 +27,7 @@ export const ProjectsList = () => {
 
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/api/projects/allprojects`, {
+      .get(`${BASE_URL}/api/projects/allprojects?page=${currentPage}&size=${PROJECTS_PER_PAGE}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -34,11 +38,13 @@ export const ProjectsList = () => {
           createdAt: formatDate(project.createdAt),
         }));
         setProjectList(formattedProjects);
+        setHasNextPage(response.data.length === PROJECTS_PER_PAGE);
+        setHasPrevPage(currentPage !== 0);
       })
       .catch((error) => {
         console.error("Error fetching projects:", error);
       });
-  }, []);
+  }, [currentPage]);
 
   const getProgressValue = (state) => {
     switch (state) {
@@ -64,6 +70,14 @@ export const ProjectsList = () => {
       default:
         return "info";
     }
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
   };
 
   return (
@@ -102,6 +116,14 @@ export const ProjectsList = () => {
                 </div>
               </div>
             ))}
+          </div>
+          <div className="pagination">
+            <button onClick={handlePrevPage} disabled={!hasPrevPage} className="prev-button">
+            &#60;&#60;&#60;
+            </button>
+            <button onClick={handleNextPage} disabled={!hasNextPage} className="next-button">
+            &#62;&#62;&#62;
+            </button>
           </div>
         </div>
       </section>

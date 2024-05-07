@@ -14,6 +14,8 @@ import lt.httpstatusok.projectmanager.controllers.backend.models.User;
 import lt.httpstatusok.projectmanager.controllers.backend.security.CustomUserDetails;
 import lt.httpstatusok.projectmanager.controllers.backend.services.ProjectService;
 import lt.httpstatusok.projectmanager.controllers.backend.services.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -68,15 +70,16 @@ public class ProjectController {
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/allprojects")
-    List<ProjectDto> getAllProjects() {
-        return projectService.getAllProjects().stream()
+    public List<ProjectDto> getAllPagedProjects(@RequestParam(defaultValue = "0") int page) {
+        Page<Project> projectPage = projectService.getAllPagedProjects(PageRequest.of(page, 8));
+        return projectPage.getContent().stream()
                 .map(projectMapper::toProjectDto)
                 .collect(Collectors.toList());
     }
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/myprojects")
-    List<ProjectDto> getMyProjects(@AuthenticationPrincipal CustomUserDetails currentUser) {
+    public List<ProjectDto> getMyProjects(@AuthenticationPrincipal CustomUserDetails currentUser) {
         User user = userService.validateAndGetUserByUsername(currentUser.getUsername());
         try {
             return projectService.getProjectsByUser(user).stream()
@@ -96,7 +99,7 @@ public class ProjectController {
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/sorting/{field}")
-    List<ProjectDto> getProjectWithSorting(@PathVariable String field) {
+    public List<ProjectDto> getProjectWithSorting(@PathVariable String field) {
         return projectService.findProjectWithSorting(field).stream()
                 .map(projectMapper::toProjectDto)
                 .collect(Collectors.toList());
