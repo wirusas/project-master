@@ -89,8 +89,9 @@ export const SideBarTask = () => {
               data-bs-target="#dashboard-collapse"
               aria-expanded="false"
               style={{ color: "#7749F8" }}
+              onClick={() => navigator("/tasks/modal")}
             >
-              My Task
+              New Task
             </button>
             <div className="collapse" id="dashboard-collapse">
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">

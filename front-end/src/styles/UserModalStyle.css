@@ -34,6 +34,7 @@
     border-color:  rgb(178, 149, 255);
     background-color: rgb(243, 156, 152);
 }
+
 #cancel-button{
     background-color: rgba(203, 217, 208);  
     color: rgba(20, 108, 67, 1);
@@ -58,9 +59,23 @@
     border-right: 4px solid  rgb(178, 149, 255);
     border-left: 4px solid  rgb(178, 149, 255);
     justify-content: center;
-    padding-left: 23px;
+    padding-left: 25px;
     height: 20px;
 }
 .users-modal-role p {
     margin-right: 3px;
+}
+#search-input{
+  background-image: url(../assets/search-icon.svg);
+  background-repeat: no-repeat;
+  background-position-x: 240px;
+  background-position-y: 5px;
+  height: 40px;
+  margin-top: 5px;
+}
+.radio-status input {
+    margin: 10px; 
+}
+.radio-status label{
+    color: #5227CC;
 }

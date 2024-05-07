@@ -11,11 +11,12 @@ import { DeleteProject } from "./DeleteProject";
 const BASE_URL = "http://localhost:8080";
 const PROJECTS_PER_PAGE = 8; // Number of projects to display per page
 
-export const ProjectsList = () => {
+export const ProjectsList = ({ searchTerm, filterState }) => {
   const [projectList, setProjectList] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
   const [hasPrevPage, setHasPrevPage] = useState(false);
+  const [filteredProjects, setFilteredProjects] = useState([]);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -45,6 +46,26 @@ export const ProjectsList = () => {
         console.error("Error fetching projects:", error);
       });
   }, [currentPage]);
+
+   //Search
+   useEffect(() => {
+    let filtered = projectList;
+
+    if (searchTerm) {
+      filtered = filtered.filter(project =>
+        project.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (filterState) {
+      filtered = filtered.filter(project =>
+        project.projectState === filterState
+      );
+    }
+
+    setFilteredProjects(filtered); 
+  }, [projectList, searchTerm, filterState]);
+
 
   const getProgressValue = (state) => {
     switch (state) {
@@ -91,7 +112,7 @@ export const ProjectsList = () => {
         </div>
         <div className="project-list">
           <div className="project-cards-container">
-            {projectList.map((project) => (
+            {filteredProjects.map((project) => (
               <div className="project-card-div" key={project.id}>
                 <div className="progress-bar-edit-project">
                   <ProgressBar
