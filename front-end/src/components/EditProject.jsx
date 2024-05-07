@@ -138,7 +138,6 @@ export const EditProject = ({ projectId }) => {
               >
                 <option value="">Select</option>
                 <option value="TO DO">TO DO</option>
-                <option value="IN PROGRESS">IN PROGRESS</option>
                 <option value="DONE">DONE</option>
               </select>
             </div>
