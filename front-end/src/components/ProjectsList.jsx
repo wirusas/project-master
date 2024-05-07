@@ -139,10 +139,10 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
             ))}
           </div>
           <div className="pagination">
-            <button onClick={handlePrevPage} disabled={!hasPrevPage} className="prev-button">
+            <button onClick={handlePrevPage} disabled={!hasPrevPage} className="prev-button" style={{ display: !hasPrevPage ? "none" : "block" }}>
             &#60;&#60;&#60;
             </button>
-            <button onClick={handleNextPage} disabled={!hasNextPage} className="next-button">
+            <button onClick={handleNextPage} disabled={!hasNextPage} className="next-button" style={{ display: !hasNextPage ? "none" : "block" }}>
             &#62;&#62;&#62;
             </button>
           </div>
