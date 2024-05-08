@@ -104,4 +104,17 @@ public class ProjectController {
                 .map(projectMapper::toProjectDto)
                 .collect(Collectors.toList());
     }
+
+
+
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/{projectId}/{userEmail}")
+    public ProjectDto addUserToProject(@PathVariable UUID projectId, @PathVariable String userEmail) {
+        User user = userService.findUserByEmail(userEmail);
+        Project project = projectService.validateAndGetProject(projectId.toString());
+        projectService.addUserToProject(user.getEmail(), projectId);
+        return projectMapper.toProjectDto(project);
+    }
 }
+

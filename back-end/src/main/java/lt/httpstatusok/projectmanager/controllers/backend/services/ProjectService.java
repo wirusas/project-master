@@ -33,4 +33,8 @@ public interface ProjectService {
 
     Page<Project> getAllPagedProjects(Pageable pageable);
 
+    Project addUserToProject(String email, UUID id);
+
+
+
 }

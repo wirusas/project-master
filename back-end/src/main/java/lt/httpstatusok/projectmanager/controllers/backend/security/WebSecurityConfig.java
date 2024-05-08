@@ -36,11 +36,13 @@ public class WebSecurityConfig {
         return http
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(HttpMethod.POST, "/api/projects").hasAnyAuthority(ADMIN, USER)
+                        .requestMatchers(HttpMethod.POST, "/api/projects/{projectId}/{userEmail}").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.GET, "/api/projects/**").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.PUT, "/api/projects/**").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.GET, "/api/projects/myprojects").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.GET, "/api/projects/allprojects").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.GET, "/api/users/me").hasAnyAuthority(ADMIN, USER)
+                        .requestMatchers(HttpMethod.DELETE, "/api/projects/{id}").hasAnyAuthority(ADMIN)
                         .requestMatchers("/api/projects").hasAuthority(ADMIN)
                         .requestMatchers("/api/users", "/api/users/**").hasAuthority(ADMIN)
                         .requestMatchers("/public/**", "/auth/**").permitAll()

@@ -101,4 +101,18 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
 
+
+    @Override
+    @Transactional
+    public Project addUserToProject(String userEmail, UUID projectId) {
+        Project existingProject = validateAndGetProject(projectId.toString());
+        User user = userRepository.findUserByEmail(userEmail);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found with email: " + userEmail);
+        }
+        existingProject.addUser(user);
+        return projectRepository.save(existingProject);
+    }
+
 }
+
