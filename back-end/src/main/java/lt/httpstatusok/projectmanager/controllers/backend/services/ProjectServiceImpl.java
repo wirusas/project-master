@@ -107,9 +107,15 @@ public class ProjectServiceImpl implements ProjectService {
     public Project addUserToProject(String userEmail, UUID projectId) {
         Project existingProject = validateAndGetProject(projectId.toString());
         User user = userRepository.findUserByEmail(userEmail);
+
         if (user == null) {
             throw new IllegalArgumentException("User not found with email: " + userEmail);
         }
+
+        if (existingProject.getUsers().contains(user)) {
+            throw new IllegalArgumentException("User is already in the project.");
+        }
+
         existingProject.addUser(user);
         return projectRepository.save(existingProject);
     }
