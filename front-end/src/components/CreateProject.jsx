@@ -14,7 +14,7 @@ export const CreateProject = () => {
   const [form, setForm] = useState({
     projectName: "",
     description: "",
-    projectStatus: "TO DO"
+    projectStatus: "",
   });
 
   // MODAL STATE
@@ -48,7 +48,7 @@ export const CreateProject = () => {
       setForm({
         projectName: "",
         description: "",
-        projectStatus: "TO DO",
+        projectStatus: "",
       });
       // Hide success message after a delay
       setTimeout(() => {
@@ -104,11 +104,27 @@ export const CreateProject = () => {
                 name="description"
                 value={form.description}
                 onChange={handleFormChange}
-                rows={6}
+                rows={5}
                 style={{ resize: "none" }}
-                maxLength={500}
+                maxLength={200}
               />
             </Form.Group>
+            <Form.Group controlId="projectStatus">
+              <Form.Label>* Project Status:</Form.Label>
+              <Form.Control
+                as="select"
+                required
+                name="projectStatus"
+                value={form.projectStatus}
+                onChange={handleFormChange}
+              >
+                <option value="">Select</option>
+                <option value="TO DO">TO DO</option>
+                <option value="IN PROGRESS">IN PROGRESS</option>
+                <option value="DONE">DONE</option>
+              </Form.Control>
+            </Form.Group>
+            {/* Add space below select field */}
             <div style={{ height: "20px" }}></div>
             <div className="d-flex justify-content-end">
               <Button variant="secondary" onClick={toggleForm} className="mr-2">

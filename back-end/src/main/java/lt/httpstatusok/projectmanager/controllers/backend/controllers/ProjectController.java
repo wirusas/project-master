@@ -14,8 +14,6 @@ import lt.httpstatusok.projectmanager.controllers.backend.models.User;
 import lt.httpstatusok.projectmanager.controllers.backend.security.CustomUserDetails;
 import lt.httpstatusok.projectmanager.controllers.backend.services.ProjectService;
 import lt.httpstatusok.projectmanager.controllers.backend.services.UserService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +29,6 @@ import static lt.httpstatusok.projectmanager.controllers.backend.config.SwaggerC
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
-
     private final UserService userService;
     private final ProjectService projectService;
     private final ProjectMapper projectMapper;
@@ -70,16 +67,16 @@ public class ProjectController {
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/allprojects")
-    public List<ProjectDto> getAllPagedProjects(@RequestParam(defaultValue = "0") int page) {
-        Page<Project> projectPage = projectService.getAllPagedProjects(PageRequest.of(page, 4));
-        return projectPage.getContent().stream()
+    List<ProjectDto> getAllProjects() {
+        return projectService.getAllProjects().stream()
                 .map(projectMapper::toProjectDto)
                 .collect(Collectors.toList());
     }
 
+
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/myprojects")
-    public List<ProjectDto> getMyProjects(@AuthenticationPrincipal CustomUserDetails currentUser) {
+    List<ProjectDto> getMyProjects(@AuthenticationPrincipal CustomUserDetails currentUser) {
         User user = userService.validateAndGetUserByUsername(currentUser.getUsername());
         try {
             return projectService.getProjectsByUser(user).stream()
@@ -97,24 +94,4 @@ public class ProjectController {
         return projectMapper.toProjectDto(project);
     }
 
-    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-    @GetMapping("/sorting/{field}")
-    public List<ProjectDto> getProjectWithSorting(@PathVariable String field) {
-        return projectService.findProjectWithSorting(field).stream()
-                .map(projectMapper::toProjectDto)
-                .collect(Collectors.toList());
-    }
-
-
-
-    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/{projectId}/{userEmail}")
-    public ProjectDto addUserToProject(@PathVariable UUID projectId, @PathVariable String userEmail) {
-        User user = userService.findUserByEmail(userEmail);
-        Project project = projectService.validateAndGetProject(projectId.toString());
-        projectService.addUserToProject(user.getEmail(), projectId);
-        return projectMapper.toProjectDto(project);
-    }
 }
-
