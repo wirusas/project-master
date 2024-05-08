@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import ProgressBar from "react-bootstrap/ProgressBar";
 import { Link } from "react-router-dom";
 import "../styles/ProjectList.css";
 import { SideBar } from "./SideBar";
@@ -7,15 +8,10 @@ import { CreateProject } from "./CreateProject";
 import { EditProject } from "./EditProject";
 import { DeleteProject } from "./DeleteProject";
 
-
 const BASE_URL = "http://localhost:8080";
-const PROJECTS_PER_PAGE = 4; // Number of projects to display per page
 
 export const ProjectsList = ({ searchTerm, filterState }) => {
   const [projectList, setProjectList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [hasNextPage, setHasNextPage] = useState(true);
-  const [hasPrevPage, setHasPrevPage] = useState(false);
   const [filteredProjects, setFilteredProjects] = useState([]);
 
   const formatDate = (timestamp) => {
@@ -28,7 +24,7 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
 
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/api/projects/allprojects?page=${currentPage}&size=${PROJECTS_PER_PAGE}`, {
+      .get(`${BASE_URL}/api/projects/allprojects`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -39,16 +35,14 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
           createdAt: formatDate(project.createdAt),
         }));
         setProjectList(formattedProjects);
-        setHasNextPage(response.data.length === PROJECTS_PER_PAGE);
-        setHasPrevPage(currentPage !== 0);
       })
       .catch((error) => {
         console.error("Error fetching projects:", error);
       });
-  }, [currentPage]);
+  }, []);
 
-  // Search
-  useEffect(() => {
+   //Search
+   useEffect(() => {
     let filtered = projectList;
 
     if (searchTerm) {
@@ -66,10 +60,13 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
     setFilteredProjects(filtered); 
   }, [projectList, searchTerm, filterState]);
 
+
   const getProgressValue = (state) => {
     switch (state) {
       case "TO DO":
-        return 0;
+        return 32;
+      case "IN PROGRESS":
+        return 65;
       case "DONE":
         return 100;
       default:
@@ -77,25 +74,17 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
     }
   };
 
-  const progressBarStyle = {
-    backgroundColor: "#F9F5FF",
-    borderRadius: "5px",
-    height: "8px",
-    margin: "5px 0",
-    overflow: "hidden",
-  };
-
-  const progressBarFillStyle = {
-    backgroundColor: "#7754F6",
-    height: "100%",
-  };
-
-  const handlePrevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
-
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+  const getVariant = (state) => {
+    switch (state) {
+      case "TO DO":
+        return "danger";
+      case "IN PROGRESS":
+        return "warning";
+      case "DONE":
+        return "success";
+      default:
+        return "info";
+    }
   };
 
   return (
@@ -112,23 +101,20 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
             {filteredProjects.map((project) => (
               <div className="project-card-div" key={project.id}>
                 <div className="progress-bar-edit-project">
-                  <div style={progressBarStyle}>
-                    <div
-                      className="progress-bar-fill"
-                      style={{
-                        ...progressBarFillStyle,
-                        width: `${getProgressValue(project.projectState)}%`,
-                      }}
-                    />
-                  </div>
+                  <ProgressBar
+                    className="progress-bar"
+                    now={getProgressValue(project.projectState)}
+                    label={project.projectState}
+                    variant={getVariant(project.projectState)}
+                  />
                   <EditProject projectId={project.id} />
                   <DeleteProject projectId={project.id} />
                 </div>
 
                 <Link to={`/tasks/${project.id}`} className="project-link">
                   <div className="project-name-description-container">
-                    <h2>{project.projectName}</h2>
-                    <p>{project.description}</p>
+                    <h2>{project.description}</h2>
+                    <p>{project.projectName}</p>
                   </div>
                 </Link>
 
@@ -138,19 +124,8 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
               </div>
             ))}
           </div>
-          <div className="pagination">
-            <button onClick={handlePrevPage} disabled={!hasPrevPage} className="prev-button" style={{ display: !hasPrevPage ? "none" : "block" }}>
-            &#60;&#60;
-            </button>
-            <button onClick={handleNextPage} disabled={!hasNextPage} className="next-button" style={{ display: !hasNextPage ? "none" : "block" }}>
-            &#62;&#62;
-            </button>
-          </div>
         </div>
-        
       </section>
-      
     </>
-    
   );
 };

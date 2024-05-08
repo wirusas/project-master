@@ -20,29 +20,27 @@ export const EditProject = ({ projectId }) => {
   const [showModal, setShowModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  // FETCH PROJECT DETAILS BY ID WHEN COMPONENT MOUNTS
+
   useEffect(() => {
-    const fetchProjectDetails = async () => {
+    const fetchProject = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/api/projects/${projectId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        const projectData = response.data;
-        // Update the form state with fetched project data
         setForm({
-          projectName: projectData.projectName,
-          description: projectData.description,
-          projectStatus: projectData.projectStatus,
+          projectName: response.data.projectName,
+          description: response.data.description,
+          projectStatus: response.data.projectState,
         });
       } catch (error) {
-        console.error("Error fetching project details:", error);
-        // Handle error, show error message, etc.
+        console.error("Failed to fetch project data:", error);
       }
     };
-    fetchProjectDetails();
+    fetchProject();
   }, [projectId]);
+
 
   // HANDLE FORM CHANGE
   const handleFormChange = (event) => {
@@ -103,7 +101,6 @@ export const EditProject = ({ projectId }) => {
             <div className="form-group">
               <label style={{ marginBottom: "7px" }}>* Project Name:</label>
               <input
-              required
                 type="text"
                 className="form-control"
                 name="projectName"
@@ -117,14 +114,13 @@ export const EditProject = ({ projectId }) => {
                 * Project Description
               </label>
               <textarea
-              required
                 className="form-control"
                 name="description"
                 value={form.description}
                 onChange={handleFormChange}
-                rows={6}
+                rows={5}
                 style={{ resize: "none" }}
-                maxLength={500}
+                maxLength={200}
               />
             </div>
             <div className="form-group" style={{ marginBottom: "20px" }}>
@@ -138,6 +134,7 @@ export const EditProject = ({ projectId }) => {
               >
                 <option value="">Select</option>
                 <option value="TO DO">TO DO</option>
+                <option value="IN PROGRESS">IN PROGRESS</option>
                 <option value="DONE">DONE</option>
               </select>
             </div>
