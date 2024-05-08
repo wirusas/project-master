@@ -92,6 +92,7 @@ export const TaskDesktop = () => {
                     marginBottom: "15px",
                   }}
                   className="card-todo rounded"
+                  id="custom-input"
                   bsPrefix
                 >
                   <Card.Body>
@@ -194,6 +195,7 @@ export const TaskDesktop = () => {
                     marginBottom: "15px",
                   }}
                   className="card-inprograss rounded"
+                  id="custom-input"
                   bsPrefix
                 >
                   <Card.Body>
@@ -295,6 +297,7 @@ export const TaskDesktop = () => {
                     marginBottom: "10px",
                   }}
                   className="card-done rounded"
+                  id="custom-input"
                   bsPrefix
                 >
                   <Card.Body>
