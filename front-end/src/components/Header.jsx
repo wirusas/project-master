@@ -78,6 +78,15 @@ export const Header = ({ onSearch, searchTerm, onFilterChange }) => {
               </a>
             </li>
           </ul>
+          <div className="dropdown-status">
+            <select onChange={(e) => onFilterChange(e.target.value)}>
+              <option value="">All</option>
+              <option value="TO DO">TO DO</option>
+              <option value="IN PROGRESS">IN PROGRESS</option>
+              <option value="DONE">DONE</option>
+            </select>
+          </div>
+          
 
           <form
             className="d-flex"
@@ -169,43 +178,6 @@ export const Header = ({ onSearch, searchTerm, onFilterChange }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <div className="radio-status">
-        <input
-          type="radio"
-          id="all"
-          name="status"
-          value=""
-          onChange={() => onFilterChange("")}
-        />
-        <label htmlFor="all">All</label>
-
-        <input
-          type="radio"
-          id="to-do"
-          name="status"
-          value="TO DO"
-          onChange={() => onFilterChange("TO DO")}
-        />
-        <label htmlFor="to-do">TO DO</label>
-
-        <input
-          type="radio"
-          id="in-progress"
-          name="status"
-          value="IN PROGRESS"
-          onChange={() => onFilterChange("IN PROGRESS")}
-        />
-        <label htmlFor="in-progress">IN PROGRESS</label>
-
-        <input
-          type="radio"
-          id="done"
-          name="status"
-          value="DONE"
-          onChange={() => onFilterChange("DONE")}
-        />
-        <label htmlFor="done">DONE</label>
-      </div>
     </>
   );
 };
