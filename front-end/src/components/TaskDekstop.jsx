@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';  // Make sure to install axios if not already done
+import React, { useState, useEffect } from "react";
+import axios from "axios"; // Make sure to install axios if not already done
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -7,34 +7,37 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import carddate from "../assets/card-date.svg";
 import "../styles/TaskDesktop.css";
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from "react-router-dom";
 
 export const TaskDesktop = () => {
   const [tasks, setTasks] = useState([]);
   const { projectId } = useParams(); // This hooks extract the projectId from the URL
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate(); 
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         // Use template literals to insert the projectId into the URL
-        const response = await axios.get(`http://localhost:8080/api/projects/${projectId}/tasks`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await axios.get(
+          `http://localhost:8080/api/projects/${projectId}/tasks`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         setTasks(response.data); // Update the state with the fetched tasks
       } catch (error) {
-        console.error('Error fetching tasks:', error);
+        console.error("Error fetching tasks:", error);
       }
     };
 
-    if (projectId) { // Ensure projectId is available before fetching
+    if (projectId) {
+      // Ensure projectId is available before fetching
       fetchTasks();
     }
-  }, [projectId]);  // Dependency array includes projectId to refetch when it changes
+  }, [projectId]); // Dependency array includes projectId to refetch when it changes
 
   // const categorizeTasks = (status) => {
   //   return tasks.filter(task => task.status.toUpperCase().replace(" ", "_") === status);
@@ -42,7 +45,7 @@ export const TaskDesktop = () => {
 
   const handleAddTask = () => {
     navigate(`/create-task/${projectId}`);
-    
+
     //setShowModal(true);
   };
 
@@ -60,7 +63,9 @@ export const TaskDesktop = () => {
       }}
     >
       <Container>
-      <Button onClick={handleAddTask} style={{ margin: "10px 0" }}>Add New Task</Button>
+        <Button onClick={handleAddTask} style={{ margin: "10px 0" }}>
+          Add New Task
+        </Button>
         <Row>
           <Col
             style={{
@@ -75,7 +80,7 @@ export const TaskDesktop = () => {
 
             {tasks
               .filter((task) => task.status === "TODO")
-              
+
               .map((task) => (
                 <Card
                   key={task.id}
@@ -113,7 +118,7 @@ export const TaskDesktop = () => {
                         borderTop: "2px solid #F47340",
                         borderBottom: "2px solid #F47340",
                         width: "325px",
-                        height: "105px",
+                        height: "125px",
                       }}
                     >
                       {task.description}
@@ -177,7 +182,7 @@ export const TaskDesktop = () => {
             <h3 style={{ textAlign: "left" }}>In Progress</h3>
             {tasks
               .filter((task) => task.status === "IN_PROGRESS")
-              
+
               .map((task) => (
                 <Card
                   key={task.id}
@@ -214,10 +219,10 @@ export const TaskDesktop = () => {
                         borderTop: "2px solid #FFC107",
                         borderBottom: "2px solid #FFC107",
                         width: "325px",
-                        height: "105px",
+                        height: "125px",
                       }}
                     >
-                     {task.description}
+                      {task.description}
                     </Card.Text>
 
                     <div
@@ -278,7 +283,7 @@ export const TaskDesktop = () => {
             <h3 style={{ textAlign: "left" }}>Done</h3>
             {tasks
               .filter((task) => task.status === "DONE")
-              
+
               .map((task) => (
                 <Card
                   key={task.id}
@@ -315,10 +320,10 @@ export const TaskDesktop = () => {
                         borderTop: "2px solid #20C997",
                         borderBottom: "2px solid #20C997",
                         width: "325px",
-                        height: "105px",
+                        height: "125px",
                       }}
                     >
-                     {task.description}
+                      {task.description}
                     </Card.Text>
 
                     <div
@@ -371,6 +376,4 @@ export const TaskDesktop = () => {
       {/* {showModal && <CreateTask show={showModal} onHide={() => setShowModal(false)} />} */}
     </div>
   );
-
 };
-
