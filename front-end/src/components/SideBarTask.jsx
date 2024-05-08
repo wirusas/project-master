@@ -47,10 +47,11 @@ export const SideBarTask = () => {
               data-bs-target="#home-collapse"
               aria-expanded="true"
               style={{ color: "#7749F8" }}
+              onClick={() => navigator("/projects")}
             >
               New Project
             </button>
-            <div className="collapse show" id="home-collapse">
+            {/* <div className="collapse show" id="home-collapse">
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
                   <a
@@ -80,7 +81,7 @@ export const SideBarTask = () => {
                   </a>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </li>
           <li className="mb-1">
             <button
@@ -93,7 +94,7 @@ export const SideBarTask = () => {
             >
               New Task
             </button>
-            <div className="collapse" id="dashboard-collapse">
+            {/* <div className="collapse" id="dashboard-collapse">
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
                   <a
@@ -132,7 +133,7 @@ export const SideBarTask = () => {
                   </a>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </li>
           <li className="mb-1">
             <button
