@@ -5,7 +5,11 @@ import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ProjectService {
     List<Project> getProjects();
@@ -21,7 +25,16 @@ public interface ProjectService {
     List<Project> getAllProjects();
 
 
-
     List<Project> getProjectsByUser(User user) throws NoProjectsFoundException;
+
+    Optional<Project> getProjectById(UUID id);
+
+    List<Project> findProjectWithSorting(String field);
+
+    Page<Project> getAllPagedProjects(Pageable pageable);
+
+    Project addUserToProject(String email, UUID id);
+
+
 
 }

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import axios from "axios";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "../styles/ProjectList.css";
 import { SideBar } from "./SideBar";
+import { CreateProject } from "./CreateProject";
 import { EditProject } from "./EditProject";
 import { DeleteProject } from "./DeleteProject";
-
 
 const BASE_URL = "http://localhost:8080";
 const PROJECTS_PER_PAGE = 9; // Number of projects to display per page
@@ -85,7 +86,7 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
 
   return (
     <>
-      
+      <br />
       <section className="sidebar-projects-container">
         <div className="sidebar">
           <SideBar />
@@ -95,15 +96,18 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
             {filteredProjects.map((project) => (
               <div className="project-card-div" key={project.id}>
                 <div className="project-name-progressbar-div">
-                  <div className="project-name">
-                    <p>{project.projectName}</p>
-                  </div>
+                 
+                  <Link className="project-name"to={`/tasks/${project.id}`}>
+                    <div >
+                      <p>{project.projectName}</p>
+                    </div>
+                  </Link>
                   <div className="progress-bar">
                     <ProgressBar
                       className="progress-bar"
                       now={getProgressValue(project.projectState)}
                       variant={getVariant(project.projectState)}
-                      label={`${getProgressValue(project.projectState)}%`} // Add percentage label
+                      label={`${getProgressValue(project.projectState)}%`} 
                       style={{
                         backgroundColor: project.projectState === "TO DO" ? "#dde0e5" : "transparent",
                         backgroundImage: project.projectState === "DONE" ? "linear-gradient(to right, #dde0e5, #dde0e5)" : "",

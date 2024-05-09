@@ -10,10 +10,6 @@ export const SideBar= () => {
   const isAuth = isUserLoggedIn();
   const navigator = useNavigate();
 
-
-
-
-
   return (
     <>
       <div className="flex-shrink-0 p-3 ms-4 side-bar">

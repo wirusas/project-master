@@ -1,54 +1,72 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios"; // Make sure to install axios if not already done
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
+import CardHeader from "react-bootstrap/CardHeader";
+import { Button } from "react-bootstrap";
 import carddate from "../assets/card-date.svg";
+import { CreateTask } from "./CreateTask";
 import "../styles/TaskDesktop.css";
-import { useParams, useNavigate } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+
+const initialTasks = [
+  {
+    id: 1,
+    title: "Task 1",
+    subtitle: "1 subtask",
+    status: "to do",
+    priority: 2,
+    link1: "Link 1",
+    link2: "Link 2",
+  },
+  {
+    id: 2,
+    title: "Task 2",
+    subtitle: "2 subtask",
+    status: "to do",
+    priority: 1,
+    link1: "Link 1",
+    link2: "Link 2",
+  },
+  {
+    id: 3,
+    title: "Task 3",
+    subtitle: "3 subtask",
+    status: "in progress",
+    priority: 2,
+    link1: "Link 1",
+    link2: "Link 2",
+  },
+  {
+    id: 4,
+    title: "Task 4",
+    subtitle: "4 subtask",
+    status: "done",
+    priority: 3,
+    link1: "Link 1",
+    link2: "Link 2",
+  },
+  {
+    id: 5,
+    title: "Task 5",
+    subtitle: "5 subtask",
+    status: "done",
+    priority: 2,
+    link1: "Link 1",
+    link2: "Link 2",
+  },
+  {
+    id: 6,
+    title: "Task 6",
+    subtitle: "6 subtask",
+    status: "done",
+    priority: 5,
+    link1: "Link 1",
+    link2: "Link 2",
+  },
+];
 
 export const TaskDesktop = () => {
-  const [tasks, setTasks] = useState([]);
-  const { projectId } = useParams(); // This hooks extract the projectId from the URL
-  const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        // Use template literals to insert the projectId into the URL
-        const response = await axios.get(
-          `http://localhost:8080/api/projects/${projectId}/tasks`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setTasks(response.data); // Update the state with the fetched tasks
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      }
-    };
-
-    if (projectId) {
-      // Ensure projectId is available before fetching
-      fetchTasks();
-    }
-  }, [projectId]); // Dependency array includes projectId to refetch when it changes
-
-  // const categorizeTasks = (status) => {
-  //   return tasks.filter(task => task.status.toUpperCase().replace(" ", "_") === status);
-  // };
-
-  const handleAddTask = () => {
-    navigate(`/create-task/${projectId}`);
-
-    //setShowModal(true);
-  };
-
   return (
     <div
       className="column-div"
@@ -63,9 +81,6 @@ export const TaskDesktop = () => {
       }}
     >
       <Container>
-        <Button onClick={handleAddTask} style={{ margin: "10px 0" }}>
-          Add New Task
-        </Button>
         <Row>
           <Col
             style={{
@@ -78,9 +93,9 @@ export const TaskDesktop = () => {
           >
             <h3 style={{ textAlign: "left" }}>To Do</h3>
 
-            {tasks
-              .filter((task) => task.status === "TODO")
-
+            {initialTasks
+              .filter((task) => task.status === "to do")
+              .sort((a, b) => b.priority - a.priority)
               .map((task) => (
                 <Card
                   key={task.id}
@@ -103,7 +118,7 @@ export const TaskDesktop = () => {
                       }}
                     >
                       <Row>
-                        <Col className="col-8">{task.name}</Col>
+                        <Col className="col-8">{task.title}</Col>
                         <Col className="col-4">
                           <img style={{ marginLeft: "50px" }} src={carddate} />
                         </Col>
@@ -111,17 +126,18 @@ export const TaskDesktop = () => {
                     </Card.Title>
 
                     <Card.Subtitle className="mb-2 text-muted">
-                      {/* <p>Task priority: {task.priority}</p> */}
+                      <p>Task priority: {task.priority}</p>
                     </Card.Subtitle>
                     <Card.Text
                       style={{
                         borderTop: "2px solid #F47340",
                         borderBottom: "2px solid #F47340",
                         width: "325px",
-                        height: "125px",
+                        height: "105px",
                       }}
                     >
-                      {task.description}
+                      Some quick example text to build on the card title and
+                      make up the bulk of the card's content.
                     </Card.Text>
                     <div
                       style={{
@@ -180,9 +196,9 @@ export const TaskDesktop = () => {
             className="rounded"
           >
             <h3 style={{ textAlign: "left" }}>In Progress</h3>
-            {tasks
-              .filter((task) => task.status === "IN_PROGRESS")
-
+            {initialTasks
+              .filter((task) => task.status === "in progress")
+              .sort((a, b) => b.priority - a.priority)
               .map((task) => (
                 <Card
                   key={task.id}
@@ -205,24 +221,25 @@ export const TaskDesktop = () => {
                       }}
                     >
                       <Row>
-                        <Col className="col-8">{task.name}</Col>
+                        <Col className="col-8">{task.title}</Col>
                         <Col className="col-4">
                           <img style={{ marginLeft: "50px" }} src={carddate} />
                         </Col>
                       </Row>
                     </Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">
-                      {/* <p>Task priority: {task.priority}</p> */}
+                      <p>Task priority: {task.priority}</p>
                     </Card.Subtitle>
                     <Card.Text
                       style={{
                         borderTop: "2px solid #FFC107",
                         borderBottom: "2px solid #FFC107",
                         width: "325px",
-                        height: "125px",
+                        height: "105px",
                       }}
                     >
-                      {task.description}
+                      Some quick example text to build on the card title and
+                      make up the bulk of the card's content.
                     </Card.Text>
 
                     <div
@@ -281,9 +298,9 @@ export const TaskDesktop = () => {
             className="custom-col rounded"
           >
             <h3 style={{ textAlign: "left" }}>Done</h3>
-            {tasks
-              .filter((task) => task.status === "DONE")
-
+            {initialTasks
+              .filter((task) => task.status === "done")
+              .sort((a, b) => b.priority - a.priority)
               .map((task) => (
                 <Card
                   key={task.id}
@@ -306,24 +323,25 @@ export const TaskDesktop = () => {
                       }}
                     >
                       <Row>
-                        <Col className="col-8">{task.name}</Col>
+                        <Col className="col-8">{task.title}</Col>
                         <Col className="col-4">
                           <img style={{ marginLeft: "50px" }} src={carddate} />
                         </Col>
                       </Row>
                     </Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">
-                      {/* <p>Task priority: {task.priority}</p> */}
+                      <p>Task priority: {task.priority}</p>
                     </Card.Subtitle>
                     <Card.Text
                       style={{
                         borderTop: "2px solid #20C997",
                         borderBottom: "2px solid #20C997",
                         width: "325px",
-                        height: "125px",
+                        height: "105px",
                       }}
                     >
-                      {task.description}
+                      Some quick example text to build on the card title and
+                      make up the bulk of the card's content.
                     </Card.Text>
 
                     <div
@@ -350,6 +368,36 @@ export const TaskDesktop = () => {
                       >
                         Change
                       </Button>
+                      {/* <Button
+                        style={{
+                          width: "54px",
+                          height: "25px",
+                          fontSize: "10px",
+                          lineHeight: "16px",
+                          fontFamily: "Inter",
+                          textAlign: "left",
+                          color: "#6610F2",
+                          backgroundColor: "#EBE5FC",
+                          paddingBottom: "20px",
+                          border: "none",
+                        }}
+                      >
+                        <div>
+                          <select
+                            style={{
+                              border: "none",
+                              backgroundColor: "#EBE5FC",
+                              color: "#6610F2",
+                            }}
+                          >
+                            <option value="">Change</option>
+                            <option value="to do">To Do</option>
+                            <option value="in progress">In Progress</option>
+                            <option value="done">Done</option>
+                          </select>
+                        </div>
+                      </Button> */}
+
                       <Button
                         style={{
                           width: "54px",
@@ -373,7 +421,6 @@ export const TaskDesktop = () => {
           </Col>
         </Row>
       </Container>
-      {/* {showModal && <CreateTask show={showModal} onHide={() => setShowModal(false)} />} */}
     </div>
   );
 };

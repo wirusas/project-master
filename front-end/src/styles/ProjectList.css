@@ -58,6 +58,22 @@
   margin-bottom: 2.5px;
 }
 
+.project-name{
+  color: black;
+  width: 50%;
+  text-align: left;
+  margin-bottom: 2.5px;
+   
+}
+ 
+.project-name:hover{
+  color: black;
+  width: 50%;
+  text-align: left;
+  margin-bottom: 2.5px;
+  font-weight: 700;
+}
+
 .edit-delete-div {
   margin-top: .5rem;
   text-align: right;
