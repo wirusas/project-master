@@ -67,8 +67,9 @@ public class ProjectController {
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/allprojects")
-    List<ProjectDto> getAllProjects() {
-        return projectService.getAllProjects().stream()
+    public List<ProjectDto> getAllPagedProjects(@RequestParam(defaultValue = "0") int page) {
+        Page<Project> projectPage = projectService.getAllPagedProjects(PageRequest.of(page, 9));
+        return projectPage.getContent().stream()
                 .map(projectMapper::toProjectDto)
                 .collect(Collectors.toList());
     }
