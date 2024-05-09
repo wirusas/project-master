@@ -34,6 +34,7 @@ export const TaskDesktop = () => {
     };
 
     if (projectId) {
+      console.log(projectId);
       // Ensure projectId is available before fetching
       fetchTasks();
     }
@@ -49,6 +50,8 @@ export const TaskDesktop = () => {
     //setShowModal(true);
   };
 
+  // const {projectId} = useParams();
+
   return (
     <div
       className="column-div"
@@ -63,9 +66,9 @@ export const TaskDesktop = () => {
       }}
     >
       <Container>
-        <Button onClick={handleAddTask} style={{ margin: "10px 0" }}>
+        {/* <Button onClick={handleAddTask} style={{ margin: "10px 0" }}>
           Add New Task
-        </Button>
+        </Button> */}
         <Row>
           <Col
             style={{

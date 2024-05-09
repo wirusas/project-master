@@ -4,6 +4,8 @@ import { isUserLoggedIn, logout } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import "../styles/LogOutModalStyle.css";
+import { TaskDesktop } from "./TaskDekstop";
+import { useParams } from "react-router-dom";
 
 export const SideBarTask = () => {
   const isAuth = isUserLoggedIn();
@@ -16,6 +18,20 @@ export const SideBarTask = () => {
     setShowModal(false);
     navigator("/login");
   }
+
+  // const handleAddTask = (projectId) => {
+  //   console.log(projectId);
+  //   navigator(`/create-task/${projectId}`);
+  // };
+
+  const { projectId } = useParams();
+
+  // console.log(projectId);
+
+  const handleAddTask = () => {
+    console.log(projectId);
+    navigator(`/create-task/${projectId}`);
+  };
 
   return (
     <>
@@ -90,7 +106,7 @@ export const SideBarTask = () => {
               data-bs-target="#dashboard-collapse"
               aria-expanded="false"
               style={{ color: "#7749F8" }}
-              onClick={() => navigator("/tasks/modal")}
+              onClick={handleAddTask}
             >
               New Task
             </button>
