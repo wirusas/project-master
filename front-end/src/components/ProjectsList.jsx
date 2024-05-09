@@ -3,7 +3,6 @@ import axios from "axios";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "../styles/ProjectList.css";
 import { SideBar } from "./SideBar";
-import { CreateProject } from "./CreateProject";
 import { EditProject } from "./EditProject";
 import { DeleteProject } from "./DeleteProject";
 
@@ -86,9 +85,7 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
 
   return (
     <>
-       <div className="create-project">
-        <CreateProject />
-      </div>
+      
       <section className="sidebar-projects-container">
         <div className="sidebar">
           <SideBar />
