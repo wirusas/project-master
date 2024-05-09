@@ -68,7 +68,7 @@ export const CreateProject = () => {
   // BUTTON TEXT
   const buttonText = showSuccessMessage
     ? "Project created successfully"
-    : "New Project   +";
+    : "New Project ";
 
   // RETURN
   return (
@@ -93,7 +93,7 @@ export const CreateProject = () => {
                 name="projectName"
                 value={form.projectName}
                 onChange={handleFormChange}
-                maxLength={20}
+                maxLength={30}
               />
             </Form.Group>
             <Form.Group controlId="description">

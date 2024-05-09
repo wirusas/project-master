@@ -2,25 +2,20 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import editlogo from "../assets/editlogo.svg";
+import '../styles/EditDelete.css'
 
-// Main base URL
 const BASE_URL = "http://localhost:8080";
 
-// MAIN EXPORT
 export const EditProject = ({ projectId }) => {
-  // FORM DATA
   const [form, setForm] = useState({
     projectName: "",
     description: "",
     projectStatus: "",
   });
 
-  // MODAL STATES
   const [showModal, setShowModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  // FETCH PROJECT DETAILS BY ID WHEN COMPONENT MOUNTS
   useEffect(() => {
     const fetchProjectDetails = async () => {
       try {
@@ -30,7 +25,6 @@ export const EditProject = ({ projectId }) => {
           },
         });
         const projectData = response.data;
-        // Update the form state with fetched project data
         setForm({
           projectName: projectData.projectName,
           description: projectData.description,
@@ -38,13 +32,11 @@ export const EditProject = ({ projectId }) => {
         });
       } catch (error) {
         console.error("Error fetching project details:", error);
-        // Handle error, show error message, etc.
       }
     };
     fetchProjectDetails();
   }, [projectId]);
 
-  // HANDLE FORM CHANGE
   const handleFormChange = (event) => {
     const { name, value } = event.target;
     setForm((prevForm) => ({
@@ -53,14 +45,11 @@ export const EditProject = ({ projectId }) => {
     }));
   };
 
-  // HANDLE FORM SUBMISSION
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // Show confirmation modal
     setShowConfirmModal(true);
   };
 
-  // Function to submit form after confirmation
   const confirmFormSubmission = async () => {
     try {
       await axios.put(`${BASE_URL}/api/projects/${projectId}`, form, {
@@ -69,31 +58,24 @@ export const EditProject = ({ projectId }) => {
           "Content-Type": "application/json",
         },
       });
-      // Close the modal after successful submission
       toggleForm();
-      // Clear form fields after successful submission
       setForm({
         projectName: "",
         description: "",
         projectStatus: "",
       });
-      // Reload the page to reflect changes
       window.location.reload(false);
     } catch (error) {
       console.error("Error updating project:", error);
-      // Handle error, show error message, etc.
     }
   };
 
-  // TOGGLE FORM VISIBILITY
   const toggleForm = () => {
     setShowModal(!showModal);
   };
 
-  // RETURN
   return (
     <>
-      {/* Modal */}
       <Modal show={showModal} onHide={toggleForm}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Project</Modal.Title>
@@ -103,13 +85,13 @@ export const EditProject = ({ projectId }) => {
             <div className="form-group">
               <label style={{ marginBottom: "7px" }}>* Project Name:</label>
               <input
-              required
+                required
                 type="text"
                 className="form-control"
                 name="projectName"
                 value={form.projectName}
                 onChange={handleFormChange}
-                maxLength={20}
+                maxLength={30}
               />
             </div>
             <div className="form-group">
@@ -117,14 +99,14 @@ export const EditProject = ({ projectId }) => {
                 * Project Description
               </label>
               <textarea
-              required
+                required
                 className="form-control"
                 name="description"
                 value={form.description}
                 onChange={handleFormChange}
                 rows={6}
                 style={{ resize: "none" }}
-                maxLength={500}
+                
               />
             </div>
             <div className="form-group" style={{ marginBottom: "20px" }}>
@@ -157,15 +139,10 @@ export const EditProject = ({ projectId }) => {
         </Modal.Body>
       </Modal>
 
-      <Button
-        variant="link"
-        onClick={toggleForm}
-        style={{ marginTop: "-12px" }}
-      >
-        <img src={editlogo} alt="Edit Project" />
-      </Button>
+      <button type="button"  className="edit-delete-buttons edit-button" onClick={toggleForm}>
+        Change
+      </button>
 
-      {/* Confirmation modal */}
       <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Submission</Modal.Title>
@@ -177,10 +154,7 @@ export const EditProject = ({ projectId }) => {
           <Button className="submit-button" onClick={confirmFormSubmission}>
             Yes
           </Button>
-          <Button
-            className="cancel-button"
-            onClick={() => setShowConfirmModal(false)}
-          >
+          <Button className="cancel-button" onClick={() => setShowConfirmModal(false)}>
             No
           </Button>
         </Modal.Footer>

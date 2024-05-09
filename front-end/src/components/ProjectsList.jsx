@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import ProgressBar from "react-bootstrap/ProgressBar";
 import "../styles/ProjectList.css";
 import { SideBar } from "./SideBar";
 import { CreateProject } from "./CreateProject";
@@ -9,7 +9,7 @@ import { DeleteProject } from "./DeleteProject";
 
 
 const BASE_URL = "http://localhost:8080";
-const PROJECTS_PER_PAGE = 4; // Number of projects to display per page
+const PROJECTS_PER_PAGE = 9; // Number of projects to display per page
 
 export const ProjectsList = ({ searchTerm, filterState }) => {
   const [projectList, setProjectList] = useState([]);
@@ -17,14 +17,6 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
   const [hasNextPage, setHasNextPage] = useState(true);
   const [hasPrevPage, setHasPrevPage] = useState(false);
   const [filteredProjects, setFilteredProjects] = useState([]);
-
-  const formatDate = (timestamp) => {
-    const date = new Date(timestamp);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
-  };
 
   useEffect(() => {
     axios
@@ -34,11 +26,7 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
         },
       })
       .then((response) => {
-        const formattedProjects = response.data.map((project) => ({
-          ...project,
-          createdAt: formatDate(project.createdAt),
-        }));
-        setProjectList(formattedProjects);
+        setProjectList(response.data);
         setHasNextPage(response.data.length === PROJECTS_PER_PAGE);
         setHasPrevPage(currentPage !== 0);
       })
@@ -47,7 +35,6 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
       });
   }, [currentPage]);
 
-  // Search
   useEffect(() => {
     let filtered = projectList;
 
@@ -66,6 +53,7 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
     setFilteredProjects(filtered); 
   }, [projectList, searchTerm, filterState]);
 
+
   const getProgressValue = (state) => {
     switch (state) {
       case "TO DO":
@@ -77,17 +65,15 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
     }
   };
 
-  const progressBarStyle = {
-    backgroundColor: "#F9F5FF",
-    borderRadius: "5px",
-    height: "8px",
-    margin: "5px 0",
-    overflow: "hidden",
-  };
-
-  const progressBarFillStyle = {
-    backgroundColor: "#7754F6",
-    height: "100%",
+  const getVariant = (state) => {
+    switch (state) {
+      case "TO DO":
+        return "primary";
+      case "DONE":
+        return "primary";
+      default:
+        return "info";
+    }
   };
 
   const handlePrevPage = () => {
@@ -100,7 +86,7 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
 
   return (
     <>
-      <div className="create-project">
+       <div className="create-project">
         <CreateProject />
       </div>
       <section className="sidebar-projects-container">
@@ -111,46 +97,43 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
           <div className="project-cards-container">
             {filteredProjects.map((project) => (
               <div className="project-card-div" key={project.id}>
-                <div className="progress-bar-edit-project">
-                  <div style={progressBarStyle}>
-                    <div
-                      className="progress-bar-fill"
+                <div className="project-name-progressbar-div">
+                  <div className="project-name">
+                    <p>{project.projectName}</p>
+                  </div>
+                  <div className="progress-bar">
+                    <ProgressBar
+                      className="progress-bar"
+                      now={getProgressValue(project.projectState)}
+                      variant={getVariant(project.projectState)}
+                      label={`${getProgressValue(project.projectState)}%`} // Add percentage label
                       style={{
-                        ...progressBarFillStyle,
-                        width: `${getProgressValue(project.projectState)}%`,
+                        backgroundColor: project.projectState === "TO DO" ? "#dde0e5" : "transparent",
+                        backgroundImage: project.projectState === "DONE" ? "linear-gradient(to right, #dde0e5, #dde0e5)" : "",
                       }}
                     />
                   </div>
+                </div>
+                <div className="project-description-container">
+                  <p>{project.description}</p>
+                </div>
+                <div className="edit-delete-div">
                   <EditProject projectId={project.id} />
                   <DeleteProject projectId={project.id} />
-                </div>
-
-                <Link to={`/tasks/${project.id}`} className="project-link">
-                  <div className="project-name-description-container">
-                    <h2>{project.projectName}</h2>
-                    <p>{project.description}</p>
-                  </div>
-                </Link>
-
-                <div className="time-stamp">
-                  <span>Task:</span> {project.createdAt}
                 </div>
               </div>
             ))}
           </div>
           <div className="pagination">
             <button onClick={handlePrevPage} disabled={!hasPrevPage} className="prev-button" style={{ display: !hasPrevPage ? "none" : "block" }}>
-            &#60;&#60;
+              &#60;&#60;
             </button>
             <button onClick={handleNextPage} disabled={!hasNextPage} className="next-button" style={{ display: !hasNextPage ? "none" : "block" }}>
-            &#62;&#62;
+              &#62;&#62;
             </button>
           </div>
         </div>
-        
       </section>
-      
     </>
-    
   );
 };
