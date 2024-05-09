@@ -13,3 +13,9 @@
 #yes-button:hover{
     border-color:  rgb(178, 149, 255);
 }
+.c-footer__copyrights{
+    font-size: 12px;
+    margin-top: 16px;
+    color: #666;
+    margin-top: 340px;
+}

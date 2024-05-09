@@ -22,7 +22,6 @@ const ProjectsComponent = () => {
     <>
       <Header onSearch={handleSearch} searchTerm={searchTerm} onFilterChange={handleFilterChange} />
       <ProjectsList searchTerm={searchTerm} filterState={filterState} />
-      <br />
       <Footer />
     </>
   );

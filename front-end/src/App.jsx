@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.css"
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { isUserLoggedIn } from "./services/AuthService";
 import RegisterComponent from "./components/RegisterComponent";
@@ -6,6 +7,7 @@ import LoginComponent from "./components/LoginComponent";
 import ProjectsComponent from "./components/ProjectsComponent";
 import TaskComponent from "./components/TaskComponent";
 import { CreateTask } from "./components/CreateTask";
+
 
 function App() {
   function AuthenticatedRoute({ children }) {
@@ -30,10 +32,11 @@ function App() {
           {/* /http://localhost:3000/projects */}
 
           {/* /http://localhost:3000/tasks */}
-          <Route path="/tasks" element={<TaskComponent />}></Route>
+          {/* <Route path="/tasks" element={<TaskComponent />}></Route> */}
+          <Route path="/tasks/:projectId" element={<TaskComponent />} /> 
 
           {/* /http://localhost:3000/tasks/modal */}
-          <Route path="/tasks/modal" element={<CreateTask />}></Route>
+          <Route path="/create-task/:projectId" element={<CreateTask />}></Route>
 
           {/* /http://localhost:3000/projects */}
           <Route
@@ -46,7 +49,6 @@ function App() {
           ></Route>
         </Routes>
       </BrowserRouter>
-      
     </>
   );
 }
