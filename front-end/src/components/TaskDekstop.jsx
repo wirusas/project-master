@@ -58,7 +58,7 @@ export const TaskDesktop = () => {
       className="column-div"
       style={{
         // border: "2px solid red",
-        width: "1100px",
+        width: "1130px",
         height: "735px",
         marginLeft: "auto",
         marginRight: "30px",
@@ -78,6 +78,7 @@ export const TaskDesktop = () => {
               minHeight: "735px",
               // border: "2px solid red",
               backgroundColor: "#f473401a",
+              marginLeft: "20px",
             }}
             className="rounded"
           >
@@ -179,7 +180,7 @@ export const TaskDesktop = () => {
             style={{
               width: "350px",
               minHeight: "735px",
-              //   border: "2px solid red",
+              // border: "2px solid red",
               backgroundColor: "#ffba091a",
               marginLeft: "20px",
             }}
@@ -281,9 +282,10 @@ export const TaskDesktop = () => {
             style={{
               width: "350px",
               minHeight: "735px",
-              //   border: "2px solid red",
+              // border: "2px solid red",
               backgroundColor: "#20c9971a",
               marginLeft: "20px",
+              marginRight: "20px",
             }}
             className="custom-col rounded"
           >
