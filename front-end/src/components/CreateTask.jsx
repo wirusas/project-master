@@ -10,6 +10,7 @@ export const CreateTask = () => {
   const [formTask, setFormTask] = useState({
     name: "",
     description: "",
+    dateCreated: "",
     status: "TODO", // Default status
   });
 

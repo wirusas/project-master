@@ -113,6 +113,8 @@ export const TaskDesktop = () => {
                         <Col className="col-8">{task.name}</Col>
                         <Col className="col-4">
                           <img style={{ marginLeft: "50px" }} src={carddate} />
+                          {/* <img style={{ marginLeft: "50px" }} src={task.dateCreated} /> */}
+                          {/* {task.dateCreated} */}
                         </Col>
                       </Row>
                     </Card.Title>
