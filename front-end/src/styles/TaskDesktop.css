@@ -9,3 +9,8 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+#date-format {
+  font-size: small;
+  padding-top: 6px;
+}
