@@ -4,8 +4,8 @@ import { isUserLoggedIn, logout } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import "../styles/LogOutModalStyle.css";
-import { TaskDesktop } from "./TaskDekstop";
 import { useParams } from "react-router-dom";
+import { CreateTask } from "./CreateTask";
 
 export const SideBarTask = () => {
   const isAuth = isUserLoggedIn();
@@ -19,18 +19,14 @@ export const SideBarTask = () => {
     navigator("/login");
   }
 
-  // const handleAddTask = (projectId) => {
-  //   console.log(projectId);
-  //   navigator(`/create-task/${projectId}`);
-  // };
-
   const { projectId } = useParams();
-
-  // console.log(projectId);
+  // const { setShowModalCT } = useParams();
+  const [showModalCT, setShowModalCT] = useState(false);
 
   const handleAddTask = () => {
     console.log(projectId);
-    navigator(`/create-task/${projectId}`);
+    // navigator(`/create-task/${projectId}`);
+    setShowModalCT(true);
   };
 
   return (
@@ -110,6 +106,7 @@ export const SideBarTask = () => {
             >
               New Task
             </button>
+            {showModalCT && <CreateTask />}
             {/* <div className="collapse" id="dashboard-collapse">
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>

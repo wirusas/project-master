@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import carddate from "../assets/card-date.svg";
 import "../styles/TaskDesktop.css";
 import { useParams, useNavigate } from "react-router-dom";
+import { CreateTask } from "./CreateTask";
 
 export const TaskDesktop = () => {
   const [tasks, setTasks] = useState([]);
@@ -47,7 +48,7 @@ export const TaskDesktop = () => {
   const handleAddTask = () => {
     navigate(`/create-task/${projectId}`);
 
-    //setShowModal(true);
+    // setShow(true);
   };
 
   // const {projectId} = useParams();
@@ -66,6 +67,7 @@ export const TaskDesktop = () => {
       }}
     >
       <Container>
+        {/* Button to create Task directly, from component */}
         {/* <Button onClick={handleAddTask} style={{ margin: "10px 0" }}>
           Add New Task
         </Button> */}
@@ -73,7 +75,7 @@ export const TaskDesktop = () => {
           <Col
             style={{
               width: "350px",
-              height: "735px",
+              minHeight: "735px",
               // border: "2px solid red",
               backgroundColor: "#f473401a",
             }}
@@ -176,7 +178,7 @@ export const TaskDesktop = () => {
           <Col
             style={{
               width: "350px",
-              height: "735px",
+              minHeight: "735px",
               //   border: "2px solid red",
               backgroundColor: "#ffba091a",
               marginLeft: "20px",
@@ -278,7 +280,7 @@ export const TaskDesktop = () => {
           <Col
             style={{
               width: "350px",
-              height: "735px",
+              minHeight: "735px",
               //   border: "2px solid red",
               backgroundColor: "#20c9971a",
               marginLeft: "20px",
