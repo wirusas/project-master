@@ -41,25 +41,24 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
       });
   }, []);
 
-   //Search
-   useEffect(() => {
+  //Search
+  useEffect(() => {
     let filtered = projectList;
 
     if (searchTerm) {
-      filtered = filtered.filter(project =>
+      filtered = filtered.filter((project) =>
         project.description.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     if (filterState) {
-      filtered = filtered.filter(project =>
-        project.projectState === filterState
+      filtered = filtered.filter(
+        (project) => project.projectState === filterState
       );
     }
 
-    setFilteredProjects(filtered); 
+    setFilteredProjects(filtered);
   }, [projectList, searchTerm, filterState]);
-
 
   const getProgressValue = (state) => {
     switch (state) {

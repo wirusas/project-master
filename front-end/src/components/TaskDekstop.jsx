@@ -9,6 +9,7 @@ import carddate from "../assets/card-date.svg";
 import "../styles/TaskDesktop.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { CreateTask } from "./CreateTask";
+import { EditTask } from "./EditTask";
 
 export const TaskDesktop = () => {
   const [tasks, setTasks] = useState([]);

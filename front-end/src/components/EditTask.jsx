@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Modal, Form, Button } from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import { Modal, Form, Button } from "react-bootstrap";
+// import Button from "react-bootstrap/Button";
 
 // Main base URL
 const BASE_URL = "http://localhost:8080";
