@@ -36,7 +36,7 @@ export const SideBarProjectList = ({ searchTerm, filterState }) => {
 
     if (searchTerm) {
       filtered = filtered.filter(project =>
-        project.description.toLowerCase().includes(searchTerm.toLowerCase())
+        project.projectName.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 

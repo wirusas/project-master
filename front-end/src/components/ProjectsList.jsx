@@ -9,7 +9,7 @@ import { EditProject } from "./EditProject";
 import { DeleteProject } from "./DeleteProject";
 
 const BASE_URL = "http://localhost:8080";
-const PROJECTS_PER_PAGE = 9; // Number of projects to display per page
+const PROJECTS_PER_PAGE = 9;
 
 export const ProjectsList = ({ searchTerm, filterState }) => {
   const [projectList, setProjectList] = useState([]);
@@ -19,40 +19,53 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
   const [filteredProjects, setFilteredProjects] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/api/projects/allprojects?page=${currentPage}&size=${PROJECTS_PER_PAGE}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((response) => {
-        setProjectList(response.data);
-        setHasNextPage(response.data.length === PROJECTS_PER_PAGE);
+    const fetchData = async () => {
+      try {
+        let response;
+        if (!searchTerm && !filterState) {
+          response = await axios.get(
+            `${BASE_URL}/api/projects/allprojects?page=${currentPage}&size=${PROJECTS_PER_PAGE}`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+        } else {
+          response = await axios.get(`${BASE_URL}/api/projects/myprojects`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+        }
+
+        const data = response.data;
+        setProjectList(data);
+        setHasNextPage(data.length === PROJECTS_PER_PAGE);
         setHasPrevPage(currentPage !== 0);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching projects:", error);
-      });
-  }, [currentPage]);
+      }
+    };
+
+    fetchData();
+  }, [currentPage, searchTerm, filterState]);
 
   useEffect(() => {
     let filtered = projectList;
 
     if (searchTerm) {
-      filtered = filtered.filter(project =>
-        project.description.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter((project) =>
+        project.projectName.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     if (filterState) {
-      filtered = filtered.filter(project =>
-        project.projectState === filterState
-      );
+      filtered = filtered.filter((project) => project.projectState === filterState);
     }
 
-    setFilteredProjects(filtered); 
+    setFilteredProjects(filtered);
   }, [projectList, searchTerm, filterState]);
-
 
   const getProgressValue = (state) => {
     switch (state) {
@@ -93,12 +106,11 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
         </div>
         <div className="project-list">
           <div className="project-cards-container">
-            {filteredProjects.map((project) => (
+            {(searchTerm || filterState ? filteredProjects : projectList).map((project) => (
               <div className="project-card-div" key={project.id}>
                 <div className="project-name-progressbar-div">
-                 
-                  <Link className="project-name"to={`/tasks/${project.id}`}>
-                    <div >
+                  <Link className="project-name" to={`/tasks/${project.id}`}>
+                    <div>
                       <p>{project.projectName}</p>
                     </div>
                   </Link>
@@ -107,7 +119,7 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
                       className="progress-bar"
                       now={getProgressValue(project.projectState)}
                       variant={getVariant(project.projectState)}
-                      label={`${getProgressValue(project.projectState)}%`} 
+                      label={`${getProgressValue(project.projectState)}%`}
                       style={{
                         backgroundColor: project.projectState === "TO DO" ? "#dde0e5" : "transparent",
                         backgroundImage: project.projectState === "DONE" ? "linear-gradient(to right, #dde0e5, #dde0e5)" : "",
