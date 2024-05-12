@@ -115,7 +115,7 @@ const LoginComponent = () => {
           </div>
         </div>
       </div>
-      <div class="c-footer__copyrights h-mt--18 h-fs--12">
+      <div className="c-footer__copyrights h-mt--18 h-fs--12">
       © 2024 | http_status_ok ™
       <br />
       Without http_status_ok permission, copying and distributing the information on the website is prohibited.

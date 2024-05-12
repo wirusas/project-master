@@ -76,6 +76,13 @@ public class ProjectController {
                 .map(projectMapper::toProjectDto)
                 .collect(Collectors.toList());
     }
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @GetMapping("/allprojects/nopagination")
+    List<ProjectDto> getAllProjects() {
+        return projectService.getAllProjects().stream()
+                .map(projectMapper::toProjectDto)
+                .collect(Collectors.toList());
+    }
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/myprojects")
