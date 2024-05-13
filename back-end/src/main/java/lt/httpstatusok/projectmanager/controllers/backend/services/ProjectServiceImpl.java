@@ -1,11 +1,14 @@
 package lt.httpstatusok.projectmanager.controllers.backend.services;
 
-import lt.httpstatusok.projectmanager.controllers.backend.exceptions.NoProjectsFoundException;
+import lombok.RequiredArgsConstructor;
 import lt.httpstatusok.projectmanager.controllers.backend.exceptions.ProjectNotFoundException;
+import lt.httpstatusok.projectmanager.controllers.backend.exceptions.NoProjectsFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.User;
 import lt.httpstatusok.projectmanager.controllers.backend.repositories.ProjectRepository;
 import lt.httpstatusok.projectmanager.controllers.backend.repositories.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,19 +17,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
+@RequiredArgsConstructor
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
-
-    public ProjectServiceImpl(ProjectRepository projectRepository, UserRepository userRepository) {
-        this.projectRepository = projectRepository;
-        this.userRepository = userRepository;
-    }
 
     @Override
     public List<Project> getProjects() {
@@ -46,7 +42,8 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public Project editProject(UUID id, Project updatedProject) {
-        Project existingProject = validateAndGetProject(id.toString());
+        Project existingProject = projectRepository.findById(id.toString())
+                .orElseThrow(() -> new ProjectNotFoundException("Project not found with ID: " + id));
 
         existingProject.setProjectName(updatedProject.getProjectName());
         existingProject.setDescription(updatedProject.getDescription());
@@ -121,4 +118,3 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
 }
-

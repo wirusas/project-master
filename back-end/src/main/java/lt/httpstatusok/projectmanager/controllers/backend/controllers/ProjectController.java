@@ -75,10 +75,18 @@ public class ProjectController {
                 .map(projectMapper::toProjectDto)
                 .collect(Collectors.toList());
     }
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @GetMapping("/findproject")
+    List<ProjectDto> getAllProjects() {
+        return projectService.getAllProjects().stream()
+                .map(projectMapper::toProjectDto)
+                .collect(Collectors.toList());
+    }
+
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/myprojects")
-    public List<ProjectDto> getMyProjects(@AuthenticationPrincipal CustomUserDetails currentUser) {
+    List<ProjectDto> getMyProjects(@AuthenticationPrincipal CustomUserDetails currentUser) {
         User user = userService.validateAndGetUserByUsername(currentUser.getUsername());
         try {
             return projectService.getProjectsByUser(user).stream()
@@ -96,24 +104,4 @@ public class ProjectController {
         return projectMapper.toProjectDto(project);
     }
 
-    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-    @GetMapping("/sorting/{field}")
-    public List<ProjectDto> getProjectWithSorting(@PathVariable String field) {
-        return projectService.findProjectWithSorting(field).stream()
-                .map(projectMapper::toProjectDto)
-                .collect(Collectors.toList());
-    }
-
-
-
-    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/{projectId}/{userEmail}")
-    public ProjectDto addUserToProject(@PathVariable UUID projectId, @PathVariable String userEmail) {
-        User user = userService.findUserByEmail(userEmail);
-        Project project = projectService.validateAndGetProject(projectId.toString());
-        projectService.addUserToProject(user.getEmail(), projectId);
-        return projectMapper.toProjectDto(project);
-    }
 }
-

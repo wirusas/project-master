@@ -1,78 +1,65 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios"; // Make sure to install axios if not already done
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import CardHeader from "react-bootstrap/CardHeader";
-import { Button } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 import carddate from "../assets/card-date.svg";
-import { CreateTask } from "./CreateTask";
 import "../styles/TaskDesktop.css";
-import Form from "react-bootstrap/Form";
-
-const initialTasks = [
-  {
-    id: 1,
-    title: "Task 1",
-    subtitle: "1 subtask",
-    status: "to do",
-    priority: 2,
-    link1: "Link 1",
-    link2: "Link 2",
-  },
-  {
-    id: 2,
-    title: "Task 2",
-    subtitle: "2 subtask",
-    status: "to do",
-    priority: 1,
-    link1: "Link 1",
-    link2: "Link 2",
-  },
-  {
-    id: 3,
-    title: "Task 3",
-    subtitle: "3 subtask",
-    status: "in progress",
-    priority: 2,
-    link1: "Link 1",
-    link2: "Link 2",
-  },
-  {
-    id: 4,
-    title: "Task 4",
-    subtitle: "4 subtask",
-    status: "done",
-    priority: 3,
-    link1: "Link 1",
-    link2: "Link 2",
-  },
-  {
-    id: 5,
-    title: "Task 5",
-    subtitle: "5 subtask",
-    status: "done",
-    priority: 2,
-    link1: "Link 1",
-    link2: "Link 2",
-  },
-  {
-    id: 6,
-    title: "Task 6",
-    subtitle: "6 subtask",
-    status: "done",
-    priority: 5,
-    link1: "Link 1",
-    link2: "Link 2",
-  },
-];
+import { useParams, useNavigate } from "react-router-dom";
+import { CreateTask } from "./CreateTask";
+import { EditTask } from "./EditTask";
 
 export const TaskDesktop = () => {
+  const [tasks, setTasks] = useState([]);
+  const { projectId } = useParams(); // This hooks extract the projectId from the URL
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        // Use template literals to insert the projectId into the URL
+        const response = await axios.get(
+          `http://localhost:8080/api/projects/${projectId}/tasks`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setTasks(response.data); // Update the state with the fetched tasks
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+
+    if (projectId) {
+      console.log(projectId);
+      // Ensure projectId is available before fetching
+      fetchTasks();
+    }
+  }, [projectId]); // Dependency array includes projectId to refetch when it changes
+
+  // const categorizeTasks = (status) => {
+  //   return tasks.filter(task => task.status.toUpperCase().replace(" ", "_") === status);
+  // };
+
+  const handleAddTask = () => {
+    navigate(`/create-task/${projectId}`);
+
+    // setShow(true);
+  };
+
+  // const {projectId} = useParams();
+
   return (
     <div
       className="column-div"
       style={{
         // border: "2px solid red",
-        width: "1100px",
+        width: "1130px",
         height: "735px",
         marginLeft: "auto",
         marginRight: "30px",
@@ -81,346 +68,377 @@ export const TaskDesktop = () => {
       }}
     >
       <Container>
+        {/* Button to create Task directly, from component */}
+        {/* <Button onClick={handleAddTask} style={{ margin: "10px 0" }}>
+          Add New Task
+        </Button> */}
         <Row>
           <Col
             style={{
               width: "350px",
-              height: "735px",
+              minHeight: "735px",
               // border: "2px solid red",
               backgroundColor: "#f473401a",
+              marginLeft: "20px",
             }}
             className="rounded"
           >
             <h3 style={{ textAlign: "left" }}>To Do</h3>
 
-            {initialTasks
-              .filter((task) => task.status === "to do")
-              .sort((a, b) => b.priority - a.priority)
-              .map((task) => (
-                <Card
-                  key={task.id}
-                  style={{
-                    width: "330px",
-                    height: "220px",
-                    border: "4px solid #F47340",
-                    backgroundColor: "white",
-                    marginBottom: "15px",
-                  }}
-                  className="card-todo rounded"
-                  bsPrefix
-                >
-                  <Card.Body>
-                    <Card.Title
-                      style={{
-                        textAlign: "left",
-                        textDecoration: "underline",
-                        marginLeft: "20px",
-                      }}
-                    >
-                      <Row>
-                        <Col className="col-8">{task.title}</Col>
-                        <Col className="col-4">
-                          <img style={{ marginLeft: "50px" }} src={carddate} />
-                        </Col>
-                      </Row>
-                    </Card.Title>
+            {tasks
+              .filter((task) => task.status === "TODO")
 
-                    <Card.Subtitle className="mb-2 text-muted">
-                      <p>Task priority: {task.priority}</p>
-                    </Card.Subtitle>
-                    <Card.Text
-                      style={{
-                        borderTop: "2px solid #F47340",
-                        borderBottom: "2px solid #F47340",
-                        width: "325px",
-                        height: "105px",
-                      }}
-                    >
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </Card.Text>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        paddingRight: "10px ",
-                        gap: "8px",
-                      }}
-                    >
-                      <Button
+              .map((task) => {
+                // Define formatDate function
+                const formatDate = (timestamp) => {
+                  const date = new Date(timestamp);
+                  const year = date.getFullYear();
+                  const month = date.getMonth() + 1;
+                  const day = date.getDate();
+                  return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
+                };
+
+                return (
+                  <Card
+                    key={task.id}
+                    style={{
+                      width: "330px",
+                      height: "220px",
+                      border: "4px solid #F47340",
+                      backgroundColor: "white",
+                      marginBottom: "15px",
+                    }}
+                    className="card-todo rounded"
+                    id="custom-input"
+                    bsPrefix
+                  >
+                    <Card.Body>
+                      <Card.Title
                         style={{
-                          width: "54px",
-                          height: "25px",
-                          fontSize: "10px",
-                          lineHeight: "16px",
-                          fontFamily: "Inter",
                           textAlign: "left",
-                          color: "#6610F2",
-                          backgroundColor: "#EBE5FC",
-                          paddingBottom: "20px",
-                          border: "none",
+                          textDecoration: "underline",
+                          marginLeft: "20px",
                         }}
                       >
-                        Change
-                      </Button>
-                      <Button
+                        <Row>
+                          <Col className="col-7">{task.name}</Col>
+                          <Col className="col-5" id="date-format">
+                            {/* <img style={{ marginLeft: "50px" }} src={carddate} /> */}
+                            {/* Check if task.dateCreated exists before formatting */}
+                            {task.dateCreated && formatDate(task.dateCreated)}
+                          </Col>
+                        </Row>
+                      </Card.Title>
+
+                      <Card.Subtitle className="mb-2 text-muted">
+                        {/* <p>Task priority: {task.priority}</p> */}
+                      </Card.Subtitle>
+                      <Card.Text
                         style={{
-                          width: "54px",
-                          height: "25px",
-                          fontSize: "10px",
-                          lineHeight: "16px",
-                          fontFamily: "Inter",
+                          borderTop: "2px solid #F47340",
+                          borderBottom: "2px solid #F47340",
+                          width: "325px",
+                          height: "125px",
                           textAlign: "left",
-                          color: "#842029",
-                          backgroundColor: "#F8D7DA",
-                          paddingBottom: "20px",
-                          border: "none",
+                          paddingLeft: "10px",
+                          paddingRight: "10px",
                         }}
                       >
-                        Delete
-                      </Button>
-                    </div>
-                  </Card.Body>
-                </Card>
-              ))}
+                        {task.description}
+                      </Card.Text>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          paddingRight: "10px ",
+                          gap: "8px",
+                        }}
+                      >
+                        <Button
+                          style={{
+                            width: "54px",
+                            height: "25px",
+                            fontSize: "10px",
+                            lineHeight: "16px",
+                            fontFamily: "Inter",
+                            textAlign: "left",
+                            color: "#6610F2",
+                            backgroundColor: "#EBE5FC",
+                            paddingBottom: "20px",
+                            border: "none",
+                          }}
+                        >
+                          {/* <EditTask /> */}
+                          Change
+                        </Button>
+                        <Button
+                          style={{
+                            width: "54px",
+                            height: "25px",
+                            fontSize: "10px",
+                            lineHeight: "16px",
+                            fontFamily: "Inter",
+                            textAlign: "left",
+                            color: "#842029",
+                            backgroundColor: "#F8D7DA",
+                            paddingBottom: "20px",
+                            border: "none",
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                );
+              })}
           </Col>
 
           <Col
             style={{
               width: "350px",
-              height: "735px",
-              //   border: "2px solid red",
+              minHeight: "735px",
+              // border: "2px solid red",
               backgroundColor: "#ffba091a",
               marginLeft: "20px",
             }}
             className="rounded"
           >
             <h3 style={{ textAlign: "left" }}>In Progress</h3>
-            {initialTasks
-              .filter((task) => task.status === "in progress")
-              .sort((a, b) => b.priority - a.priority)
-              .map((task) => (
-                <Card
-                  key={task.id}
-                  style={{
-                    width: "330px",
-                    height: "220px",
-                    border: "4px solid #FFC107",
-                    backgroundColor: "white",
-                    marginBottom: "15px",
-                  }}
-                  className="card-inprograss rounded"
-                  bsPrefix
-                >
-                  <Card.Body>
-                    <Card.Title
-                      style={{
-                        textAlign: "left",
-                        textDecoration: "underline",
-                        marginLeft: "20px",
-                      }}
-                    >
-                      <Row>
-                        <Col className="col-8">{task.title}</Col>
-                        <Col className="col-4">
-                          <img style={{ marginLeft: "50px" }} src={carddate} />
-                        </Col>
-                      </Row>
-                    </Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">
-                      <p>Task priority: {task.priority}</p>
-                    </Card.Subtitle>
-                    <Card.Text
-                      style={{
-                        borderTop: "2px solid #FFC107",
-                        borderBottom: "2px solid #FFC107",
-                        width: "325px",
-                        height: "105px",
-                      }}
-                    >
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </Card.Text>
+            {tasks
+              .filter((task) => task.status === "IN_PROGRESS")
 
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        paddingRight: "10px ",
-                        gap: "8px",
-                      }}
-                    >
-                      <Button
+              .map((task) => {
+                // Define formatDate function
+                const formatDate = (timestamp) => {
+                  const date = new Date(timestamp);
+                  const year = date.getFullYear();
+                  const month = date.getMonth() + 1;
+                  const day = date.getDate();
+                  return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
+                };
+
+                return (
+                  <Card
+                    key={task.id}
+                    style={{
+                      width: "330px",
+                      height: "220px",
+                      border: "4px solid #FFC107",
+                      backgroundColor: "white",
+                      marginBottom: "15px",
+                    }}
+                    className="card-inprograss rounded"
+                    id="custom-input"
+                    bsPrefix
+                  >
+                    <Card.Body>
+                      <Card.Title
                         style={{
-                          width: "54px",
-                          height: "25px",
-                          fontSize: "10px",
-                          lineHeight: "16px",
-                          fontFamily: "Inter",
                           textAlign: "left",
-                          color: "#6610F2",
-                          backgroundColor: "#EBE5FC",
-                          paddingBottom: "20px",
-                          border: "none",
+                          textDecoration: "underline",
+                          marginLeft: "20px",
                         }}
                       >
-                        Change
-                      </Button>
-                      <Button
+                        <Row>
+                          <Col className="col-7">{task.name}</Col>
+                          <Col className="col-5" id="date-format">
+                            {/* <img
+                              style={{ marginLeft: "50px" }}
+                              src={carddate}
+                            /> */}
+                            {/* Check if task.dateCreated exists before formatting */}
+                            {task.dateCreated && formatDate(task.dateCreated)}
+                          </Col>
+                        </Row>
+                      </Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">
+                        {/* <p>Task priority: {task.priority}</p> */}
+                      </Card.Subtitle>
+                      <Card.Text
                         style={{
-                          width: "54px",
-                          height: "25px",
-                          fontSize: "10px",
-                          lineHeight: "16px",
-                          fontFamily: "Inter",
+                          borderTop: "2px solid #FFC107",
+                          borderBottom: "2px solid #FFC107",
+                          width: "325px",
+                          height: "125px",
                           textAlign: "left",
-                          color: "#842029",
-                          backgroundColor: "#F8D7DA",
-                          paddingBottom: "20px",
-                          border: "none",
+                          paddingLeft: "10px",
+                          paddingRight: "10px",
                         }}
                       >
-                        Delete
-                      </Button>
-                    </div>
-                  </Card.Body>
-                </Card>
-              ))}
+                        {task.description}
+                      </Card.Text>
+
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          paddingRight: "10px ",
+                          gap: "8px",
+                        }}
+                      >
+                        <Button
+                          style={{
+                            width: "54px",
+                            height: "25px",
+                            fontSize: "10px",
+                            lineHeight: "16px",
+                            fontFamily: "Inter",
+                            textAlign: "left",
+                            color: "#6610F2",
+                            backgroundColor: "#EBE5FC",
+                            paddingBottom: "20px",
+                            border: "none",
+                          }}
+                        >
+                          Change
+                        </Button>
+                        <Button
+                          style={{
+                            width: "54px",
+                            height: "25px",
+                            fontSize: "10px",
+                            lineHeight: "16px",
+                            fontFamily: "Inter",
+                            textAlign: "left",
+                            color: "#842029",
+                            backgroundColor: "#F8D7DA",
+                            paddingBottom: "20px",
+                            border: "none",
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                );
+              })}
           </Col>
           <Col
             style={{
               width: "350px",
-              height: "735px",
-              //   border: "2px solid red",
+              minHeight: "735px",
+              // border: "2px solid red",
               backgroundColor: "#20c9971a",
               marginLeft: "20px",
+              marginRight: "20px",
             }}
             className="custom-col rounded"
           >
             <h3 style={{ textAlign: "left" }}>Done</h3>
-            {initialTasks
-              .filter((task) => task.status === "done")
-              .sort((a, b) => b.priority - a.priority)
-              .map((task) => (
-                <Card
-                  key={task.id}
-                  style={{
-                    width: "330px",
-                    height: "220px",
-                    border: "4px solid #20C997",
-                    backgroundColor: "white",
-                    marginBottom: "10px",
-                  }}
-                  className="card-done rounded"
-                  bsPrefix
-                >
-                  <Card.Body>
-                    <Card.Title
-                      style={{
-                        textAlign: "left",
-                        textDecoration: "underline",
-                        marginLeft: "20px",
-                      }}
-                    >
-                      <Row>
-                        <Col className="col-8">{task.title}</Col>
-                        <Col className="col-4">
-                          <img style={{ marginLeft: "50px" }} src={carddate} />
-                        </Col>
-                      </Row>
-                    </Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">
-                      <p>Task priority: {task.priority}</p>
-                    </Card.Subtitle>
-                    <Card.Text
-                      style={{
-                        borderTop: "2px solid #20C997",
-                        borderBottom: "2px solid #20C997",
-                        width: "325px",
-                        height: "105px",
-                      }}
-                    >
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </Card.Text>
+            {tasks
+              .filter((task) => task.status === "DONE")
 
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        paddingRight: "10px ",
-                        gap: "8px",
-                      }}
-                    >
-                      <Button
-                        style={{
-                          width: "54px",
-                          height: "25px",
-                          fontSize: "10px",
-                          lineHeight: "16px",
-                          fontFamily: "Inter",
-                          textAlign: "left",
-                          color: "#6610F2",
-                          backgroundColor: "#EBE5FC",
-                          paddingBottom: "20px",
-                          border: "none",
-                        }}
-                      >
-                        Change
-                      </Button>
-                      {/* <Button
-                        style={{
-                          width: "54px",
-                          height: "25px",
-                          fontSize: "10px",
-                          lineHeight: "16px",
-                          fontFamily: "Inter",
-                          textAlign: "left",
-                          color: "#6610F2",
-                          backgroundColor: "#EBE5FC",
-                          paddingBottom: "20px",
-                          border: "none",
-                        }}
-                      >
-                        <div>
-                          <select
-                            style={{
-                              border: "none",
-                              backgroundColor: "#EBE5FC",
-                              color: "#6610F2",
-                            }}
-                          >
-                            <option value="">Change</option>
-                            <option value="to do">To Do</option>
-                            <option value="in progress">In Progress</option>
-                            <option value="done">Done</option>
-                          </select>
-                        </div>
-                      </Button> */}
+              .map((task) => {
+                // Define formatDate function
+                const formatDate = (timestamp) => {
+                  const date = new Date(timestamp);
+                  const year = date.getFullYear();
+                  const month = date.getMonth() + 1;
+                  const day = date.getDate();
+                  return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
+                };
 
-                      <Button
+                return (
+                  <Card
+                    key={task.id}
+                    style={{
+                      width: "330px",
+                      height: "220px",
+                      border: "4px solid #20C997",
+                      backgroundColor: "white",
+                      marginBottom: "10px",
+                    }}
+                    className="card-done rounded"
+                    id="custom-input"
+                    bsPrefix
+                  >
+                    <Card.Body>
+                      <Card.Title
                         style={{
-                          width: "54px",
-                          height: "25px",
-                          fontSize: "10px",
-                          lineHeight: "16px",
-                          fontFamily: "Inter",
                           textAlign: "left",
-                          color: "#842029",
-                          backgroundColor: "#F8D7DA",
-                          paddingBottom: "20px",
-                          border: "none",
+                          textDecoration: "underline",
+                          marginLeft: "20px",
                         }}
                       >
-                        Delete
-                      </Button>
-                    </div>
-                  </Card.Body>
-                </Card>
-              ))}
+                        <Row>
+                          <Col className="col-7">{task.name}</Col>
+                          <Col className="col-5" id="date-format">
+                            {/* <img
+                              style={{ marginLeft: "50px" }}
+                              src={carddate}/> */}
+                            {/* Check if task.dateCreated exists before formatting */}
+                            {task.dateCreated && formatDate(task.dateCreated)}
+                          </Col>
+                        </Row>
+                      </Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">
+                        {/* <p>Task priority: {task.priority}</p> */}
+                      </Card.Subtitle>
+                      <Card.Text
+                        style={{
+                          borderTop: "2px solid #20C997",
+                          borderBottom: "2px solid #20C997",
+                          width: "325px",
+                          height: "125px",
+                          textAlign: "left",
+                          paddingLeft: "10px",
+                          paddingRight: "10px",
+                        }}
+                      >
+                        {task.description}
+                      </Card.Text>
+
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          paddingRight: "10px ",
+                          gap: "8px",
+                        }}
+                      >
+                        <Button
+                          style={{
+                            width: "54px",
+                            height: "25px",
+                            fontSize: "10px",
+                            lineHeight: "16px",
+                            fontFamily: "Inter",
+                            textAlign: "left",
+                            color: "#6610F2",
+                            backgroundColor: "#EBE5FC",
+                            paddingBottom: "20px",
+                            border: "none",
+                          }}
+                        >
+                          Change
+                        </Button>
+                        <Button
+                          style={{
+                            width: "54px",
+                            height: "25px",
+                            fontSize: "10px",
+                            lineHeight: "16px",
+                            fontFamily: "Inter",
+                            textAlign: "left",
+                            color: "#842029",
+                            backgroundColor: "#F8D7DA",
+                            paddingBottom: "20px",
+                            border: "none",
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                );
+              })}
           </Col>
         </Row>
       </Container>
+      {/* {showModal && <CreateTask show={showModal} onHide={() => setShowModal(false)} />} */}
     </div>
   );
 };

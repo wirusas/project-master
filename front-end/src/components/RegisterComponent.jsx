@@ -228,7 +228,7 @@ const RegisterComponent = () => {
                   </button>
                 </div>
                 <div className="Allready-member">
-                  <p>Allready a member ?</p>
+                  <p>Already a member ?</p>
                 </div>
                 <div className="Login-link">
                   <a href="http://localhost:3000/login">Login</a>
@@ -237,6 +237,11 @@ const RegisterComponent = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="c-footer__copyrights h-mt--18 h-fs--12">
+      © 2024 | http_status_ok ™
+      <br />
+      Without http_status_ok permission, copying and distributing the information on the website is prohibited.
       </div>
     </div>
   );
