@@ -31,7 +31,6 @@ import static lt.httpstatusok.projectmanager.controllers.backend.config.SwaggerC
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
-
     private final UserService userService;
     private final ProjectService projectService;
     private final ProjectMapper projectMapper;
