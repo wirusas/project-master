@@ -32,7 +32,7 @@ export const ProjectsList = ({ searchTerm, filterState }) => {
             }
           );
         } else {
-          response = await axios.get(`${BASE_URL}/api/projects/allprojects/nopagination`, {
+          response = await axios.get(`${BASE_URL}/api/projects/findproject`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },

@@ -4,6 +4,8 @@ import { isUserLoggedIn, logout } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import "../styles/LogOutModalStyle.css";
+import { useParams } from "react-router-dom";
+import { CreateTask } from "./CreateTask";
 
 export const SideBarTask = () => {
   const isAuth = isUserLoggedIn();
@@ -16,6 +18,16 @@ export const SideBarTask = () => {
     setShowModal(false);
     navigator("/login");
   }
+
+  const { projectId } = useParams();
+  // const { setShowModalCT } = useParams();
+  const [showModalCT, setShowModalCT] = useState(false);
+
+  const handleAddTask = () => {
+    console.log(projectId);
+    // navigator(`/create-task/${projectId}`);
+    setShowModalCT(true);
+  };
 
   return (
     <>
@@ -47,10 +59,11 @@ export const SideBarTask = () => {
               data-bs-target="#home-collapse"
               aria-expanded="true"
               style={{ color: "#7749F8" }}
+              onClick={() => navigator("/projects")}
             >
               New Project
             </button>
-            <div className="collapse show" id="home-collapse">
+            {/* <div className="collapse show" id="home-collapse">
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
                   <a
@@ -80,7 +93,7 @@ export const SideBarTask = () => {
                   </a>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </li>
           <li className="mb-1">
             <button
@@ -89,11 +102,12 @@ export const SideBarTask = () => {
               data-bs-target="#dashboard-collapse"
               aria-expanded="false"
               style={{ color: "#7749F8" }}
-              onClick={() => navigator("/tasks/modal")}
+              onClick={handleAddTask}
             >
               New Task
             </button>
-            <div className="collapse" id="dashboard-collapse">
+            {showModalCT && <CreateTask />}
+            {/* <div className="collapse" id="dashboard-collapse">
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
                   <a
@@ -132,7 +146,7 @@ export const SideBarTask = () => {
                   </a>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </li>
           <li className="mb-1">
             <button

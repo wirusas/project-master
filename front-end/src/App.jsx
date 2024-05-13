@@ -31,9 +31,13 @@ function App() {
 
           {/* /http://localhost:3000/tasks */}
           <Route path="/tasks" element={<TaskComponent />}></Route>
+          
+            {/* /http://localhost:3000/tasks */}
+          {/* <Route path="/tasks" element={<TaskComponent />}></Route> */}
+          <Route path="/tasks/:projectId" element={<TaskComponent />} /> 
 
           {/* /http://localhost:3000/tasks/modal */}
-          <Route path="/tasks/modal" element={<CreateTask />}></Route>
+          <Route path="/create-task/:projectId" element={<CreateTask />}></Route>
 
           {/* /http://localhost:3000/projects */}
           <Route

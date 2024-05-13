@@ -3,13 +3,12 @@ package lt.httpstatusok.projectmanager.controllers.backend.services;
 import lt.httpstatusok.projectmanager.controllers.backend.exceptions.NoProjectsFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 public interface ProjectService {
     List<Project> getProjects();
@@ -25,6 +24,7 @@ public interface ProjectService {
     List<Project> getAllProjects();
 
 
+
     List<Project> getProjectsByUser(User user) throws NoProjectsFoundException;
 
     Optional<Project> getProjectById(UUID id);
@@ -34,7 +34,4 @@ public interface ProjectService {
     Page<Project> getAllPagedProjects(Pageable pageable);
 
     Project addUserToProject(String email, UUID id);
-
-
-
 }

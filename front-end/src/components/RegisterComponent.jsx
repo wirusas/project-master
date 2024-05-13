@@ -228,7 +228,7 @@ const RegisterComponent = () => {
                   </button>
                 </div>
                 <div className="Allready-member">
-                  <p>Allready a member ?</p>
+                  <p>Already a member ?</p>
                 </div>
                 <div className="Login-link">
                   <a href="http://localhost:3000/login">Login</a>
