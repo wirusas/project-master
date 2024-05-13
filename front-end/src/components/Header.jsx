@@ -82,11 +82,9 @@ export const Header = ({ onSearch, searchTerm, onFilterChange }) => {
             <select onChange={(e) => onFilterChange(e.target.value)}>
               <option value="">All</option>
               <option value="TO DO">TO DO</option>
-              <option value="IN PROGRESS">IN PROGRESS</option>
               <option value="DONE">DONE</option>
             </select>
           </div>
-          
 
           <form
             className="d-flex"
@@ -110,13 +108,13 @@ export const Header = ({ onSearch, searchTerm, onFilterChange }) => {
               onChange={(e) => onSearch(e.target.value)}
               id="search-input"
             />
-            <button
+          </form>
+           <button
               className="users-initials"
               onClick={() => setShowModalUser(true)}
             >
               {getInitials(loggedInUser)}
             </button>
-          </form>
         </header>
       </div>
       <Modal

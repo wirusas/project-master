@@ -39,13 +39,13 @@
    display: flex;
    justify-content: end;
    position: relative;
-   /* padding-bottom: 370px; */
    
 }
 .card{
     border: none;
     background: none;
     position: absolute;
-    top: 150px;
+    top:150px
+
 }
 

@@ -28,9 +28,9 @@ public class Project {
 
     private ZonedDateTime createdAt;
 
-    public Project(String description, String projectName, String projectState) {
-        this.description = description;
+    public Project(String projectName, String description,  String projectState) {
         this.projectName = projectName;
+        this.description = description;
         this.projectState = projectState;
     }
 
