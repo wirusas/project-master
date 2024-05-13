@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -21,6 +22,9 @@ public class Project {
 
     @ManyToMany(mappedBy = "followedProjects")
     private List<User> users = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project")
+    private Set<Task> tasks;
 
     private ZonedDateTime createdAt;
 
