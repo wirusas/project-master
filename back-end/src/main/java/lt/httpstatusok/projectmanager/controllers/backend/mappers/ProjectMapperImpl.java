@@ -38,8 +38,8 @@ public class ProjectMapperImpl implements ProjectMapper {
 
 
         String id = project.getId() != null ? project.getId() : "";
-        String description = project.getDescription() != null ? project.getDescription() : "";
         String projectName = project.getProjectName() != null ? project.getProjectName() : "";
+        String description = project.getDescription() != null ? project.getDescription() : "";
         String projectState = project.getProjectState() != null ? project.getProjectState() : "";
         // Assuming createdAt is not nullable
         ZonedDateTime createdAt = project.getCreatedAt() != null ? project.getCreatedAt() : ZonedDateTime.now();
@@ -49,6 +49,6 @@ public class ProjectMapperImpl implements ProjectMapper {
                 .map(user -> new ProjectDto.UserDto(user.getUsername()))
                 .collect(Collectors.toList());
 
-        return new ProjectDto(id, description, projectName, projectState, userDtos, createdAt);
+        return new ProjectDto(id, projectName, description, projectState, userDtos, createdAt);
     }
 }

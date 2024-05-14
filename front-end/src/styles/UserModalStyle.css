@@ -3,7 +3,6 @@
     margin-left: 45%;
     justify-content: center;
     align-items: center;
-    
 }
 
 .user-modal-header{
@@ -69,10 +68,16 @@
 #search-input{
   background-image: url(../assets/search-icon.svg);
   background-repeat: no-repeat;
-  background-position-x: 250px;
+  background-position-x: 240px;
   background-position-y: 5px;
   height: 40px;
   margin-top: 5px;
+}
+.radio-status input {
+    margin: 10px; 
+}
+.radio-status label{
+    color: #5227CC;
 }
 .dropdown-status select{
     background-image: url(../assets/filter-icon.png);
@@ -82,8 +87,13 @@
     padding-right: 20px; 
     appearance: none;
     padding-left: 7px;
-    border: 2px solid rgb(178, 149, 255);
-    cursor: pointer;
-
-    
+    /* border: 2px solid rgb(178, 149, 255); */
+    margin-top: 5px;
+    cursor: pointer; 
+    height: 30px;
+    width: 100px;
+    border-radius: 7px;
+    border: 1px solid;
+    border-Color: rgb(133, 64, 245);
+    box-Shadow: 0px 0px 0px 3px rgba(102, 16, 242, 0.15);
 }

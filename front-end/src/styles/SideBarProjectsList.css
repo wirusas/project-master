@@ -1,0 +1,45 @@
+.sidebar-my-projects{
+    text-decoration: none;
+   color: black;
+   margin-left: .75rem;
+   margin-bottom: 2rem;
+    
+  }
+
+  .sidebar-my-projects:hover{
+    font-weight: 700;
+  }
+
+  .sidebar-projects-pagination-div{
+    width: 70px;
+    display: flex;
+    justify-content: space-around;
+   margin-left: 1rem;
+                
+  }
+
+  .sidebar-projects-pagination-link{
+    text-decoration: none;
+    color: black;
+    
+  }
+
+  .sidebar-projects-pagination-link:hover{
+
+font-weight: 900;
+
+  }
+  .sidebar-project-dropdown ul{
+    list-style-type: none;
+  }
+
+  .sidebar-project-dropdown ul li{
+    margin-left: -1.3rem;
+    margin-top: 1rem;
+  }
+
+  .sidebar-project-dropdown{
+    width: 170px;
+    
+  }
+  

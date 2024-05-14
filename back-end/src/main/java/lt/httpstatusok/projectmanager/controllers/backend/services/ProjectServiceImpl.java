@@ -7,10 +7,14 @@ import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.User;
 import lt.httpstatusok.projectmanager.controllers.backend.repositories.ProjectRepository;
 import lt.httpstatusok.projectmanager.controllers.backend.repositories.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -75,6 +79,42 @@ public class ProjectServiceImpl implements ProjectService {
         return projects;
     }
 
+    @Override
+    public Optional<Project> getProjectById(UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
+        return projectRepository.findById(id.toString());
+    }
 
+    @Override
+    public List<Project> findProjectWithSorting(String field) {
+        return projectRepository.findAll(Sort.by(Sort.Direction.ASC, field));
+    }
+
+    @Override
+    public Page<Project> getAllPagedProjects(Pageable pageable) {
+        return projectRepository.findAll(pageable);
+    }
+
+
+
+    @Override
+    @Transactional
+    public Project addUserToProject(String userEmail, UUID projectId) {
+        Project existingProject = validateAndGetProject(projectId.toString());
+        User user = userRepository.findUserByEmail(userEmail);
+
+        if (user == null) {
+            throw new IllegalArgumentException("User not found with email: " + userEmail);
+        }
+
+        if (existingProject.getUsers().contains(user)) {
+            throw new IllegalArgumentException("User is already in the project.");
+        }
+
+        existingProject.addUser(user);
+        return projectRepository.save(existingProject);
+    }
 
 }

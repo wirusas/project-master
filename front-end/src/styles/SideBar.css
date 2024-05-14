@@ -1,0 +1,21 @@
+.side-bar {
+    width: 280px;
+    padding-left: 16px;
+    text-align: left;
+  }
+  
+  .side-bar .fw-semibold {
+    font-size: 20px;
+    color: white;
+    background-color: rgba(119, 73, 248, 0.50);
+    width: 217px;
+    height: 56px;
+    padding-left: 16px;
+    padding-top: 13px;
+  }
+  
+  .fw-semibold{
+    border-radius: 6px;
+  }
+
+  
