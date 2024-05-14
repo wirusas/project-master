@@ -3,10 +3,10 @@ import { Modal, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-export const CreateTask = () => {
+export const CreateTask = ({ refreshTasks, show, onClose }) => {
   const { projectId } = useParams();
   const navigate = useNavigate();
-  const [showModalCT, setShowModalCT] = useState(true);
+
   const [formTask, setFormTask] = useState({
     name: "",
     description: "",
@@ -14,7 +14,6 @@ export const CreateTask = () => {
     status: "TODO", // Default status
   });
 
-  const handleClose = () => setShowModalCT(false);
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormTask({ ...formTask, [name]: value });
@@ -34,15 +33,24 @@ export const CreateTask = () => {
       );
       console.log("Task created:", response.data);
       // handleClose();
-      navigate(`/tasks/${projectId}`);
-      handleClose();
+      if (response.status === 201) {
+        refreshTasks();
+        setFormTask({
+          name: "",
+          description: "",
+          dateCreated: "",
+          status: "TODO",
+        });
+        onClose();
+        //navigate(`/tasks/${projectId}`)
+      }
     } catch (error) {
       console.error("Error posting task:", error);
     }
   };
 
   return (
-    <Modal show={showModalCT} onHide={handleClose} backdrop="static" size="lg">
+    <Modal show={show} onHide={onClose} backdrop="static" size="lg">
       <Modal.Body
         className="rounded"
         style={{
