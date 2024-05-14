@@ -7,7 +7,7 @@ import "../styles/LogOutModalStyle.css";
 import { useParams } from "react-router-dom";
 import { CreateTask } from "./CreateTask";
 
-export const SideBarTask = () => {
+export const SideBarTask = (refreshTasks) => {
   const isAuth = isUserLoggedIn();
   const navigator = useNavigate();
 
@@ -63,37 +63,6 @@ export const SideBarTask = () => {
             >
               New Project
             </button>
-            {/* <div className="collapse show" id="home-collapse">
-              <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                    style={{ marginLeft: "15px", color: "red" }}
-                  >
-                    1st step
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                    style={{ marginLeft: "15px" }}
-                  >
-                    2nd step
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                    style={{ marginLeft: "15px" }}
-                  >
-                    3rd step
-                  </a>
-                </li>
-              </ul>
-            </div> */}
           </li>
           <li className="mb-1">
             <button
@@ -106,47 +75,12 @@ export const SideBarTask = () => {
             >
               New Task
             </button>
-            {showModalCT && <CreateTask />}
-            {/* <div className="collapse" id="dashboard-collapse">
-              <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                    style={{ marginLeft: "15px" }}
-                  >
-                    Overview
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                    style={{ marginLeft: "15px" }}
-                  >
-                    Weekly
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                    style={{ marginLeft: "15px" }}
-                  >
-                    Monthly
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                    style={{ marginLeft: "15px" }}
-                  >
-                    Annually
-                  </a>
-                </li>
-              </ul>
-            </div> */}
+            <CreateTask
+              refreshTasks={refreshTasks}
+              show={showModalCT}
+              onClose={() => setShowModalCT(false)}
+            />
+            {/* {showModalCT && <CreateTask />} */}
           </li>
           <li className="mb-1">
             <button
