@@ -97,7 +97,7 @@ export const CreateTask = ({ refreshTasks, show, onClose }) => {
             </Form.Select>
           </Form.Group>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button variant="secondary" onClick={onClose}>
               Close
             </Button>
             <Button type="submit" variant="primary">
