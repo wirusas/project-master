@@ -11,40 +11,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { CreateTask } from "./CreateTask";
 import { EditTask } from "./EditTask";
 
-export const TaskDesktop = () => {
-  const [tasks, setTasks] = useState([]);
+export const TaskDesktop = ({ tasks }) => {
   const { projectId } = useParams(); // This hooks extract the projectId from the URL
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        // Use template literals to insert the projectId into the URL
-        const response = await axios.get(
-          `http://localhost:8080/api/projects/${projectId}/tasks`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setTasks(response.data); // Update the state with the fetched tasks
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      }
-    };
-
-    if (projectId) {
-      console.log(projectId);
-      // Ensure projectId is available before fetching
-      fetchTasks();
-    }
-  }, [projectId]); // Dependency array includes projectId to refetch when it changes
-
-  // const categorizeTasks = (status) => {
-  //   return tasks.filter(task => task.status.toUpperCase().replace(" ", "_") === status);
-  // };
 
   const handleAddTask = () => {
     navigate(`/create-task/${projectId}`);
