@@ -52,5 +52,7 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
-
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
 }

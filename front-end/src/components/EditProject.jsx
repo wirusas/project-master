@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import '../styles/EditDelete.css'
 
 const BASE_URL = "http://localhost:8080";
@@ -15,6 +16,10 @@ export const EditProject = ({ projectId }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [showRemoveUserModal, setShowRemoveUserModal] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [notification, setNotification] = useState("");
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
@@ -74,6 +79,75 @@ export const EditProject = ({ projectId }) => {
     setShowModal(!showModal);
   };
 
+  const toggleAddUserModal = () => {
+    setShowAddUserModal(!showAddUserModal);
+  };
+
+  const toggleRemoveUserModal = () => {
+    setShowRemoveUserModal(!showRemoveUserModal);
+  };
+
+  const handleUserEmailChange = (e) => {
+    setUserEmail(e.target.value);
+  };
+
+  const handleAddUserSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/projects/${projectId}/${userEmail}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setShowAddUserModal(false);
+      setUserEmail("");
+
+      // Clear any previous notification on successful addition
+      setNotification("");
+    } catch (error) {
+      console.error("Error adding user to project:", error);
+      // Check different error cases
+      if (error.response && error.response.status === 409 && error.response.data.message === "User is already a member of the project.") {
+        setNotification("User is already a member of the project.");
+      } else if (error.response && error.response.status === 500) {
+        setNotification("User not found with the provided email.");
+      } else {
+        setNotification("An error occurred while adding user to project.");
+      }
+    }
+  };
+
+  const handleRemoveUserSubmit = async (e) => {
+    e.preventDefault();
+    console.log("removing user")
+    try {
+      const response = await axios.delete(
+        `${BASE_URL}/api/projects/${projectId}/removeUser/${userEmail}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setShowRemoveUserModal(false);
+      setUserEmail("");
+
+      // Clear any previous notification on successful removal
+      setNotification("");
+    } catch (error) {
+      console.error("Error removing user:", error);
+      // Check different error cases
+    }
+  };
+
   return (
     <>
       <Modal show={showModal} onHide={toggleForm}>
@@ -106,7 +180,6 @@ export const EditProject = ({ projectId }) => {
                 onChange={handleFormChange}
                 rows={6}
                 style={{ resize: "none" }}
-                
               />
             </div>
             <div className="form-group" style={{ marginBottom: "20px" }}>
@@ -139,7 +212,15 @@ export const EditProject = ({ projectId }) => {
         </Modal.Body>
       </Modal>
 
-      <button type="button"  className="edit-delete-buttons edit-button" onClick={toggleForm}>
+      <button type="button" className="edit-delete-buttons edit-button" onClick={toggleAddUserModal} style={{width: "80px"}}>
+        Add User
+      </button>
+
+      <button type="button" className="edit-delete-buttons edit-button" onClick={toggleRemoveUserModal} style={{width: "80px"}}>
+        Remove User
+      </button>
+
+      <button type="button" className="edit-delete-buttons edit-button" onClick={toggleForm}>
         Change
       </button>
 
@@ -158,6 +239,56 @@ export const EditProject = ({ projectId }) => {
             No
           </Button>
         </Modal.Footer>
+      </Modal>
+
+      <Modal show={showAddUserModal} onHide={toggleAddUserModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleAddUserSubmit}>
+            <Form.Group controlId="formUserEmail">
+              <Form.Label>User Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter user email"
+                value={userEmail}
+                onChange={handleUserEmailChange}
+                required
+              />
+               {/* Notification */}
+              {notification && <div className="notification" style={{marginTop: "1rem"}}>{notification}</div>}
+            </Form.Group>
+            <Button variant="primary" type="submit" style={{marginTop: "1rem", float: "right"}}>
+              Submit
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={showRemoveUserModal} onHide={toggleRemoveUserModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Remove User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleRemoveUserSubmit}>
+            <Form.Group controlId="formUserEmail">
+              <Form.Label>User Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter user email"
+                value={userEmail}
+                onChange={handleUserEmailChange}
+                required
+              />
+               {/* Notification */}
+              {notification && <div className="notification" style={{marginTop: "1rem"}}>{notification}</div>}
+            </Form.Group>
+            <Button variant="primary" type="submit" style={{marginTop: "1rem", float: "right"}}>
+              Submit
+            </Button>
+          </Form>
+        </Modal.Body>
       </Modal>
     </>
   );

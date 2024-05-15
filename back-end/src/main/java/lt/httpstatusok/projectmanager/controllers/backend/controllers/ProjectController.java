@@ -8,6 +8,7 @@ import lt.httpstatusok.projectmanager.controllers.backend.dto.CreateProjectReque
 import lt.httpstatusok.projectmanager.controllers.backend.dto.EditProjectRequest;
 import lt.httpstatusok.projectmanager.controllers.backend.dto.ProjectDto;
 import lt.httpstatusok.projectmanager.controllers.backend.exceptions.NoProjectsFoundException;
+import lt.httpstatusok.projectmanager.controllers.backend.exceptions.UserNotFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.mappers.ProjectMapper;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.User;
@@ -17,6 +18,7 @@ import lt.httpstatusok.projectmanager.controllers.backend.services.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -75,6 +77,7 @@ public class ProjectController {
                 .map(projectMapper::toProjectDto)
                 .collect(Collectors.toList());
     }
+
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/findproject")
     List<ProjectDto> getAllProjects() {
@@ -104,4 +107,35 @@ public class ProjectController {
         return projectMapper.toProjectDto(project);
     }
 
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @GetMapping("/sorting/{field}")
+    public List<ProjectDto> getProjectWithSorting(@PathVariable String field) {
+        return projectService.findProjectWithSorting(field).stream()
+                .map(projectMapper::toProjectDto)
+                .collect(Collectors.toList());
+    }
+
+
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/{projectId}/{userEmail}")
+    public ProjectDto addUserToProject(@PathVariable UUID projectId, @PathVariable String userEmail) {
+        User user = userService.findUserByEmail(userEmail);
+        Project project = projectService.validateAndGetProject(projectId.toString());
+        projectService.addUserToProject(user.getEmail(), projectId);
+        return projectMapper.toProjectDto(project);
+    }
+
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @DeleteMapping("/projects/{projectId}/removeUser/{userEmail}")
+    public ResponseEntity<?> removeUserFromProject(@PathVariable UUID projectId, @PathVariable String userEmail) {
+        try {
+            Project updatedProject = projectService.removeUserFromProject(userEmail, projectId);
+            return ResponseEntity.ok(updatedProject);
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to remove user from project");
+        }
+    }
 }

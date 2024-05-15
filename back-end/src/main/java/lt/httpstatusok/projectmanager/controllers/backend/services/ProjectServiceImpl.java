@@ -3,6 +3,8 @@ package lt.httpstatusok.projectmanager.controllers.backend.services;
 import lombok.RequiredArgsConstructor;
 import lt.httpstatusok.projectmanager.controllers.backend.exceptions.ProjectNotFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.exceptions.NoProjectsFoundException;
+import lt.httpstatusok.projectmanager.controllers.backend.exceptions.UserExistsInTRheProject;
+import lt.httpstatusok.projectmanager.controllers.backend.exceptions.UserNotFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.User;
 import lt.httpstatusok.projectmanager.controllers.backend.repositories.ProjectRepository;
@@ -106,14 +108,29 @@ public class ProjectServiceImpl implements ProjectService {
         User user = userRepository.findUserByEmail(userEmail);
 
         if (user == null) {
-            throw new IllegalArgumentException("User not found with email: " + userEmail);
-        }
-
-        if (existingProject.getUsers().contains(user)) {
-            throw new IllegalArgumentException("User is already in the project.");
+            throw new UserNotFoundException(String.format("User with email %s not found", userEmail));
+        } else if (existingProject.getUsers().contains(user)) {
+            throw new UserExistsInTRheProject("User is already a member of the project.");
         }
 
         existingProject.addUser(user);
+        return projectRepository.save(existingProject);
+    }
+
+
+    @Override
+    @Transactional
+    public Project removeUserFromProject(String userEmail, UUID projectId) {
+        Project existingProject = validateAndGetProject(projectId.toString());
+        User user = userRepository.findUserByEmail(userEmail);
+
+        if (user == null) {
+            throw new UserNotFoundException(String.format("User with email %s not found", userEmail));
+        } else if (!existingProject.getUsers().contains(user)) {
+            throw new UserNotFoundException(String.format("User with email %s is not a member of the project", userEmail));
+        }
+
+        existingProject.removeUser(user);
         return projectRepository.save(existingProject);
     }
 

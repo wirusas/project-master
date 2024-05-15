@@ -43,4 +43,9 @@ public class Project {
         users.add(user);
         user.getFollowedProjects().add(this);
     }
+    public void removeUser(User user){
+        users.remove(user);
+        user.getFollowedProjects().remove(this);
+    }
+
 }
