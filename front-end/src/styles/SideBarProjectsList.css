@@ -5,6 +5,8 @@
    margin-bottom: 2rem;
     
   }
+  
+  .sidebar-save-projects{background-color: antiquewhite;}
 
   .sidebar-my-projects:hover{
     font-weight: 700;

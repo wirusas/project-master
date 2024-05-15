@@ -34,4 +34,5 @@ public interface ProjectService {
     Page<Project> getAllPagedProjects(Pageable pageable);
 
     Project addUserToProject(String email, UUID id);
+    Project removeUserFromProject(String email, UUID id);
 }
