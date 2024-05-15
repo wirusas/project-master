@@ -107,12 +107,9 @@ export const EditProject = ({ projectId }) => {
 
       setShowAddUserModal(false);
       setUserEmail("");
-
-      // Clear any previous notification on successful addition
       setNotification("");
     } catch (error) {
       console.error("Error adding user to project:", error);
-      // Check different error cases
       if (error.response && error.response.status === 409 && error.response.data.message === "User is already a member of the project.") {
         setNotification("User is already a member of the project.");
       } else if (error.response && error.response.status === 500) {
@@ -125,7 +122,6 @@ export const EditProject = ({ projectId }) => {
 
   const handleRemoveUserSubmit = async (e) => {
     e.preventDefault();
-    console.log("removing user")
     try {
       const response = await axios.delete(
         `${BASE_URL}/api/projects/${projectId}/removeUser/${userEmail}`,
@@ -138,13 +134,22 @@ export const EditProject = ({ projectId }) => {
       );
 
       setShowRemoveUserModal(false);
-      setUserEmail("");
-
-      // Clear any previous notification on successful removal
-      setNotification("");
+    setUserEmail("");
+    setNotification("User successfully removed.");
+      
+      // Automatically close the modal after a short delay
+      setTimeout(() => {
+        setNotification("");
+      }, 5000); 
     } catch (error) {
       console.error("Error removing user:", error);
-      // Check different error cases
+      if (error.response && error.response.status === 404) {
+        setNotification("User not found in the project.");
+      } else if (error.response && error.response.status === 403) {
+        setNotification("You are not authorized to remove this user.");
+      } else {
+        setNotification("An error occurred while removing user from project.");
+      }
     }
   };
 
@@ -216,7 +221,7 @@ export const EditProject = ({ projectId }) => {
         Add User
       </button>
 
-      <button type="button" className="edit-delete-buttons edit-button" onClick={toggleRemoveUserModal} style={{width: "80px"}}>
+      <button type="button" className="edit-delete-buttons edit-button" onClick={toggleRemoveUserModal} style={{width: "75px"}}>
         Remove User
       </button>
 

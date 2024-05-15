@@ -127,7 +127,7 @@ public class ProjectController {
     }
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-    @DeleteMapping("/projects/{projectId}/removeUser/{userEmail}")
+    @DeleteMapping("{projectId}/removeUser/{userEmail}")
     public ResponseEntity<?> removeUserFromProject(@PathVariable UUID projectId, @PathVariable String userEmail) {
         try {
             Project updatedProject = projectService.removeUserFromProject(userEmail, projectId);
