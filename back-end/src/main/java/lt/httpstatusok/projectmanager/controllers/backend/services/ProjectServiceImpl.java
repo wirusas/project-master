@@ -1,14 +1,18 @@
 package lt.httpstatusok.projectmanager.controllers.backend.services;
 
 import lombok.RequiredArgsConstructor;
+import lt.httpstatusok.projectmanager.controllers.backend.dto.ProjectDto;
 import lt.httpstatusok.projectmanager.controllers.backend.exceptions.ProjectNotFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.exceptions.NoProjectsFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.exceptions.UserExistsInTRheProject;
 import lt.httpstatusok.projectmanager.controllers.backend.exceptions.UserNotFoundException;
+import lt.httpstatusok.projectmanager.controllers.backend.mappers.ProjectMapper;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.User;
 import lt.httpstatusok.projectmanager.controllers.backend.repositories.ProjectRepository;
 import lt.httpstatusok.projectmanager.controllers.backend.repositories.UserRepository;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,6 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.io.IOException;
+import java.io.Writer;
+
 
 @RequiredArgsConstructor
 @Service
@@ -25,6 +32,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final ProjectMapper projectMapper;
 
     @Override
     public List<Project> getProjects() {
@@ -100,7 +108,6 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
 
-
     @Override
     @Transactional
     public Project addUserToProject(String userEmail, UUID projectId) {
@@ -132,6 +139,30 @@ public class ProjectServiceImpl implements ProjectService {
 
         existingProject.removeUser(user);
         return projectRepository.save(existingProject);
+    }
+
+
+    @Override
+    public void writeProjectsToCsv(List<Project> projects, Writer writer) throws IOException {
+        // Initialize CSVPrinter with writer
+        CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
+
+        // Write headings
+        printer.printRecord("CREATED_AT", "DESCRIPTION", "ID", "PROJECT_NAME", "PROJECT_STATE");
+
+        // Write project data
+        for (Project project : projects) {
+            // Map Project to ProjectDto using ProjectMapper
+            ProjectDto projectDto = projectMapper.toProjectDto(project);
+
+            printer.printRecord(
+                    projectDto.createdAt(),
+                    projectDto.description(),
+                    projectDto.id(),
+                    projectDto.projectName(),
+                    projectDto.projectState()
+            );
+        }
     }
 
 }

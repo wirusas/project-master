@@ -40,6 +40,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/projects/{projectId}/removeUser/{userEmail}").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.POST, "/api/projects/{projectId}/tasks").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.GET, "/api/projects/**").hasAnyAuthority(ADMIN, USER)
+                        .requestMatchers(HttpMethod.GET, "/api/projects/css").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.GET, "/api/projects/{projectId}/tasks").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.PUT, "/api/projects/**").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers(HttpMethod.GET, "/api/projects/myprojects").hasAnyAuthority(ADMIN, USER)
