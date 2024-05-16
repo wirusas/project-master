@@ -9,4 +9,8 @@ public interface TaskService {
     Task createTask(String projectId, TaskCreateRequest taskCreateRequest);
 
     List<Task> getTasksByProjectId(String projectId);
+
+    void deleteTask(Task task);
+
+    Task validateAndGetTask(Long id);
 }
