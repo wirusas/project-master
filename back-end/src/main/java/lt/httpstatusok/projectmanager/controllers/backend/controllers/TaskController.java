@@ -41,4 +41,12 @@ public class TaskController {
         return new ResponseEntity<>(tasks, HttpStatus.OK);
 
     }
+
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @DeleteMapping("/{id}")
+    public Task deleteTask(@PathVariable Long id) {
+        Task task = taskService.validateAndGetTask(id);
+        taskService.deleteTask(task);
+        return task;
+    }
 }
