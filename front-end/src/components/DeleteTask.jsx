@@ -4,7 +4,9 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import deletelogo from "../assets/deletelogo.svg";
 
-export const DeleteTask = ({ taskId }) => {
+const BASE_URL = "http://localhost:8080";
+
+export const DeleteTask = ({ projectId, taskId }) => {
   const [showConfirmModalDT, setShowConfirmModalDT] = useState(false);
   const [showUnauthorizedModalDT, setShowUnauthorizedModalDT] = useState(false);
 
@@ -16,11 +18,14 @@ export const DeleteTask = ({ taskId }) => {
   // delete task
   const deleteTask = async () => {
     try {
-      await axios.delete(`${BASE_URL}/api/projects/${projectId}/${taskId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      await axios.delete(
+        `${BASE_URL}/api/projects/${projectId}/tasks/${taskId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       // Close the confirmation modal
       setShowConfirmModalDT(false);
       // Reload the page
@@ -37,8 +42,26 @@ export const DeleteTask = ({ taskId }) => {
 
   return (
     <>
-      <img src={deletelogo} alt="Delete Task" onClick={handleDeleteClick} />
-      {/* Confirmation modal */}
+      {/* <img src={deletelogo} alt="Delete Task" onClick={handleDeleteClick} /> */}
+      {/* <div onClick={handleDeleteClick}></div> */}
+      <Button
+        onClick={handleDeleteClick}
+        style={{
+          width: "54px",
+          height: "25px",
+          fontSize: "10px",
+          lineHeight: "16px",
+          fontFamily: "Inter",
+          textAlign: "left",
+          color: "#842029",
+          backgroundColor: "#F8D7DA",
+          paddingBottom: "20px",
+          border: "none",
+        }}
+      >
+        Delete
+      </Button>
+
       <Modal
         show={showConfirmModalDT}
         onHide={() => setShowConfirmModalDT(false)}
@@ -56,7 +79,7 @@ export const DeleteTask = ({ taskId }) => {
           >
             Cancel
           </Button>
-          <Button variant="danger" onClick={deleteProject}>
+          <Button variant="danger" onClick={deleteTask}>
             Delete
           </Button>
         </Modal.Footer>

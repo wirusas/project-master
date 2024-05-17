@@ -10,11 +10,15 @@ import "../styles/TaskDesktop.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { CreateTask } from "./CreateTask";
 import { EditTask } from "./EditTask";
+import { DeleteTask } from "./DeleteTask";
 
 export const TaskDesktop = ({ tasks, setShowModalET }) => {
   const { projectId } = useParams(); // This hooks extract the projectId from the URL
+  const { taskId } = useParams();
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  console.log("projectId:", projectId);
+  console.log("taskId:", taskId);
 
   const handleAddTask = () => {
     navigate(`/create-task/${projectId}`);
@@ -142,22 +146,24 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                           {/* <EditTask  taskId={task.id}/> */}
                           Change
                         </Button>
-                        <Button
-                          style={{
-                            width: "54px",
-                            height: "25px",
-                            fontSize: "10px",
-                            lineHeight: "16px",
-                            fontFamily: "Inter",
-                            textAlign: "left",
-                            color: "#842029",
-                            backgroundColor: "#F8D7DA",
-                            paddingBottom: "20px",
-                            border: "none",
-                          }}
-                        >
-                          Delete
-                        </Button>
+                        <DeleteTask projectId={projectId} taskId={task.Id}>
+                          <Button
+                            style={{
+                              width: "54px",
+                              height: "25px",
+                              fontSize: "10px",
+                              lineHeight: "16px",
+                              fontFamily: "Inter",
+                              textAlign: "left",
+                              color: "#842029",
+                              backgroundColor: "#F8D7DA",
+                              paddingBottom: "20px",
+                              border: "none",
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </DeleteTask>
                       </div>
                     </Card.Body>
                   </Card>
