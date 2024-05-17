@@ -11,7 +11,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { CreateTask } from "./CreateTask";
 import { EditTask } from "./EditTask";
 
-export const TaskDesktop = ({ tasks }) => {
+export const TaskDesktop = ({ tasks, setShowModalET }) => {
   const { projectId } = useParams(); // This hooks extract the projectId from the URL
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -137,8 +137,9 @@ export const TaskDesktop = ({ tasks }) => {
                             paddingBottom: "20px",
                             border: "none",
                           }}
+                          onClick={() => setShowModalET(true)}
                         >
-                          {/* <EditTask /> */}
+                          {/* <EditTask  taskId={task.id}/> */}
                           Change
                         </Button>
                         <Button
