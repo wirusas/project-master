@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Form, Button } from "react-bootstrap";
+import { useParams, useNavigate } from "react-router-dom";
 // import Button from "react-bootstrap/Button";
 
 // Main base URL
 const BASE_URL = "http://localhost:8080";
 
-export const EditTask = ({ taskId }) => {
+export const EditTask = ({ taskId, projectId }) => {
   // FORM DATA
   const [form, setForm] = useState({
     name: "",
@@ -16,13 +17,15 @@ export const EditTask = ({ taskId }) => {
 
   // MODAL STATES
   const [showModalET, setShowModalET] = useState(false);
-  const [showConfirmModalET, setShowConfirmModalET] = useState(false);
+  const [showConfirmModalET, setShowConfirmModalET] = useState(true);
+
+  // const { projectId } = useParams();
 
   useEffect(() => {
     const fetchTask = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/api/projects/${projectId}${taskId}`,
+          `${BASE_URL}/api/projects/${projectId}/tasks/${taskId}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -30,16 +33,16 @@ export const EditTask = ({ taskId }) => {
           }
         );
         setForm({
-          taskName: response.data.taskName,
-          taskDescription: response.data.taskDescription,
-          taskStatus: response.data.taskStatus,
+          name: response.data.name,
+          description: response.data.description,
+          status: response.data.status,
         });
       } catch (error) {
         console.error("Failed to fetch task data:", error);
       }
     };
     fetchTask();
-  }, [taskId]);
+  }, [taskId, projectId]);
 
   // HANDLE FORM CHANGE
   const handleFormChange = (event) => {
@@ -60,22 +63,26 @@ export const EditTask = ({ taskId }) => {
   // Function to submit form after confirmation
   const confirmFormSubmission = async () => {
     try {
-      await axios.put(`${BASE_URL}/api/projects/${projectId}${taskId}`, form, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-      });
+      await axios.put(
+        `${BASE_URL}/api/projects/${projectId}/tasks/${taskId}`,
+        form,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       // Close the modal after successful submission
       handleClose();
       // Clear form fields after successful submission
       setForm({
-        taskName: "",
-        taskDescription: "",
-        taskStatus: "",
+        name: "",
+        description: "",
+        status: "",
       });
       // Reload the page to reflect changes
-      window.location.reload(false);
+      // window.location.reload(false);
     } catch (error) {
       console.error("Error updating task:", error);
       // Handle error, show error message, etc.
@@ -90,6 +97,10 @@ export const EditTask = ({ taskId }) => {
   // RETURN
   return (
     <>
+      {/* <Button variant="primary" onClick={() => setShowModalET(true)}>
+        Edit Task
+      </Button> */}
+
       {/* Modal */}
       <Modal
         show={showModalET}
@@ -113,7 +124,7 @@ export const EditTask = ({ taskId }) => {
                 type="text"
                 placeholder="Task Name"
                 name="name"
-                value={formTask.name}
+                value={form.name}
                 onChange={handleFormChange}
                 required
                 autoFocus
@@ -125,7 +136,7 @@ export const EditTask = ({ taskId }) => {
                 placeholder="Task Description"
                 rows={3}
                 name="description"
-                value={formTask.description}
+                value={form.description}
                 onChange={handleFormChange}
                 required
               />
@@ -133,7 +144,7 @@ export const EditTask = ({ taskId }) => {
             <Form.Group className="mb-3" controlId="taskStatus">
               <Form.Select
                 name="status"
-                value={formTask.status}
+                value={form.status}
                 onChange={handleFormChange}
                 required
               >
