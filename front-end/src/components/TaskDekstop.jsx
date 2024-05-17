@@ -146,7 +146,7 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                           {/* <EditTask  taskId={task.id}/> */}
                           Change
                         </Button>
-                        <DeleteTask projectId={projectId} taskId={task.Id}>
+                        <DeleteTask projectId={projectId} taskId={task.id}>
                           <Button
                             style={{
                               width: "54px",
@@ -270,22 +270,24 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                         >
                           Change
                         </Button>
-                        <Button
-                          style={{
-                            width: "54px",
-                            height: "25px",
-                            fontSize: "10px",
-                            lineHeight: "16px",
-                            fontFamily: "Inter",
-                            textAlign: "left",
-                            color: "#842029",
-                            backgroundColor: "#F8D7DA",
-                            paddingBottom: "20px",
-                            border: "none",
-                          }}
-                        >
-                          Delete
-                        </Button>
+                        <DeleteTask projectId={projectId} taskId={task.id}>
+                          <Button
+                            style={{
+                              width: "54px",
+                              height: "25px",
+                              fontSize: "10px",
+                              lineHeight: "16px",
+                              fontFamily: "Inter",
+                              textAlign: "left",
+                              color: "#842029",
+                              backgroundColor: "#F8D7DA",
+                              paddingBottom: "20px",
+                              border: "none",
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </DeleteTask>
                       </div>
                     </Card.Body>
                   </Card>
@@ -391,22 +393,24 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                         >
                           Change
                         </Button>
-                        <Button
-                          style={{
-                            width: "54px",
-                            height: "25px",
-                            fontSize: "10px",
-                            lineHeight: "16px",
-                            fontFamily: "Inter",
-                            textAlign: "left",
-                            color: "#842029",
-                            backgroundColor: "#F8D7DA",
-                            paddingBottom: "20px",
-                            border: "none",
-                          }}
-                        >
-                          Delete
-                        </Button>
+                        <DeleteTask projectId={projectId} taskId={task.id}>
+                          <Button
+                            style={{
+                              width: "54px",
+                              height: "25px",
+                              fontSize: "10px",
+                              lineHeight: "16px",
+                              fontFamily: "Inter",
+                              textAlign: "left",
+                              color: "#842029",
+                              backgroundColor: "#F8D7DA",
+                              paddingBottom: "20px",
+                              border: "none",
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </DeleteTask>
                       </div>
                     </Card.Body>
                   </Card>

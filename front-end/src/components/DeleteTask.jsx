@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import deletelogo from "../assets/deletelogo.svg";
+import { useParams } from "react-router-dom";
 
 const BASE_URL = "http://localhost:8080";
 
-export const DeleteTask = ({ projectId, taskId }) => {
+export const DeleteTask = ({ projectId, taskId, refreshTasks }) => {
   const [showConfirmModalDT, setShowConfirmModalDT] = useState(false);
   const [showUnauthorizedModalDT, setShowUnauthorizedModalDT] = useState(false);
 
@@ -26,10 +26,14 @@ export const DeleteTask = ({ projectId, taskId }) => {
           },
         }
       );
+
       // Close the confirmation modal
       setShowConfirmModalDT(false);
       // Reload the page
       window.location.reload(false);
+      // if (response.status === 203) {
+      //   refreshTasks();
+      // }
     } catch (error) {
       if (error.response && error.response.status === 403) {
         // unauthorized message modal
@@ -42,8 +46,6 @@ export const DeleteTask = ({ projectId, taskId }) => {
 
   return (
     <>
-      {/* <img src={deletelogo} alt="Delete Task" onClick={handleDeleteClick} /> */}
-      {/* <div onClick={handleDeleteClick}></div> */}
       <Button
         onClick={handleDeleteClick}
         style={{
