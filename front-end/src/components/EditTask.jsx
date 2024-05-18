@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Form, Button } from "react-bootstrap";
-import { useParams, useNavigate } from "react-router-dom";
-// import Button from "react-bootstrap/Button";
+import { TaskDesktop } from "./TaskDekstop";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 // Main base URL
 const BASE_URL = "http://localhost:8080";
 
-export const EditTask = ({ taskId, projectId }) => {
+export const EditTask = ({ taskId, showModalET, handleClose }) => {
+  const { projectId } = useParams(); // This hooks extract the projectId from the URL
+
   // FORM DATA
   const [form, setForm] = useState({
     name: "",
@@ -16,7 +19,7 @@ export const EditTask = ({ taskId, projectId }) => {
   });
 
   // MODAL STATES
-  const [showModalET, setShowModalET] = useState(false);
+  // const [showModalET, setShowModalET] = useState(false);
   const [showConfirmModalET, setShowConfirmModalET] = useState(false);
 
   // const { projectId } = useParams();
@@ -54,7 +57,7 @@ export const EditTask = ({ taskId, projectId }) => {
   };
 
   // HANDLE FORM SUBMISSION
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
     // Show confirmation modal
     setShowConfirmModalET(true);
@@ -74,13 +77,17 @@ export const EditTask = ({ taskId, projectId }) => {
         }
       );
       // Close the modal after successful submission
+      // handleClose();
+      showModalET(false);
       handleClose();
+
       // Clear form fields after successful submission
       setForm({
         name: "",
         description: "",
         status: "",
       });
+
       // Reload the page to reflect changes
       // window.location.reload(false);
     } catch (error) {
@@ -90,9 +97,9 @@ export const EditTask = ({ taskId, projectId }) => {
   };
 
   // TOGGLE FORM VISIBILITY
-  const handleClose = () => {
-    setShowModalET(!showModalET);
-  };
+  // const handleClose = () => {
+  //   setShowModalET(!showModalET);
+  // };
 
   // RETURN
   return (
@@ -101,7 +108,7 @@ export const EditTask = ({ taskId, projectId }) => {
         Edit Task
       </Button> */}
 
-      <Button
+      {/* <Button
         style={{
           width: "54px",
           height: "25px",
@@ -114,13 +121,13 @@ export const EditTask = ({ taskId, projectId }) => {
           paddingBottom: "20px",
           border: "none",
         }}
-        onClick={() => setShowModalET(true)}
+        onClick={() => showModalET(true)}
       >
         {/* <EditTask  taskId={task.id}/> */}
-        Change
-      </Button>
+      {/* Change
+      </Button> */}
 
-      {/* Modal */}
+      {/* Edit Task Modal */}
       <Modal
         show={showModalET}
         onHide={handleClose}

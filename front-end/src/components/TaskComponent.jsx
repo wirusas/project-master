@@ -1,17 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { TaskDesktop } from "./TaskDekstop";
 import { Header } from "./Header";
-// import { SideBar } from "./SideBar";
+import { EditTask } from "./EditTask";
 import { Footer } from "./Footer";
 import "../styles/TasksComponentStyle.css";
 import { SideBarTask } from "./SideBarTask";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const TaskComponent = () => {
+const TaskComponent = ({}) => {
   const [tasks, setTasks] = useState([]);
 
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [showModalET, setShowModalET] = useState(false);
+
   const { projectId } = useParams();
+
+  const handleEditTask = (task) => {
+    setSelectedTask(task);
+    setShowModalET(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModalET(false);
+    setSelectedTask(null);
+  };
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -58,7 +71,15 @@ const TaskComponent = () => {
           <SideBarTask refreshTasks={refreshTasks} />
         </div>
         <div className="task-desktop">
-          <TaskDesktop tasks={tasks} />
+          <TaskDesktop tasks={tasks} onEditTask={handleEditTask} />
+          {selectedTask && (
+            <EditTask
+              taskId={selectedTask.id}
+              projectId={selectedTask.projectId}
+              showModalET={showModalET}
+              handleClose={handleCloseModal}
+            />
+          )}
         </div>
       </div>
       <Footer />
