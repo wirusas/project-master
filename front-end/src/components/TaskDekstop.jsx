@@ -128,24 +128,26 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                           gap: "8px",
                         }}
                       >
-                        <Button
-                          style={{
-                            width: "54px",
-                            height: "25px",
-                            fontSize: "10px",
-                            lineHeight: "16px",
-                            fontFamily: "Inter",
-                            textAlign: "left",
-                            color: "#6610F2",
-                            backgroundColor: "#EBE5FC",
-                            paddingBottom: "20px",
-                            border: "none",
-                          }}
-                          onClick={() => setShowModalET(true)}
-                        >
-                          {/* <EditTask  taskId={task.id}/> */}
-                          Change
-                        </Button>
+                        <EditTask projectId={projectId} taskId={task.id}>
+                          <Button
+                            style={{
+                              width: "54px",
+                              height: "25px",
+                              fontSize: "10px",
+                              lineHeight: "16px",
+                              fontFamily: "Inter",
+                              textAlign: "left",
+                              color: "#6610F2",
+                              backgroundColor: "#EBE5FC",
+                              paddingBottom: "20px",
+                              border: "none",
+                            }}
+                            onClick={() => setShowModalET(true)}
+                          >
+                            {/* <EditTask  taskId={task.id}/> */}
+                            Change
+                          </Button>
+                        </EditTask>
                         <DeleteTask projectId={projectId} taskId={task.id}>
                           <Button
                             style={{
