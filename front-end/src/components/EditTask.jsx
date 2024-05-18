@@ -17,7 +17,7 @@ export const EditTask = ({ taskId, projectId }) => {
 
   // MODAL STATES
   const [showModalET, setShowModalET] = useState(false);
-  const [showConfirmModalET, setShowConfirmModalET] = useState(true);
+  const [showConfirmModalET, setShowConfirmModalET] = useState(false);
 
   // const { projectId } = useParams();
 
@@ -61,7 +61,7 @@ export const EditTask = ({ taskId, projectId }) => {
   };
 
   // Function to submit form after confirmation
-  const confirmFormSubmission = async () => {
+  const confirmFormSubmissionET = async () => {
     try {
       await axios.put(
         `${BASE_URL}/api/projects/${projectId}/tasks/${taskId}`,
@@ -193,10 +193,10 @@ export const EditTask = ({ taskId, projectId }) => {
           <Modal.Title>Confirm Submission</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure you want to submit the changes?</p>
+          <p>Are you sure you want to submit the changes? EDIT TASK</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="submit-button" onClick={confirmFormSubmission}>
+          <Button className="submit-button" onClick={confirmFormSubmissionET}>
             Yes
           </Button>
           <Button
