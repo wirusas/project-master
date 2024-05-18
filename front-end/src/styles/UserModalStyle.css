@@ -1,0 +1,99 @@
+.user-modal{
+    width: 250px;
+    margin-left: 45%;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-modal-header{
+    border-color:  rgb(178, 149, 255);;
+    background-color: rgb(178, 149, 255);
+    color: white;
+    height: 30px;
+    
+}
+.user-modal-body{
+    display: flex;
+    border-right: 4px solid  rgb(178, 149, 255);
+    border-left: 4px solid  rgb(178, 149, 255);
+    padding-bottom: 2px;
+}
+
+.user-modal-footer{
+
+    border-right: 4px solid  rgb(178, 149, 255);
+    border-left: 4px solid  rgb(178, 149, 255);
+    border-bottom: 4px solid  rgb(178, 149, 255);
+    border-top: none;
+}
+#cancel-button:hover{
+ border-color:  rgb(178, 149, 255);
+ background-color: rgb(180, 226, 196);  
+}
+#yes-button:hover{
+    border-color:  rgb(178, 149, 255);
+    background-color: rgb(243, 156, 152);
+}
+
+#cancel-button{
+    background-color: rgba(203, 217, 208);  
+    color: rgba(20, 108, 67, 1);
+    width: 80px;
+    border-color:rgba(203, 217, 208);
+  
+}
+#yes-button{
+    background-color: rgba(244, 195, 192);
+     color: rgba(132, 32, 41, 1);
+     border-color:rgba(244, 195, 192);
+    
+}
+
+.users-text{
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.users-modal-role{
+    display: flex; 
+    border-right: 4px solid  rgb(178, 149, 255);
+    border-left: 4px solid  rgb(178, 149, 255);
+    justify-content: center;
+    padding-left: 25px;
+    height: 20px;
+}
+.users-modal-role p {
+    margin-right: 3px;
+}
+#search-input{
+  background-image: url(../assets/search-icon.svg);
+  background-repeat: no-repeat;
+  background-position-x: 240px;
+  background-position-y: 5px;
+  height: 40px;
+  margin-top: 5px;
+}
+.radio-status input {
+    margin: 10px; 
+}
+.radio-status label{
+    color: #5227CC;
+}
+.dropdown-status select{
+    background-image: url(../assets/filter-icon.png);
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: right center; 
+    padding-right: 20px; 
+    appearance: none;
+    padding-left: 7px;
+    /* border: 2px solid rgb(178, 149, 255); */
+    margin-top: 5px;
+    cursor: pointer; 
+    height: 30px;
+    width: 100px;
+    border-radius: 7px;
+    border: 1px solid;
+    border-Color: rgb(133, 64, 245);
+    box-Shadow: 0px 0px 0px 3px rgba(102, 16, 242, 0.15);
+}

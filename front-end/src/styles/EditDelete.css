@@ -1,0 +1,37 @@
+.edit-delete-buttons {
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.edit-button:hover {
+    background-color: rgb(102, 16, 242);
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: rgb(132, 32, 41);
+    color: white;
+}
+
+.edit-button {
+    width: 54px;
+    height: 25px;
+    font-size: 10px;
+    line-height: 16px;
+    font-family: Inter;
+    color: rgb(102, 16, 242);
+    background-color: rgb(235, 229, 252);
+    margin-right: 10px;
+}
+
+.delete-button {
+    width: 54px;
+    height: 25px;
+    font-size: 10px;
+    line-height: 16px;
+    font-family: Inter;
+    color: rgb(132, 32, 41);
+    background-color: rgb(248, 215, 218);
+}

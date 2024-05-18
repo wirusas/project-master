@@ -1,0 +1,15 @@
+>>> THERE ARE SEPARATE PACKAGES THAT WILL BE USED TO HOLD SEPARATE JAVA CLASSES BY THEIR PURPOSE <<<
+
+
+
+1. CONTROLLERS - will hold all controllers
+2. DTO - will hold all DTOs needed
+3. EXCEPTIONS - will hold all classes needed to handle exceptions
+4. MAPERS - will hold classes to relate DTOs with models
+5. MODELS - will hold all basic models of objects
+6. REPOSITORIES - will hold all necessary repositories
+6. SECURITY - will hold all classes related to authentication and authentification such as JWTs.
+7. SERVICES - will hold all classes needed to execute code related to tasks
+
+
+>>> DO NOT CREATE CLASSES WHERE THEY DO NOT BELONG IF YOU NEED EXTRA FUNCTIONALITY CREATE NEW PACKAGE <<<
