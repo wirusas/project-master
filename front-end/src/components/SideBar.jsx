@@ -43,7 +43,7 @@ export const SideBar= () => {
     <>
       <div className="flex-shrink-0 p-3 ms-4 side-bar">
         <div className="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none">
-          <span className="fw-semibold">Projects</span>
+          <span className="fw-semibold">Navbar</span>
         </div>
         <ul className="list-unstyled ps-0">
           <CreateProject />
@@ -51,7 +51,7 @@ export const SideBar= () => {
           <SideBarProjectList />
           <li className="mb-1">
             <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed sidebar-my-projects" onClick={handleExportCSV} style={{padding: "0"}}>
-              projects.csv
+              project-data.csv
             </button>
           </li>
           

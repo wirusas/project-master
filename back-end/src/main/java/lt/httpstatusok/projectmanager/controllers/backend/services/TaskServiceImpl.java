@@ -7,13 +7,9 @@ import lt.httpstatusok.projectmanager.controllers.backend.models.Task;
 import lt.httpstatusok.projectmanager.controllers.backend.models.enums.TaskStatus;
 import lt.httpstatusok.projectmanager.controllers.backend.repositories.ProjectRepository;
 import lt.httpstatusok.projectmanager.controllers.backend.repositories.TaskRepository;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.io.Writer;
 import java.util.List;
 
 @Service
@@ -60,33 +56,6 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public List<Task> findTasksByStatus(TaskStatus status) {
         return taskRepository.findByStatus(status);
-    }
-
-    @Override
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
-    }
-
-    @Override
-    public void writeTasksToCsv(List<Task> tasks, Writer writer) throws IOException {
-        // Initialize CSVPrinter with writer
-        CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
-
-        // Write headings
-        printer.printRecord("CREATED_AT", "LAST_UPDATE", "ID", "TASK_NAME", "STATUS", "DESCRIPTION");
-
-        // Write project data
-        for (Task task : tasks) {
-            printer.printRecord(
-                   task.getDateCreated(),
-                   task.getLastUpdated(),
-                    task.getId(),
-                    task.getName(),
-                    task.getStatus(),
-                    task.getDescription()
-
-            );
-        }
     }
 
 
