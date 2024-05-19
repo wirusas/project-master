@@ -26,6 +26,14 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
     // setShow(true);
   };
 
+  const handleSearchChange = (e) => {
+    onSearch(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    onFilterChange(e.target.value);
+  };
+
   // const {projectId} = useParams();
 
   return (
@@ -33,7 +41,7 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
       className="column-div"
       style={{
         // border: "2px solid red",
-        width: "1130px",
+        width: "1150px",
         height: "735px",
         marginLeft: "auto",
         marginRight: "30px",

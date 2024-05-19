@@ -1,27 +1,29 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Header } from "./Header";
 import { SideBar } from "./SideBar";
 import "bootstrap/dist/js/bootstrap.bundle";
 import { Footer } from "./Footer";
-
 import { ProjectsList } from "./ProjectsList";
 
 const ProjectsComponent = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterState, setFilterState] = useState(""); 
+  const [searchProjectQuery, setProjectSearchQuery] = useState("");
+  const [filterProjectState, setProjectFilterState] = useState("All");
 
-  const handleSearch = (term) => {
-    setSearchTerm(term);
+  const handleProjectSearch = (query) => {
+    setProjectSearchQuery(query);
   };
 
-  const handleFilterChange = (state) => {
-    setFilterState(state);
+  const handleProjectFilter = (state) => {
+    setProjectFilterState(state);
   };
 
   return (
     <>
-      <Header onSearch={handleSearch} searchTerm={searchTerm} onFilterChange={handleFilterChange} />
-      <ProjectsList searchTerm={searchTerm} filterState={filterState} />
+      <Header onSearch={handleProjectSearch} onFilter={handleProjectFilter} />
+      <ProjectsList
+        searchQuery={searchProjectQuery}
+        filterState={filterProjectState}
+      />
       <br />
       <Footer />
     </>

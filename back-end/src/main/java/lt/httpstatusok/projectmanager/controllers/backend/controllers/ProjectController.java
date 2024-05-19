@@ -18,6 +18,7 @@ import lt.httpstatusok.projectmanager.controllers.backend.services.ProjectServic
 import lt.httpstatusok.projectmanager.controllers.backend.services.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -147,5 +148,52 @@ public class ProjectController {
         response.setContentType("text/csv");
         response.addHeader("Content-Disposition", "attachment; filename=\"projects.csv\"");
         projectService.writeProjectsToCsv(projectService.getAllProjects(), response.getWriter());
+    }
+    @GetMapping("/search")
+    public ResponseEntity<Page<ProjectDto>> findProjectByName(@RequestParam(required = false) String projectName,
+                                                              @RequestParam(defaultValue = "0") int page,
+                                                              @RequestParam(defaultValue = "9") int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Project> projectPage;
+
+            if (projectName != null && !projectName.isEmpty()) {
+                projectPage = projectService.findProjectByName(projectName, pageable);
+            } else {
+                projectPage = projectService.getAllPagedProjects(pageable);
+            }
+
+            if (projectPage.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(projectPage.map(projectMapper::toProjectDto));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    @GetMapping("/filter")
+    public ResponseEntity<Page<Project>> filterProjects(
+            @RequestParam("projectState") String projectState,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "9") int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Project> projectPage;
+
+            if ("All".equalsIgnoreCase(projectState)) {
+                projectPage = projectService.findAllProjects(pageable);
+            } else {
+                projectPage = projectService.findByProjectState(projectState, pageable);
+            }
+
+            if (projectPage.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(projectPage);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
