@@ -8,25 +8,12 @@ import { useNavigate } from "react-router-dom";
 import "../styles/UserModalStyle.css";
 import "../styles/LogOutModalStyle.css";
 
-export const Header = ({ onSearch, onFilter }) => {
+export const TasksHeader = ({ onSearchHandler, searchQuery, onFilterChangeHandler }) => {
   const [showModalUser, setShowModalUser] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const loggedInUser = getLoggedInUser();
   const storedRoles = JSON.parse(localStorage.getItem("userRoles"));
   const navigator = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterState, setFilterState] = useState("ALL");
-
-  const handleProjectSearch = (e) => {
-    e.preventDefault();
-    onSearch(searchTerm);
-  };
-
-  const handleProjectFilter = (e) => {
-    const state = e.target.value;
-    setFilterState(state);
-    onFilter(state);
-  };
 
   const handleLogout = () => {
     logout();
@@ -43,6 +30,15 @@ export const Header = ({ onSearch, onFilter }) => {
 
   const getUserName = (name) => {
     return name;
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    onSearchHandler(e.target.elements.search.value);
+  };
+
+  const handleFilterChange = (e) => {
+    onFilterChangeHandler(e.target.value);
   };
 
   return (
@@ -92,32 +88,33 @@ export const Header = ({ onSearch, onFilter }) => {
             </li>
           </ul>
           <div className="dropdown-status">
-            <select onChange={handleProjectFilter}>
-              <option value="All">All</option>
-              <option value="TO DO">TO DO</option>
+            <select onChange={handleFilterChange}>
+              <option value="">All</option>
+              <option value="TODO">TO DO</option>
+              <option value="IN_PROGRESS">IN PROGRESS</option>
               <option value="DONE">DONE</option>
             </select>
           </div>
 
-          <form 
+          <form
             className="d-flex"
             role="search"
-            onSubmit={handleProjectSearch}
+            onSubmit={handleSearch}
           >
             <input
               className="form-control me-2"
               type="search"
+              name="search"
               placeholder="Search"
               aria-label="Search"
               style={{
                 borderColor: "#8540F5",
                 width: "300px",
               }}
+              defaultValue={searchQuery}
               id="search-input"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button className="projects-header-search" type="submit">Search</button>
+            <button className="tasks-header-search" type="submit">Search</button>
           </form>
           <button
             className="users-initials"
@@ -181,8 +178,12 @@ export const Header = ({ onSearch, onFilter }) => {
           >
             Cancel
           </Button>
-          <Button variant="danger" id="yes-button" onClick={handleLogout}>
-            Yes, log out
+          <Button
+            variant="danger"
+            id="yes-button"
+            onClick={handleLogout}
+          >
+            Yes
           </Button>
         </Modal.Footer>
       </Modal>
