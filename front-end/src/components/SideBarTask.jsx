@@ -6,6 +6,7 @@ import { Modal, Button } from "react-bootstrap";
 import "../styles/LogOutModalStyle.css";
 import { useParams } from "react-router-dom";
 import { CreateTask } from "./CreateTask";
+import axios from "axios";
 
 export const SideBarTask = ({ refreshTasks }) => {
   const isAuth = isUserLoggedIn();
@@ -20,13 +21,38 @@ export const SideBarTask = ({ refreshTasks }) => {
   }
 
   const { projectId } = useParams();
-  // const { setShowModalCT } = useParams();
   const [showModalCT, setShowModalCT] = useState(false);
 
   const handleAddTask = () => {
     console.log(projectId);
-    // navigator(`/create-task/${projectId}`);
     setShowModalCT(true);
+  };
+
+  const downloadCSV = async () => {
+    try {
+      const token = localStorage.getItem("token"); // Replace with actual token retrieval logic
+      if (!token) {
+        console.error("No token found");
+        return;
+      }
+
+      const response = await axios.get(`http://localhost:8080/api/projects/${projectId}/tasks/csv`, {
+        responseType: "blob", // Important for handling binary data
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "tasks.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading the CSV file", error);
+    }
   };
 
   return (
@@ -75,7 +101,6 @@ export const SideBarTask = ({ refreshTasks }) => {
             >
               New Task
             </button>
-            {/* {showModalCT && <CreateTask />} */}
             <CreateTask
               refreshTasks={refreshTasks}
               show={showModalCT}
@@ -84,54 +109,14 @@ export const SideBarTask = ({ refreshTasks }) => {
           </li>
           <li className="mb-1">
             <button
-              className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-              data-bs-toggle="collapse"
-              data-bs-target="#orders-collapse"
-              aria-expanded="false"
+              className="btn btn-toggle d-inline-flex align-items-center rounded border-0"
               style={{ color: "#7749F8" }}
+              onClick={downloadCSV}
+              onMouseEnter={(e) => (e.target.style.fontWeight = "bold")}
+              onMouseLeave={(e) => (e.target.style.fontWeight = "normal")}
             >
-              Save All.CSV
+              tasks.CSV
             </button>
-            <div className="collapse" id="orders-collapse">
-              <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                    style={{ marginLeft: "15px" }}
-                  >
-                    New
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                    style={{ marginLeft: "15px" }}
-                  >
-                    Processed
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                    style={{ marginLeft: "15px" }}
-                  >
-                    Shipped
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                    style={{ marginLeft: "15px" }}
-                  >
-                    Returned
-                  </a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li className="border-top my-3"></li>
           <li className="mb-1">

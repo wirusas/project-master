@@ -1,9 +1,11 @@
 package lt.httpstatusok.projectmanager.controllers.backend.services;
 
 import lt.httpstatusok.projectmanager.controllers.backend.dto.TaskCreateRequest;
+import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Task;
 import lt.httpstatusok.projectmanager.controllers.backend.models.enums.TaskStatus;
 
+import java.io.Writer;
 import java.util.List;
 
 public interface TaskService {
@@ -15,7 +17,13 @@ public interface TaskService {
 
     Task validateAndGetTask(Long id);
 
+
+    List<Task> getAllTasks();
+
+    void writeTasksToCsv(List<Task> projects, Writer writer) throws java.io.IOException;
+
     List<Task> findTasksByName(String name);
 
     List<Task> findTasksByStatus(TaskStatus status);
+
 }
