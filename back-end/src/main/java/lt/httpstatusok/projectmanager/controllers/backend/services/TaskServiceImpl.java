@@ -48,6 +48,15 @@ public class TaskServiceImpl implements TaskService{
     public Task validateAndGetTask(Long id) {
         return taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found with ID: " + id));
     }
+    @Override
+    public List<Task> findTasksByName(String name) {
+        return taskRepository.findByNameContaining(name);
+    }
+
+    @Override
+    public List<Task> findTasksByStatus(TaskStatus status) {
+        return taskRepository.findByStatus(status);
+    }
 
 
 }

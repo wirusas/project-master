@@ -1,5 +1,6 @@
 package lt.httpstatusok.projectmanager.controllers.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "projects_id")
 
     )
+    @JsonIgnore
     private List<Project> followedProjects = new ArrayList<>();
 
 
