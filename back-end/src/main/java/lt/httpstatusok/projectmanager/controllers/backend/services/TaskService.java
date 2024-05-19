@@ -2,6 +2,7 @@ package lt.httpstatusok.projectmanager.controllers.backend.services;
 
 import lt.httpstatusok.projectmanager.controllers.backend.dto.TaskCreateRequest;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Task;
+import lt.httpstatusok.projectmanager.controllers.backend.models.enums.TaskStatus;
 
 import java.util.List;
 
@@ -13,4 +14,8 @@ public interface TaskService {
     void deleteTask(Task task);
 
     Task validateAndGetTask(Long id);
+
+    List<Task> findTasksByName(String name);
+
+    List<Task> findTasksByStatus(TaskStatus status);
 }
