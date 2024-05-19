@@ -1,4 +1,6 @@
 package lt.httpstatusok.projectmanager.controllers.backend.controllers;
+import io.jsonwebtoken.io.IOException;
+import jakarta.servlet.http.HttpServletResponse;
 import lt.httpstatusok.projectmanager.controllers.backend.dto.TaskCreateRequest;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Task;
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,5 +50,13 @@ public class TaskController {
         Task task = taskService.validateAndGetTask(id);
         taskService.deleteTask(task);
         return task;
+    }
+
+    @GetMapping("/csv")
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    public void exportCSV(HttpServletResponse response) throws IOException, java.io.IOException {
+        response.setContentType("text/csv");
+        response.addHeader("Content-Disposition", "attachment; filename=\"tasks.csv\"");
+        taskService.writeTasksToCsv(taskService.getAllTasks(), response.getWriter());
     }
 }
