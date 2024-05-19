@@ -1,4 +1,5 @@
 package lt.httpstatusok.projectmanager.controllers.backend.controllers;
+import jakarta.servlet.http.HttpServletResponse;
 import lt.httpstatusok.projectmanager.controllers.backend.dto.TaskCreateRequest;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Task;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 import java.util.List;
 import static lt.httpstatusok.projectmanager.controllers.backend.config.SwaggerConfig.BEARER_KEY_SECURITY_SCHEME;
 
@@ -70,5 +73,13 @@ public class TaskController {
         } else {
             return new ResponseEntity<>(tasks, HttpStatus.OK);
         }
+    }
+
+    @GetMapping("/csv")
+    @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
+    public void exportCSV(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        response.addHeader("Content-Disposition", "attachment; filename=\"tasks.csv\"");
+        taskService.writeTasksToCsv(taskService.getAllTasks(), response.getWriter());
     }
 }
