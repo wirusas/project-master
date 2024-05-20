@@ -11,6 +11,8 @@ import { DeleteTask } from "./DeleteTask";
 
 const TaskComponent = ({}) => {
   const [tasks, setTasks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
 
   const [selectedTask, setSelectedTask] = useState(null);
   const [showModalET, setShowModalET] = useState(false);
@@ -30,30 +32,31 @@ const TaskComponent = ({}) => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        // Use template literals to insert the projectId into the URL
-        const response = await axios.get(
-          `http://localhost:8080/api/projects/${projectId}/tasks`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setTasks(response.data); // Update the state with the fetched tasks
+        let url = `http://localhost:8080/api/projects/${projectId}/tasks`;
+        if (searchQuery) {
+          url += `/search?name=${searchQuery}`;
+        } else if (filterStatus) {
+          url += `/filter?status=${filterStatus}`;
+        }
+
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setTasks(response.data);
       } catch (error) {
         console.error("Error fetching tasks:", error);
+        if (error.response && error.response.status === 404) {
+          alert("NO DATA !");
+        }
       }
     };
 
     if (projectId) {
-      console.log(projectId);
-      // Ensure projectId is available before fetching
       fetchTasks();
     }
-
-    // useEffect(() => {
-    //   fetchTasks();
-  }, [projectId]);
+  }, [projectId, searchQuery, filterStatus]);
 
   const refreshTasks = async () => {
     const response = await axios.get(
@@ -67,9 +70,21 @@ const TaskComponent = ({}) => {
     setTasks(response.data);
   };
 
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
+  const handleFilterChange = (status) => {
+    setFilterStatus(status);
+  };
+
   return (
     <>
-      <Header />
+      <TasksHeader
+        onSearchHandler={handleSearch}
+        searchQuery={searchQuery}
+        onFilterChangeHandler={handleFilterChange}
+      />
       <div className="task-container">
         <div className="sidebar">
           <SideBarTask refreshTasks={refreshTasks} />

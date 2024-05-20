@@ -25,6 +25,14 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
     // setShow(true);
   };
 
+  const handleSearchChange = (e) => {
+    onSearch(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    onFilterChange(e.target.value);
+  };
+
   // const {projectId} = useParams();
 
   return (

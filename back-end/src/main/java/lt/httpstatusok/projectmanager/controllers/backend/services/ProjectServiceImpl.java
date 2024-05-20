@@ -164,5 +164,19 @@ public class ProjectServiceImpl implements ProjectService {
             );
         }
     }
+    @Override
+    public Page<Project> findProjectByName(String projectName, Pageable pageable) {
+        return projectRepository.findByProjectNameContainingIgnoreCase(projectName, pageable);
+    }
+
+
+    @Override
+    public Page<Project> findByProjectState(String projectState, Pageable pageable) {
+        return projectRepository.findByProjectState(projectState, pageable);
+    }
+
+    public Page<Project> findAllProjects(Pageable pageable) {
+        return projectRepository.findAll(pageable);
+    }
 
 }

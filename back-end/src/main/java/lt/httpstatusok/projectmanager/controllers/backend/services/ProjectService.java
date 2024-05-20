@@ -42,4 +42,10 @@ public interface ProjectService {
 
     void writeProjectsToCsv(List<Project> projects, Writer writer) throws java.io.IOException;
 
+    Page<Project> findProjectByName(String projectName, Pageable pageable);
+
+    Page<Project> findByProjectState(String projectState, Pageable pageable);
+
+    Page<Project> findAllProjects(Pageable pageable);
+
 }

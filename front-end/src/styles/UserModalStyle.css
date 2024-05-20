@@ -72,13 +72,13 @@
   background-position-y: 5px;
   height: 40px;
   margin-top: 5px;
+  height: 38px;
+
 }
-.radio-status input {
-    margin: 10px; 
+#search-input:hover{
+box-Shadow: 0px 0px 0px 3px rgba(102, 16, 242, 0.15)
 }
-.radio-status label{
-    color: #5227CC;
-}
+
 .dropdown-status select{
     background-image: url(../assets/filter-icon.png);
     background-size: 20px 20px;
@@ -94,6 +94,47 @@
     width: 100px;
     border-radius: 7px;
     border: 1px solid;
-    border-Color: rgb(133, 64, 245);
+    border-Color: rgb(178, 149, 255);
+    
+}
+.dropdown-status select:hover{
     box-Shadow: 0px 0px 0px 3px rgba(102, 16, 242, 0.15);
+}
+.tasks-header-search{
+    border-radius: 3px;
+    border: 1px solid rgb(178, 149, 255);
+    background: rgb(178, 149, 255);
+    color: var(--Default-White, #FFF);
+    width: 77px;
+    height: 38px;
+    margin-top: 5px;
+    margin-left: 5px;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px;
+}
+.tasks-header-search:hover{
+    box-Shadow: 0px 0px 0px 3px rgba(102, 16, 242, 0.15);
+    background: rgb(156, 120, 255);;
+}
+.projects-header-search{
+    border-radius: 3px;
+    border: 1px solid rgb(178, 149, 255);
+    background: rgb(178, 149, 255);
+    color: var(--Default-White, #FFF);
+    width: 77px;
+    height: 38px;
+    margin-top: 5px;
+    margin-left: 5px;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px;
+}
+.projects-header-search:hover{
+    box-Shadow: 0px 0px 0px 3px rgba(102, 16, 242, 0.15);
+    background: rgb(156, 120, 255);;
 }
