@@ -17,6 +17,11 @@ public interface TaskService {
 
     Task validateAndGetTask(Long id);
 
+    Task getTaskById(Long id);
+
+    Task updateTask(Long id, Task updatedTask);
+
+
     List<Task> findTasksByName(String name);
 
     List<Task> findTasksByStatus(TaskStatus status);
@@ -24,4 +29,5 @@ public interface TaskService {
     void writeTasksToCsv(List<Task> projects, Writer writer) throws java.io.IOException;
 
     List<Task> getAllTasks();
+
 }

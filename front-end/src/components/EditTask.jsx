@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Form, Button } from "react-bootstrap";
-import { useParams, useNavigate } from "react-router-dom";
-// import Button from "react-bootstrap/Button";
+import { useParams } from "react-router-dom";
 
 // Main base URL
 const BASE_URL = "http://localhost:8080";
 
-export const EditTask = ({ taskId, projectId }) => {
+export const EditTask = ({
+  taskId,
+  showModalET,
+  handleClose,
+  refreshTasks,
+}) => {
+  const { projectId } = useParams(); // This hooks extract the projectId from the URL
+
   // FORM DATA
   const [form, setForm] = useState({
     name: "",
@@ -16,10 +22,7 @@ export const EditTask = ({ taskId, projectId }) => {
   });
 
   // MODAL STATES
-  const [showModalET, setShowModalET] = useState(false);
-  const [showConfirmModalET, setShowConfirmModalET] = useState(true);
-
-  // const { projectId } = useParams();
+  const [showConfirmModalET, setShowConfirmModalET] = useState(false);
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -54,14 +57,14 @@ export const EditTask = ({ taskId, projectId }) => {
   };
 
   // HANDLE FORM SUBMISSION
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
     // Show confirmation modal
     setShowConfirmModalET(true);
   };
 
   // Function to submit form after confirmation
-  const confirmFormSubmission = async () => {
+  const confirmFormSubmissionET = async () => {
     try {
       await axios.put(
         `${BASE_URL}/api/projects/${projectId}/tasks/${taskId}`,
@@ -75,33 +78,26 @@ export const EditTask = ({ taskId, projectId }) => {
       );
       // Close the modal after successful submission
       handleClose();
+
+      refreshTasks();
+
       // Clear form fields after successful submission
       setForm({
         name: "",
         description: "",
         status: "",
       });
-      // Reload the page to reflect changes
-      // window.location.reload(false);
     } catch (error) {
       console.error("Error updating task:", error);
       // Handle error, show error message, etc.
+    } finally {
+      setShowConfirmModalET(false);
     }
   };
 
-  // TOGGLE FORM VISIBILITY
-  const handleClose = () => {
-    setShowModalET(!showModalET);
-  };
-
-  // RETURN
   return (
     <>
-      {/* <Button variant="primary" onClick={() => setShowModalET(true)}>
-        Edit Task
-      </Button> */}
-
-      {/* Modal */}
+      {/* Edit Task Modal */}
       <Modal
         show={showModalET}
         onHide={handleClose}
@@ -158,7 +154,7 @@ export const EditTask = ({ taskId, projectId }) => {
                 Close
               </Button>
               <Button type="submit" variant="primary">
-                Edit Task
+                Save changes
               </Button>
             </Modal.Footer>
           </Form>
@@ -177,7 +173,7 @@ export const EditTask = ({ taskId, projectId }) => {
           <p>Are you sure you want to submit the changes?</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="submit-button" onClick={confirmFormSubmission}>
+          <Button className="submit-button" onClick={confirmFormSubmissionET}>
             Yes
           </Button>
           <Button

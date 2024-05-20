@@ -91,5 +91,23 @@ public class TaskServiceImpl implements TaskService{
         return taskRepository.findAll();
     }
 
+    @Override
+    public Task getTaskById(Long id) {
+            return taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+        }
+
+    @Override
+    public Task updateTask(Long id, Task updatedTask) {
+        return taskRepository.findById(id).map(task -> {
+            task.setName(updatedTask.getName());
+            task.setDescription(updatedTask.getDescription());
+            task.setStatus(updatedTask.getStatus());
+            // other fields to update
+            return taskRepository.save(task);
+        }).orElseThrow(() -> new RuntimeException("Task not updated"));
+    }
 
 }
+
+
+

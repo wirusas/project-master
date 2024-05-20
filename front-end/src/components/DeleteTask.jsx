@@ -31,9 +31,8 @@ export const DeleteTask = ({ projectId, taskId, refreshTasks }) => {
       setShowConfirmModalDT(false);
       // Reload the page
       window.location.reload(false);
-      // if (response.status === 203) {
-      //   refreshTasks();
-      // }
+
+      refreshTasks();
     } catch (error) {
       if (error.response && error.response.status === 403) {
         // unauthorized message modal

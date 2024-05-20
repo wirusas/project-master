@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // Make sure to install axios if not already done
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -12,7 +11,7 @@ import { CreateTask } from "./CreateTask";
 import { EditTask } from "./EditTask";
 import { DeleteTask } from "./DeleteTask";
 
-export const TaskDesktop = ({ tasks, setShowModalET }) => {
+export const TaskDesktop = ({ tasks, onEditTask }) => {
   const { projectId } = useParams(); // This hooks extract the projectId from the URL
   const { taskId } = useParams();
   const [showModal, setShowModal] = useState(false);
@@ -103,7 +102,9 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                         }}
                       >
                         <Row>
-                          <Col className="col-7">{task.name}</Col>
+                          <Col className="col-7" id="task-name-sedebar">
+                            {task.name}
+                          </Col>
                           <Col className="col-5" id="date-format">
                             {/* <img style={{ marginLeft: "50px" }} src={carddate} /> */}
                             {/* Check if task.dateCreated exists before formatting */}
@@ -115,6 +116,7 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                       <Card.Subtitle className="mb-2 text-muted">
                         {/* <p>Task priority: {task.priority}</p> */}
                       </Card.Subtitle>
+
                       <Card.Text
                         style={{
                           borderTop: "2px solid #F47340",
@@ -124,10 +126,12 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                           textAlign: "left",
                           paddingLeft: "10px",
                           paddingRight: "10px",
+                          overflowY: "auto",
                         }}
                       >
                         {task.description}
                       </Card.Text>
+
                       <div
                         style={{
                           display: "flex",
@@ -136,9 +140,10 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                           gap: "8px",
                         }}
                       >
+                        {/* <EditTask projectId={projectId} taskId={task.id}> */}
                         <Button
                           style={{
-                            width: "54px",
+                            width: "54x",
                             height: "25px",
                             fontSize: "10px",
                             lineHeight: "16px",
@@ -149,11 +154,12 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                             paddingBottom: "20px",
                             border: "none",
                           }}
-                          onClick={() => setShowModalET(true)}
+                          onClick={() => onEditTask(task)}
                         >
-                          {/* <EditTask  taskId={task.id}/> */}
-                          Change
+                          {/* <EditTask taskId={task.id} /> */}
+                          Edit task
                         </Button>
+                        {/* </EditTask> */}
                         <DeleteTask projectId={projectId} taskId={task.id}>
                           <Button
                             style={{
@@ -249,6 +255,7 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                           textAlign: "left",
                           paddingLeft: "10px",
                           paddingRight: "10px",
+                          overflowY: "auto",
                         }}
                       >
                         {task.description}
@@ -264,7 +271,7 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                       >
                         <Button
                           style={{
-                            width: "54px",
+                            width: "54x",
                             height: "25px",
                             fontSize: "10px",
                             lineHeight: "16px",
@@ -275,8 +282,10 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                             paddingBottom: "20px",
                             border: "none",
                           }}
+                          onClick={() => onEditTask(task)}
                         >
-                          Change
+                          {/* <EditTask taskId={task.id} /> */}
+                          Edit task
                         </Button>
                         <DeleteTask projectId={projectId} taskId={task.id}>
                           <Button
@@ -372,6 +381,7 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                           textAlign: "left",
                           paddingLeft: "10px",
                           paddingRight: "10px",
+                          overflowY: "auto",
                         }}
                       >
                         {task.description}
@@ -387,7 +397,7 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                       >
                         <Button
                           style={{
-                            width: "54px",
+                            width: "54x",
                             height: "25px",
                             fontSize: "10px",
                             lineHeight: "16px",
@@ -398,8 +408,10 @@ export const TaskDesktop = ({ tasks, setShowModalET }) => {
                             paddingBottom: "20px",
                             border: "none",
                           }}
+                          onClick={() => onEditTask(task)}
                         >
-                          Change
+                          {/* <EditTask taskId={task.id} /> */}
+                          Edit task
                         </Button>
                         <DeleteTask projectId={projectId} taskId={task.id}>
                           <Button

@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { TaskDesktop } from "./TaskDekstop";
+import { Header } from "./Header";
+import { EditTask } from "./EditTask";
 import { TasksHeader } from "./TasksHeader";
-// import { SideBar } from "./SideBar";
 import { Footer } from "./Footer";
 import "../styles/TasksComponentStyle.css";
 import { SideBarTask } from "./SideBarTask";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { DeleteTask } from "./DeleteTask";
 
-const TaskComponent = () => {
+const TaskComponent = ({}) => {
   const [tasks, setTasks] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
 
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [showModalET, setShowModalET] = useState(false);
+
   const { projectId } = useParams();
+
+  const handleEditTask = (task) => {
+    setSelectedTask(task);
+    setShowModalET(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModalET(false);
+    setSelectedTask(null);
+  };
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -66,7 +81,7 @@ const TaskComponent = () => {
 
   return (
     <>
-         <TasksHeader
+      <TasksHeader
         onSearchHandler={handleSearch}
         searchQuery={searchQuery}
         onFilterChangeHandler={handleFilterChange}
@@ -76,12 +91,16 @@ const TaskComponent = () => {
           <SideBarTask refreshTasks={refreshTasks} />
         </div>
         <div className="task-desktop">
-          {/* Pass search and filter handlers to TaskDesktop */}
-          <TaskDesktop
-            tasks={tasks}
-            onSearch={handleSearch}
-            onFilterChange={handleFilterChange}
-          />
+          <TaskDesktop tasks={tasks} onEditTask={handleEditTask} />
+          {selectedTask && (
+            <EditTask
+              taskId={selectedTask.id}
+              projectId={selectedTask.projectId}
+              showModalET={showModalET}
+              handleClose={handleCloseModal}
+              refreshTasks={refreshTasks}
+            />
+          )}
         </div>
       </div>
       <Footer />
