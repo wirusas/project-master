@@ -14,4 +14,6 @@ public interface TaskService {
 
     Task validateAndGetTask(Long id);
 
+    Task getTaskById(Long id);
+
 }
