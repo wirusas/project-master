@@ -118,6 +118,7 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                           textAlign: "left",
                           paddingLeft: "10px",
                           paddingRight: "10px",
+                          overflowY: "auto",
                         }}
                       >
                         {task.description}
@@ -246,6 +247,7 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                           textAlign: "left",
                           paddingLeft: "10px",
                           paddingRight: "10px",
+                          overflowY: "auto",
                         }}
                       >
                         {task.description}
@@ -371,6 +373,7 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                           textAlign: "left",
                           paddingLeft: "10px",
                           paddingRight: "10px",
+                          overflowY: "auto",
                         }}
                       >
                         {task.description}
