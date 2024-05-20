@@ -7,6 +7,7 @@ import "../styles/TasksComponentStyle.css";
 import { SideBarTask } from "./SideBarTask";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { DeleteTask } from "./DeleteTask";
 
 const TaskComponent = ({}) => {
   const [tasks, setTasks] = useState([]);
