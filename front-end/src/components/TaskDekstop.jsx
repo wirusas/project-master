@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import PropTypes from "prop-types";
 import carddate from "../assets/card-date.svg";
 import "../styles/TaskDesktop.css";
 import { useParams, useNavigate } from "react-router-dom";
@@ -11,7 +12,7 @@ import { CreateTask } from "./CreateTask";
 import { EditTask } from "./EditTask";
 import { DeleteTask } from "./DeleteTask";
 
-export const TaskDesktop = ({ tasks, onEditTask }) => {
+export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
   const { projectId } = useParams(); // This hooks extract the projectId from the URL
   const { taskId } = useParams();
   const [showModal, setShowModal] = useState(false);
@@ -160,7 +161,11 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                           Edit task
                         </Button>
                         {/* </EditTask> */}
-                        <DeleteTask projectId={projectId} taskId={task.id}>
+                        <DeleteTask
+                          projectId={projectId}
+                          taskId={task.id}
+                          refreshTasks={refreshTasks}
+                        >
                           <Button
                             style={{
                               width: "54px",
@@ -287,7 +292,11 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                           {/* <EditTask taskId={task.id} /> */}
                           Edit task
                         </Button>
-                        <DeleteTask projectId={projectId} taskId={task.id}>
+                        <DeleteTask
+                          projectId={projectId}
+                          taskId={task.id}
+                          refreshTasks={refreshTasks}
+                        >
                           <Button
                             style={{
                               width: "54px",
@@ -413,7 +422,11 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                           {/* <EditTask taskId={task.id} /> */}
                           Edit task
                         </Button>
-                        <DeleteTask projectId={projectId} taskId={task.id}>
+                        <DeleteTask
+                          projectId={projectId}
+                          taskId={task.id}
+                          refreshTasks={refreshTasks}
+                        >
                           <Button
                             style={{
                               width: "54px",
@@ -442,4 +455,18 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
       {/* {showModal && <CreateTask show={showModal} onHide={() => setShowModal(false)} />} */}
     </div>
   );
+};
+
+TaskDesktop.propTypes = {
+  tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+      dateCreated: PropTypes.string,
+    })
+  ).isRequired,
+  onEditTask: PropTypes.func.isRequired,
+  refreshTasks: PropTypes.func.isRequired,
 };

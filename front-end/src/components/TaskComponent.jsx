@@ -91,7 +91,11 @@ const TaskComponent = ({}) => {
           <SideBarTask refreshTasks={refreshTasks} />
         </div>
         <div className="task-desktop">
-          <TaskDesktop tasks={tasks} onEditTask={handleEditTask} />
+          <TaskDesktop
+            tasks={tasks}
+            onEditTask={handleEditTask}
+            refreshTasks={refreshTasks}
+          />
           {selectedTask && (
             <EditTask
               taskId={selectedTask.id}
