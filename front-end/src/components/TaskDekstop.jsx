@@ -32,7 +32,7 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
       className="column-div"
       style={{
         // border: "2px solid red",
-        width: "1130px",
+        width: "1150px",
         height: "735px",
         marginLeft: "auto",
         marginRight: "30px",
@@ -130,7 +130,7 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                         {/* <EditTask projectId={projectId} taskId={task.id}> */}
                         <Button
                           style={{
-                            width: "54px",
+                            width: "54x",
                             height: "25px",
                             fontSize: "10px",
                             lineHeight: "16px",
@@ -144,7 +144,7 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                           onClick={() => onEditTask(task)}
                         >
                           {/* <EditTask taskId={task.id} /> */}
-                          Change
+                          Edit task
                         </Button>
                         {/* </EditTask> */}
                         <DeleteTask projectId={projectId} taskId={task.id}>
@@ -257,7 +257,7 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                       >
                         <Button
                           style={{
-                            width: "54px",
+                            width: "54x",
                             height: "25px",
                             fontSize: "10px",
                             lineHeight: "16px",
@@ -268,8 +268,10 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                             paddingBottom: "20px",
                             border: "none",
                           }}
+                          onClick={() => onEditTask(task)}
                         >
-                          Change
+                          {/* <EditTask taskId={task.id} /> */}
+                          Edit task
                         </Button>
                         <DeleteTask projectId={projectId} taskId={task.id}>
                           <Button
@@ -380,7 +382,7 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                       >
                         <Button
                           style={{
-                            width: "54px",
+                            width: "54x",
                             height: "25px",
                             fontSize: "10px",
                             lineHeight: "16px",
@@ -391,8 +393,10 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                             paddingBottom: "20px",
                             border: "none",
                           }}
+                          onClick={() => onEditTask(task)}
                         >
-                          Change
+                          {/* <EditTask taskId={task.id} /> */}
+                          Edit task
                         </Button>
                         <DeleteTask projectId={projectId} taskId={task.id}>
                           <Button

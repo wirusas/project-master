@@ -16,4 +16,6 @@ public interface TaskService {
 
     Task getTaskById(Long id);
 
+    Task updateTask(Long id, Task updatedTask);
+
 }
