@@ -76,6 +76,7 @@ public class TaskController {
         }
     }
 
+
     @GetMapping("/search")
     public ResponseEntity<List<Task>> searchTasksByName(@PathVariable String projectId,
                                                         @RequestParam("name") String name) {

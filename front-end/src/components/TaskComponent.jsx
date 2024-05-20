@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { TaskDesktop } from "./TaskDekstop";
 import { Header } from "./Header";
 import { EditTask } from "./EditTask";
+import { TasksHeader } from "./TasksHeader";
 import { Footer } from "./Footer";
 import "../styles/TasksComponentStyle.css";
 import { SideBarTask } from "./SideBarTask";
