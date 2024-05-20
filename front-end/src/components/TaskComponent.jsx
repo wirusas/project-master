@@ -49,6 +49,9 @@ const TaskComponent = ({}) => {
       // Ensure projectId is available before fetching
       fetchTasks();
     }
+
+    // useEffect(() => {
+    //   fetchTasks();
   }, [projectId]);
 
   const refreshTasks = async () => {
@@ -78,6 +81,7 @@ const TaskComponent = ({}) => {
               projectId={selectedTask.projectId}
               showModalET={showModalET}
               handleClose={handleCloseModal}
+              // refreshTasks={fetchTasks}
             />
           )}
         </div>

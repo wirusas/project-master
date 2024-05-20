@@ -8,7 +8,12 @@ import { useParams } from "react-router-dom";
 // Main base URL
 const BASE_URL = "http://localhost:8080";
 
-export const EditTask = ({ taskId, showModalET, handleClose }) => {
+export const EditTask = ({
+  taskId,
+  showModalET,
+  handleClose,
+  refreshTasks,
+}) => {
   const { projectId } = useParams(); // This hooks extract the projectId from the URL
 
   // FORM DATA
@@ -19,10 +24,7 @@ export const EditTask = ({ taskId, showModalET, handleClose }) => {
   });
 
   // MODAL STATES
-  // const [showModalET, setShowModalET] = useState(false);
   const [showConfirmModalET, setShowConfirmModalET] = useState(false);
-
-  // const { projectId } = useParams();
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -77,56 +79,30 @@ export const EditTask = ({ taskId, showModalET, handleClose }) => {
         }
       );
       // Close the modal after successful submission
-      // handleClose();
-      showModalET(false);
       handleClose();
 
       // Clear form fields after successful submission
-      setForm({
-        name: "",
-        description: "",
-        status: "",
-      });
+      if (response.status === 200) {
+        refreshTasks();
+        setForm({
+          name: "",
+          description: "",
+          status: "",
+        });
+      }
 
       // Reload the page to reflect changes
       // window.location.reload(false);
     } catch (error) {
       console.error("Error updating task:", error);
       // Handle error, show error message, etc.
+    } finally {
+      setShowConfirmModalET(false);
     }
   };
 
-  // TOGGLE FORM VISIBILITY
-  // const handleClose = () => {
-  //   setShowModalET(!showModalET);
-  // };
-
-  // RETURN
   return (
     <>
-      {/* <Button variant="primary" onClick={() => setShowModalET(true)}>
-        Edit Task
-      </Button> */}
-
-      {/* <Button
-        style={{
-          width: "54px",
-          height: "25px",
-          fontSize: "10px",
-          lineHeight: "16px",
-          fontFamily: "Inter",
-          textAlign: "left",
-          color: "#6610F2",
-          backgroundColor: "#EBE5FC",
-          paddingBottom: "20px",
-          border: "none",
-        }}
-        onClick={() => showModalET(true)}
-      >
-        {/* <EditTask  taskId={task.id}/> */}
-      {/* Change
-      </Button> */}
-
       {/* Edit Task Modal */}
       <Modal
         show={showModalET}
@@ -184,7 +160,7 @@ export const EditTask = ({ taskId, showModalET, handleClose }) => {
                 Close
               </Button>
               <Button type="submit" variant="primary">
-                Edit Task
+                Save changes
               </Button>
             </Modal.Footer>
           </Form>
@@ -200,7 +176,7 @@ export const EditTask = ({ taskId, showModalET, handleClose }) => {
           <Modal.Title>Confirm Submission</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Are you sure you want to submit the changes? EDIT TASK</p>
+          <p>Are you sure you want to submit the changes?</p>
         </Modal.Body>
         <Modal.Footer>
           <Button className="submit-button" onClick={confirmFormSubmissionET}>
