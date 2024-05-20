@@ -81,7 +81,7 @@ const TaskComponent = ({}) => {
               projectId={selectedTask.projectId}
               showModalET={showModalET}
               handleClose={handleCloseModal}
-              // refreshTasks={fetchTasks}
+              refreshTasks={refreshTasks}
             />
           )}
         </div>

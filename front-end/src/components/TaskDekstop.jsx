@@ -94,7 +94,9 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                         }}
                       >
                         <Row>
-                          <Col className="col-7">{task.name}</Col>
+                          <Col className="col-7" id="task-name-sedebar">
+                            {task.name}
+                          </Col>
                           <Col className="col-5" id="date-format">
                             {/* <img style={{ marginLeft: "50px" }} src={carddate} /> */}
                             {/* Check if task.dateCreated exists before formatting */}
@@ -106,6 +108,7 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                       <Card.Subtitle className="mb-2 text-muted">
                         {/* <p>Task priority: {task.priority}</p> */}
                       </Card.Subtitle>
+
                       <Card.Text
                         style={{
                           borderTop: "2px solid #F47340",
@@ -119,6 +122,7 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                       >
                         {task.description}
                       </Card.Text>
+
                       <div
                         style={{
                           display: "flex",

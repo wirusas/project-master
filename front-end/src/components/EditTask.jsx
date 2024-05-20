@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Form, Button } from "react-bootstrap";
-import { TaskDesktop } from "./TaskDekstop";
-import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 // Main base URL
@@ -81,18 +79,14 @@ export const EditTask = ({
       // Close the modal after successful submission
       handleClose();
 
-      // Clear form fields after successful submission
-      if (response.status === 200) {
-        refreshTasks();
-        setForm({
-          name: "",
-          description: "",
-          status: "",
-        });
-      }
+      refreshTasks();
 
-      // Reload the page to reflect changes
-      // window.location.reload(false);
+      // Clear form fields after successful submission
+      setForm({
+        name: "",
+        description: "",
+        status: "",
+      });
     } catch (error) {
       console.error("Error updating task:", error);
       // Handle error, show error message, etc.
