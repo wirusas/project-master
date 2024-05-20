@@ -30,7 +30,7 @@ export const DeleteTask = ({ projectId, taskId, refreshTasks }) => {
       // Close the confirmation modal
       setShowConfirmModalDT(false);
       // Reload the page
-      // window.location.reload(false);
+      window.location.reload(false);
 
       refreshTasks();
     } catch (error) {
