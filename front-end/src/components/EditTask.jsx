@@ -18,6 +18,7 @@ export const EditTask = ({
   const [form, setForm] = useState({
     name: "",
     description: "",
+    priority: "",
     status: "",
   });
 
@@ -38,6 +39,7 @@ export const EditTask = ({
         setForm({
           name: response.data.name,
           description: response.data.description,
+          priority: response.data.priority,
           status: response.data.status,
         });
       } catch (error) {
@@ -85,6 +87,7 @@ export const EditTask = ({
       setForm({
         name: "",
         description: "",
+        priority: "",
         status: "",
       });
     } catch (error) {
@@ -148,6 +151,39 @@ export const EditTask = ({
                 <option value="IN_PROGRESS">In Progress</option>
                 <option value="DONE">Done</option>
               </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="taskPriority">
+              <h4 style={{ color: "#7749F8" }}>Priority</h4>
+              <Form.Check
+                type="checkbox"
+                label="LOW"
+                name="priority"
+                value="LOW"
+                style={{ color: "#228B22" }}
+                checked={form.priority === "LOW"}
+                onChange={handleFormChange}
+                inline
+              />
+              <Form.Check
+                type="checkbox"
+                label="Medium"
+                name="priority"
+                value="MEDIUM"
+                style={{ color: "#FF8C00" }}
+                checked={form.priority === "MEDIUM"}
+                onChange={handleFormChange}
+                inline
+              />
+              <Form.Check
+                type="checkbox"
+                label="HIGH"
+                name="priority"
+                value="HIGH"
+                style={{ color: "#B22222" }}
+                checked={form.priority === "HIGH"}
+                onChange={handleFormChange}
+                inline
+              />
             </Form.Group>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>

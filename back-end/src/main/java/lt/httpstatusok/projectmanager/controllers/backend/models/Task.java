@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
+import lt.httpstatusok.projectmanager.controllers.backend.models.enums.TaskPriority;
 import lt.httpstatusok.projectmanager.controllers.backend.models.enums.TaskStatus;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -37,6 +38,10 @@ public class Task {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TaskPriority priority;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

@@ -11,6 +11,7 @@ export const CreateTask = ({ refreshTasks, show, onClose }) => {
     name: "",
     description: "",
     dateCreated: "",
+    priority: "LOW",
     status: "TODO", // Default status
   });
 
@@ -39,6 +40,7 @@ export const CreateTask = ({ refreshTasks, show, onClose }) => {
           name: "",
           description: "",
           dateCreated: "",
+          priority: "",
           status: "TODO",
         });
         onClose();
@@ -85,16 +87,52 @@ export const CreateTask = ({ refreshTasks, show, onClose }) => {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="taskStatus">
-            <Form.Select
+            {/* <Form.Select
               name="status"
               value={formTask.status}
               onChange={handleFormChange}
-              required
-            >
-              <option value="TODO">To Do</option>
+              required */}
+            {/* > */}
+            {/* <option value="TODO">To Do</option>
               <option value="IN_PROGRESS">In Progress</option>
-              <option value="DONE">Done</option>
-            </Form.Select>
+              <option value="DONE">Done</option> */}
+            {/* <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </Form.Select> */}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="taskPriority">
+            <h4 style={{ color: "#7749F8" }}>Priority</h4>
+            <Form.Check
+              type="checkbox"
+              label="Low"
+              name="priority"
+              value="LOW"
+              style={{ color: "#228B22" }}
+              checked={formTask.priority === "LOW"}
+              onChange={handleFormChange}
+              inline
+            />
+            <Form.Check
+              type="checkbox"
+              label="Medium"
+              name="priority"
+              value="MEDIUM"
+              style={{ color: "#FF8C00" }}
+              checked={formTask.priority === "MEDIUM"}
+              onChange={handleFormChange}
+              inline
+            />
+            <Form.Check
+              type="checkbox"
+              label="High"
+              name="priority"
+              value="HIGH"
+              style={{ color: "#B22222" }}
+              checked={formTask.priority === "HIGH"}
+              onChange={handleFormChange}
+              inline
+            />
           </Form.Group>
           <Modal.Footer>
             <Button variant="secondary" onClick={onClose}>

@@ -10,12 +10,26 @@
   overflow-y: auto;
 }
 
+#task-name-task-desktop {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 #date-format {
   font-size: small;
   padding-top: 6px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
-#task-name-sedebar {
+#priority-format {
+  font-size: small;
+  padding-top: 6px;
+  padding-left: 5px;
+  padding-right: 0px;
+}
+
+/* #task-name-sedebar {
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -23,4 +37,4 @@
 .task-description-sedebar {
   overflow-x: hidden;
   overflow-y: auto;
-}
+} */

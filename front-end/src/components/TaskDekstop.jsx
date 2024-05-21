@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import PropTypes from "prop-types";
 import carddate from "../assets/card-date.svg";
 import "../styles/TaskDesktop.css";
 import { useParams, useNavigate } from "react-router-dom";
@@ -11,7 +12,7 @@ import { CreateTask } from "./CreateTask";
 import { EditTask } from "./EditTask";
 import { DeleteTask } from "./DeleteTask";
 
-export const TaskDesktop = ({ tasks, onEditTask }) => {
+export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
   const { projectId } = useParams(); // This hooks extract the projectId from the URL
   const { taskId } = useParams();
   const [showModal, setShowModal] = useState(false);
@@ -49,10 +50,6 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
       }}
     >
       <Container>
-        {/* Button to create Task directly, from component */}
-        {/* <Button onClick={handleAddTask} style={{ margin: "10px 0" }}>
-          Add New Task
-        </Button> */}
         <Row>
           <Col
             style={{
@@ -102,13 +99,14 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                         }}
                       >
                         <Row>
-                          <Col className="col-7" id="task-name-sedebar">
+                          <Col className="col-6" id="task-name-task-desktop">
                             {task.name}
                           </Col>
-                          <Col className="col-5" id="date-format">
-                            {/* <img style={{ marginLeft: "50px" }} src={carddate} /> */}
-                            {/* Check if task.dateCreated exists before formatting */}
+                          <Col className="col-3" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
+                          </Col>
+                          <Col className="col-1" id="priority-format">
+                            {task.priority}
                           </Col>
                         </Row>
                       </Card.Title>
@@ -160,7 +158,11 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                           Edit task
                         </Button>
                         {/* </EditTask> */}
-                        <DeleteTask projectId={projectId} taskId={task.id}>
+                        <DeleteTask
+                          projectId={projectId}
+                          taskId={task.id}
+                          refreshTasks={refreshTasks}
+                        >
                           <Button
                             style={{
                               width: "54px",
@@ -232,17 +234,18 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                         }}
                       >
                         <Row>
-                          <Col className="col-7">{task.name}</Col>
-                          <Col className="col-5" id="date-format">
-                            {/* <img
-                              style={{ marginLeft: "50px" }}
-                              src={carddate}
-                            /> */}
-                            {/* Check if task.dateCreated exists before formatting */}
+                          <Col className="col-6" id="task-name-task-desktop">
+                            {task.name}
+                          </Col>
+                          <Col className="col-3" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
+                          </Col>
+                          <Col className="col-1" id="priority-format">
+                            {task.priority}
                           </Col>
                         </Row>
                       </Card.Title>
+
                       <Card.Subtitle className="mb-2 text-muted">
                         {/* <p>Task priority: {task.priority}</p> */}
                       </Card.Subtitle>
@@ -287,7 +290,11 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                           {/* <EditTask taskId={task.id} /> */}
                           Edit task
                         </Button>
-                        <DeleteTask projectId={projectId} taskId={task.id}>
+                        <DeleteTask
+                          projectId={projectId}
+                          taskId={task.id}
+                          refreshTasks={refreshTasks}
+                        >
                           <Button
                             style={{
                               width: "54px",
@@ -359,13 +366,14 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                         }}
                       >
                         <Row>
-                          <Col className="col-7">{task.name}</Col>
-                          <Col className="col-5" id="date-format">
-                            {/* <img
-                              style={{ marginLeft: "50px" }}
-                              src={carddate}/> */}
-                            {/* Check if task.dateCreated exists before formatting */}
+                          <Col className="col-6" id="task-name-task-desktop">
+                            {task.name}
+                          </Col>
+                          <Col className="col-3" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
+                          </Col>
+                          <Col className="col-1" id="priority-format">
+                            {task.priority}
                           </Col>
                         </Row>
                       </Card.Title>
@@ -413,7 +421,11 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
                           {/* <EditTask taskId={task.id} /> */}
                           Edit task
                         </Button>
-                        <DeleteTask projectId={projectId} taskId={task.id}>
+                        <DeleteTask
+                          projectId={projectId}
+                          taskId={task.id}
+                          refreshTasks={refreshTasks}
+                        >
                           <Button
                             style={{
                               width: "54px",
@@ -442,4 +454,19 @@ export const TaskDesktop = ({ tasks, onEditTask }) => {
       {/* {showModal && <CreateTask show={showModal} onHide={() => setShowModal(false)} />} */}
     </div>
   );
+};
+
+TaskDesktop.propTypes = {
+  tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      priority: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+      dateCreated: PropTypes.string,
+    })
+  ).isRequired,
+  onEditTask: PropTypes.func.isRequired,
+  refreshTasks: PropTypes.func.isRequired,
 };
