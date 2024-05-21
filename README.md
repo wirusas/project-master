@@ -66,10 +66,17 @@ order-api has the following ENDPOINTS:
 
 - In a terminal (it might be Visual Studio Code), you can download it [`here`](https://code.visualstudio.com/download), make sure you are inside `front-end` root folder;
 
-- Run the following command to install npm `npm i` or `npm install`if you are running application for the first time;
-
+- If you are running application for the first time;Run the following command to install npm 
+ ```
+   `npm i`;
+ ``` or
   ```
-  Run the following command to start front end application `npm run dev`;
+   `npm install`;
+  ```
+
+  Run the following command to start front end application 
+  ```
+   `npm run dev`;
   ```
 
 
