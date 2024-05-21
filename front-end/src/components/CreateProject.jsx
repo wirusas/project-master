@@ -79,15 +79,21 @@ export const CreateProject = () => {
       </Button>
 
       {/* Modal */}
-      <Modal show={showModal} onHide={toggleForm}>
-        <Modal.Header closeButton>
-          <Modal.Title>Create Project</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <Modal show={showModal} onHide={toggleForm} >
+        
+        <Modal.Body className="rouded"
+        style={{
+          borderStyle: "solid",
+          borderColor: "#5227cce0",
+          borderWidth: "4px",
+          background:
+            "linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(119, 73, 248, 0.19))",
+        }}>
           <Form onSubmit={handleFormSubmit}>
             <Form.Group controlId="projectName">
-              <Form.Label>* Project Name:</Form.Label>
+              <Form.Label></Form.Label>
               <Form.Control
+              placeholder="Project Name"
                 required
                 type="text"
                 name="projectName"
@@ -97,8 +103,9 @@ export const CreateProject = () => {
               />
             </Form.Group>
             <Form.Group controlId="description">
-              <Form.Label>* Project Description:</Form.Label>
+              <Form.Label></Form.Label>
               <Form.Control
+              placeholder="Project Description"
                 as="textarea"
                 required
                 name="description"
@@ -108,11 +115,12 @@ export const CreateProject = () => {
                 style={{ resize: "none" }}
                 maxLength={500}
               />
+              <div className="description-button-separator"></div>
             </Form.Group>
             <div style={{ height: "20px" }}></div>
             <div className="d-flex justify-content-end">
               <Button variant="secondary" onClick={toggleForm} className="mr-2">
-                Cancel
+                Close
               </Button>
               <Button className="submit-button" type="submit" style={{ marginLeft: "7px" }}>
                 Save
