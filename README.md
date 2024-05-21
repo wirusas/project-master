@@ -91,8 +91,8 @@ order-api has the following ENDPOINTS:
 
 ## Applications URLs
 
-| back-end    | http://localhost:8080                 |                                                     |
-| front-end   | http://localhost:3000/                | `admin/admin`, `user/user` or signing up a new user |
+| back-end    | http://localhost:8080    |                                                     |
+| front-end   | http://localhost:3000/   | `admin/admin`, `user/user` or signing up a new user |
 
 > **Note**: the credentials shown in the table are the ones already pre-defined. You can signup new users.
 
