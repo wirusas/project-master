@@ -118,7 +118,7 @@ export const SideBarTask = ({ refreshTasks }) => {
               onMouseEnter={(e) => (e.target.style.fontWeight = "bold")}
               onMouseLeave={(e) => (e.target.style.fontWeight = "normal")}
             >
-              task-data.CSV
+              tasks.CSV
             </button>
           </li>
           <li className="border-top my-3"></li>
