@@ -32,20 +32,17 @@ order-api has the following ENDPOINTS:
   | `GET     /api/projects/csv`                                   | Yes     | `ADMIN`, `USER` |
   | `GET     /api/projects/allprojects`                           | Yes     | `ADMIN`, `USER` |
   | `DELETE  /api/projects/{projectId}/removeUser/{userEmail}`    | Yes     | `ADMIN`, `USER` |
-
   | `POST /auth/signup`                                           | No      |                 |
   | `POST /auth/authenticate`                                     | No      |                 |
-
   | `GET /api/projects/{projectId}/tasks`                         | Yes     | `ADMIN`, `USER` |
   | `POST /api/projects/{projectId}/tasks`                        | Yes     | `ADMIN`, `USER` |
   | `GET /api/projects/{projectId}/tasks/search`                  | Yes     | `ADMIN`, `USER` |
   | `GET /api/projects/{projectId}/tasks/filter`                  | Yes     | `ADMIN`, `USER` |
   | `GET /api/projects/{projectId}/tasks/csv`                     | Yes     | `ADMIN`, `USER` |
   | `DELETE /api/projects/{projectId}/tasks/{id}`                 | Yes     | `ADMIN`, `USER` |
-
   | `GET /api/users`                                              | No      | `ADMIN`         |
   | `GET /api/users/{username}`                                   | Yes     | `ADMIN`         |
-  | `DELETE /api/users/{username}`                                  | Yes     | `ADMIN`, `USER` |
+  | `DELETE /api/users/{username}`                                | Yes     | `ADMIN`, `USER` |
   | `GET /api/me`                                                 | Yes     | `ADMIN`, `USER` |
 
 
