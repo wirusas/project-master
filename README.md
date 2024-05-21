@@ -68,17 +68,18 @@ order-api has the following ENDPOINTS:
 
 - If you are running application for the first time;Run the following command to install npm 
    ```
-   `npm i`
+   npm i
  
  or
 
    ```
-    `npm install`
+    `npm install
+   ```
 
-Run the following command to start front end application 
+- Run the following command to start front end application 
 
    ```
-   `npm run dev`;
+   npm run dev
 
 
 
