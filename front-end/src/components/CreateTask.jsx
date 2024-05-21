@@ -135,35 +135,6 @@ export const CreateTask = ({ refreshTasks, show, onClose }) => {
             />
           </Form.Group>
           <Modal.Footer>
-            {/* <Form.Group className="mb-3" controlId="taskPriority">
-              <Form.Check
-                type="radio"
-                label="Low"
-                name="priority"
-                value="Low"
-                checked={formTask.priority === "Low"}
-                onChange={handleFormChange}
-                inline
-              />
-              <Form.Check
-                type="radio"
-                label="Medium"
-                name="priority"
-                value="Medium"
-                checked={formTask.priority === "Medium"}
-                onChange={handleFormChange}
-                inline
-              />
-              <Form.Check
-                type="radio"
-                label="High"
-                name="priority"
-                value="High"
-                checked={formTask.priority === "High"}
-                onChange={handleFormChange}
-                inline
-              />
-            </Form.Group> */}
             <Button variant="secondary" onClick={onClose}>
               Close
             </Button>
