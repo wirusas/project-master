@@ -105,7 +105,8 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                           <Col className="col-4" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
                           </Col>
-                          <Col className="col-2" id="date-format">
+                          <Col className="col-2" id="priority-format">
+                            {task.priority}
                             {/* {task.dateCreated && formatDate(task.dateCreated)} */}
                           </Col>
                         </Row>
@@ -460,6 +461,7 @@ TaskDesktop.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
+      priority: PropTypes.string.isRequired,
       status: PropTypes.string.isRequired,
       dateCreated: PropTypes.string,
     })
