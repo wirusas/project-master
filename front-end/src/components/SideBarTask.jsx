@@ -130,7 +130,7 @@ export const SideBarTask = ({ refreshTasks }) => {
               aria-expanded="false"
               style={{ color: "#7749F8" }}
             >
-              Account
+              {/* Account */}
             </button>
             <div className="collapse" id="account-collapse">
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">

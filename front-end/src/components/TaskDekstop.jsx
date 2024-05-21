@@ -22,8 +22,6 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
 
   const handleAddTask = () => {
     navigate(`/create-task/${projectId}`);
-
-    // setShow(true);
   };
 
   const handleSearchChange = (e) => {
@@ -34,7 +32,11 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
     onFilterChange(e.target.value);
   };
 
-  // const {projectId} = useParams();
+  const MAX_LENGTH = 14;
+
+  const truncateText = (text, maxLength) => {
+    return text.length > maxLength ? text.substring(0, maxLength) + ".." : text;
+  };
 
   return (
     <div
@@ -94,13 +96,12 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                       <Card.Title
                         style={{
                           textAlign: "left",
-                          textDecoration: "underline",
                           marginLeft: "20px",
                         }}
                       >
                         <Row>
                           <Col className="col-6" id="task-name-task-desktop">
-                            {task.name}
+                            {truncateText(task.name, MAX_LENGTH)}
                           </Col>
                           <Col className="col-3" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
@@ -229,13 +230,12 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                       <Card.Title
                         style={{
                           textAlign: "left",
-                          textDecoration: "underline",
                           marginLeft: "20px",
                         }}
                       >
                         <Row>
                           <Col className="col-6" id="task-name-task-desktop">
-                            {task.name}
+                            {truncateText(task.name, MAX_LENGTH)}
                           </Col>
                           <Col className="col-3" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
@@ -361,13 +361,12 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                       <Card.Title
                         style={{
                           textAlign: "left",
-                          textDecoration: "underline",
                           marginLeft: "20px",
                         }}
                       >
                         <Row>
                           <Col className="col-6" id="task-name-task-desktop">
-                            {task.name}
+                            {truncateText(task.name, MAX_LENGTH)}
                           </Col>
                           <Col className="col-3" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
@@ -451,7 +450,6 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
           </Col>
         </Row>
       </Container>
-      {/* {showModal && <CreateTask show={showModal} onHide={() => setShowModal(false)} />} */}
     </div>
   );
 };
