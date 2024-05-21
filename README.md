@@ -40,7 +40,7 @@ order-api has the following ENDPOINTS:
   | `GET /api/projects/{projectId}/tasks/filter`                  | Yes     | `ADMIN`, `USER` |
   | `GET /api/projects/{projectId}/tasks/csv`                     | Yes     | `ADMIN`, `USER` |
   | `DELETE /api/projects/{projectId}/tasks/{id}`                 | Yes     | `ADMIN`, `USER` |
-  | `GET /api/users`                                              | No      | `ADMIN`         |
+  | `GET /api/users`                                              | Yes     | `ADMIN`         |
   | `GET /api/users/{username}`                                   | Yes     | `ADMIN`         |
   | `DELETE /api/users/{username}`                                | Yes     | `ADMIN`, `USER` |
   | `GET /api/me`                                                 | Yes     | `ADMIN`, `USER` |
