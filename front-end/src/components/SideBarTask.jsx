@@ -36,12 +36,15 @@ export const SideBarTask = ({ refreshTasks }) => {
         return;
       }
 
-      const response = await axios.get(`http://localhost:8080/api/projects/${projectId}/tasks/csv`, {
-        responseType: "blob", // Important for handling binary data
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `http://localhost:8080/api/projects/${projectId}/tasks/csv`,
+        {
+          responseType: "blob", // Important for handling binary data
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
@@ -74,7 +77,7 @@ export const SideBarTask = ({ refreshTasks }) => {
               paddingTop: "13px",
             }}
           >
-            Navbar
+            Tasks
           </span>
         </div>
         <ul className="list-unstyled ps-0">

@@ -50,10 +50,6 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
       }}
     >
       <Container>
-        {/* Button to create Task directly, from component */}
-        {/* <Button onClick={handleAddTask} style={{ margin: "10px 0" }}>
-          Add New Task
-        </Button> */}
         <Row>
           <Col
             style={{
@@ -103,13 +99,14 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                         }}
                       >
                         <Row>
-                          <Col className="col-7" id="task-name-sedebar">
+                          <Col className="col-6" id="task-name-sedebar">
                             {task.name}
                           </Col>
-                          <Col className="col-5" id="date-format">
-                            {/* <img style={{ marginLeft: "50px" }} src={carddate} /> */}
-                            {/* Check if task.dateCreated exists before formatting */}
+                          <Col className="col-4" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
+                          </Col>
+                          <Col className="col-2" id="date-format">
+                            {/* {task.dateCreated && formatDate(task.dateCreated)} */}
                           </Col>
                         </Row>
                       </Card.Title>
