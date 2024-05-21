@@ -10,3 +10,11 @@
 .task-desktop {
   flex: 1;
 }
+.no-data-tasks-div{
+  padding-bottom: 470px;
+  margin-left: 50vh;
+  margin-top: 20px;
+}
+.no-data-tasks-div img{
+  width: 150px;
+}
