@@ -40,7 +40,7 @@ export const CreateTask = ({ refreshTasks, show, onClose }) => {
           name: "",
           description: "",
           dateCreated: "",
-          priority: "",
+          priority: "LOW",
           status: "TODO",
         });
         onClose();
