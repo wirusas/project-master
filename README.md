@@ -64,7 +64,7 @@ order-api has the following ENDPOINTS:
 
 **front-end**
 
-- In a terminal (it might be Visual Studio Code), you can download it here https://code.visualstudio.com/download, make sure you are inside `front-end` root folder;
+- In a terminal (it might be Visual Studio Code), you can download it [`here`](https://code.visualstudio.com/download), make sure you are inside `front-end` root folder;
 
 - Run the following command to install npm `npm i` or `npm install`if you are running application for the first time;
 
@@ -75,7 +75,7 @@ order-api has the following ENDPOINTS:
 
 - **back-end**
 
-  - Open java Compiler (it might be IntelliJ IDEA) you can download it here (https://www.jetbrains.com/idea/download/?section=windows);
+  - Open java Compiler (it might be IntelliJ IDEA) you can download it [`here`](https://www.jetbrains.com/idea/download/?section=windows);
   - In the compiler open back-end application
   - run BackEndEplication
 
