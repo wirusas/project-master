@@ -11,7 +11,7 @@ export const CreateTask = ({ refreshTasks, show, onClose }) => {
     name: "",
     description: "",
     dateCreated: "",
-    priority: "Low",
+    priority: "LOW",
     status: "TODO", // Default status
   });
 
@@ -107,9 +107,9 @@ export const CreateTask = ({ refreshTasks, show, onClose }) => {
               type="checkbox"
               label="Low"
               name="priority"
-              value="Low"
+              value="LOW"
               style={{ color: "#228B22" }}
-              checked={formTask.priority === "Low"}
+              checked={formTask.priority === "LOW"}
               onChange={handleFormChange}
               inline
             />
@@ -117,9 +117,9 @@ export const CreateTask = ({ refreshTasks, show, onClose }) => {
               type="checkbox"
               label="Medium"
               name="priority"
-              value="Medium"
+              value="MEDIUM"
               style={{ color: "#FF8C00" }}
-              checked={formTask.priority === "Medium"}
+              checked={formTask.priority === "MEDIUM"}
               onChange={handleFormChange}
               inline
             />
@@ -127,9 +127,9 @@ export const CreateTask = ({ refreshTasks, show, onClose }) => {
               type="checkbox"
               label="High"
               name="priority"
-              value="High"
+              value="HIGH"
               style={{ color: "#B22222" }}
-              checked={formTask.priority === "High"}
+              checked={formTask.priority === "HIGH"}
               onChange={handleFormChange}
               inline
             />

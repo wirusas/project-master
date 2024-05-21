@@ -13,6 +13,7 @@ public class TaskCreateRequest {
     private String name;
     private String description;
     private String status;
+    private String priority;
 
 
 

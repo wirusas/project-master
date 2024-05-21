@@ -4,6 +4,7 @@ import lt.httpstatusok.projectmanager.controllers.backend.dto.TaskCreateRequest;
 import lt.httpstatusok.projectmanager.controllers.backend.exceptions.TaskNotFoundException;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Project;
 import lt.httpstatusok.projectmanager.controllers.backend.models.Task;
+import lt.httpstatusok.projectmanager.controllers.backend.models.enums.TaskPriority;
 import lt.httpstatusok.projectmanager.controllers.backend.models.enums.TaskStatus;
 import lt.httpstatusok.projectmanager.controllers.backend.repositories.ProjectRepository;
 import lt.httpstatusok.projectmanager.controllers.backend.repositories.TaskRepository;
@@ -33,6 +34,7 @@ public class TaskServiceImpl implements TaskService{
         task.setName(taskCreateRequest.getName());
         task.setDescription(taskCreateRequest.getDescription());
         task.setStatus(TaskStatus.valueOf(taskCreateRequest.getStatus()));
+        task.setPriority(TaskPriority.valueOf(taskCreateRequest.getPriority()));
         task.setProject(project);
         return taskRepository.save(task);
     }
@@ -68,7 +70,7 @@ public class TaskServiceImpl implements TaskService{
         CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
 
         // Write headings
-        printer.printRecord("CREATED_AT", "DESCRIPTION", "ID", "NAME", "STATUS", "LAST_UPDATE");
+        printer.printRecord("CREATED_AT", "DESCRIPTION", "ID", "NAME", "STATUS", "PRIORITY", "LAST_UPDATE");
 
         // Write project data
         for (Task task : tasks) {
@@ -78,6 +80,7 @@ public class TaskServiceImpl implements TaskService{
                     task.getId(),
                     task.getName(),
                     task.getStatus(),
+                    task.getPriority(),
                     task.getLastUpdated()
             );
         }
@@ -102,6 +105,7 @@ public class TaskServiceImpl implements TaskService{
             task.setName(updatedTask.getName());
             task.setDescription(updatedTask.getDescription());
             task.setStatus(updatedTask.getStatus());
+            task.setPriority(updatedTask.getPriority());
             // other fields to update
             return taskRepository.save(task);
         }).orElseThrow(() -> new RuntimeException("Task not updated"));

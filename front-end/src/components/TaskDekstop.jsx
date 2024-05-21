@@ -99,15 +99,14 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                         }}
                       >
                         <Row>
-                          <Col className="col-6" id="task-name-sedebar">
+                          <Col className="col-6" id="task-name-task-desktop">
                             {task.name}
                           </Col>
-                          <Col className="col-4" id="date-format">
+                          <Col className="col-3" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
                           </Col>
-                          <Col className="col-2" id="priority-format">
+                          <Col className="col-1" id="priority-format">
                             {task.priority}
-                            {/* {task.dateCreated && formatDate(task.dateCreated)} */}
                           </Col>
                         </Row>
                       </Card.Title>
@@ -235,17 +234,18 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                         }}
                       >
                         <Row>
-                          <Col className="col-7">{task.name}</Col>
-                          <Col className="col-5" id="date-format">
-                            {/* <img
-                              style={{ marginLeft: "50px" }}
-                              src={carddate}
-                            /> */}
-                            {/* Check if task.dateCreated exists before formatting */}
+                          <Col className="col-6" id="task-name-task-desktop">
+                            {task.name}
+                          </Col>
+                          <Col className="col-3" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
+                          </Col>
+                          <Col className="col-1" id="priority-format">
+                            {task.priority}
                           </Col>
                         </Row>
                       </Card.Title>
+
                       <Card.Subtitle className="mb-2 text-muted">
                         {/* <p>Task priority: {task.priority}</p> */}
                       </Card.Subtitle>
@@ -366,13 +366,14 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                         }}
                       >
                         <Row>
-                          <Col className="col-7">{task.name}</Col>
-                          <Col className="col-5" id="date-format">
-                            {/* <img
-                              style={{ marginLeft: "50px" }}
-                              src={carddate}/> */}
-                            {/* Check if task.dateCreated exists before formatting */}
+                          <Col className="col-6" id="task-name-task-desktop">
+                            {task.name}
+                          </Col>
+                          <Col className="col-3" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
+                          </Col>
+                          <Col className="col-1" id="priority-format">
+                            {task.priority}
                           </Col>
                         </Row>
                       </Card.Title>

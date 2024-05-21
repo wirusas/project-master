@@ -156,11 +156,11 @@ export const EditTask = ({
               <h4 style={{ color: "#7749F8" }}>Priority</h4>
               <Form.Check
                 type="checkbox"
-                label="Low"
+                label="LOW"
                 name="priority"
-                value="Low"
+                value="LOW"
                 style={{ color: "#228B22" }}
-                checked={form.priority === "Low"}
+                checked={form.priority === "LOW"}
                 onChange={handleFormChange}
                 inline
               />
@@ -168,19 +168,19 @@ export const EditTask = ({
                 type="checkbox"
                 label="Medium"
                 name="priority"
-                value="Medium"
+                value="MEDIUM"
                 style={{ color: "#FF8C00" }}
-                checked={form.priority === "Medium"}
+                checked={form.priority === "MEDIUM"}
                 onChange={handleFormChange}
                 inline
               />
               <Form.Check
                 type="checkbox"
-                label="High"
+                label="HIGH"
                 name="priority"
-                value="High"
+                value="HIGH"
                 style={{ color: "#B22222" }}
-                checked={form.priority === "High"}
+                checked={form.priority === "HIGH"}
                 onChange={handleFormChange}
                 inline
               />
