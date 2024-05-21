@@ -75,9 +75,7 @@ order-api has the following ENDPOINTS:
   ```
     `npm install`;
 
-  
-
-  Run the following command to start front end application 
+Run the following command to start front end application 
   ```
    `npm run dev`;
 
