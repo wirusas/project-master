@@ -8,6 +8,7 @@ import { CreateProject } from "./CreateProject";
 import { EditProject } from "./EditProject";
 import { DeleteProject } from "./DeleteProject";
 import { ToastContainer, toast } from "react-toastify";
+import NoDataLogo from "../assets/no-data.png"
 
 const BASE_URL = "http://localhost:8080";
 const PROJECTS_PER_PAGE = 9;
@@ -17,6 +18,7 @@ export const ProjectsList = ({ searchQuery, filterState }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
   const [hasPrevPage, setHasPrevPage] = useState(false);
+  const [notFound, setNotFound] = useState(false);
  
   useEffect(() => {
     const fetchData = async () => {
@@ -40,11 +42,14 @@ export const ProjectsList = ({ searchQuery, filterState }) => {
           setProjectList(data.content);
           setHasNextPage(data.content.length === PROJECTS_PER_PAGE);
           setHasPrevPage(data.number !== 0);
+          setNotFound(data.content.length === 0);
         }
       } catch (error) {
         console.error("Error fetching projects:", error);
         if (error.response && error.response.status === 404) {
-          alert("NO DATA !");
+          setNotFound(true); // Set notFound to true when 404 error occurs
+        } else {
+          setNotFound(false); // Reset notFound for other errors or successful fetch
         }
       }
     };
@@ -89,6 +94,9 @@ export const ProjectsList = ({ searchQuery, filterState }) => {
           <SideBar />
         </div>
         <div className="project-list">
+        {notFound ? (
+          <div className="no-data-div "><img src= {NoDataLogo}/></div>
+          ) : (
           <div className="project-cards-container">
           {projectList && projectList.map((project) =>  (
                 <div className="project-card-div" key={project.id}>
@@ -128,6 +136,7 @@ export const ProjectsList = ({ searchQuery, filterState }) => {
               )
             )}
           </div>
+          )}
           <div className="pagination">
             <button
               onClick={handlePrevPage}

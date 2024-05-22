@@ -173,3 +173,10 @@
     margin: 0 auto;
    }
 }
+.no-data-div{
+  padding-bottom: 400px;
+  margin-right: 200px;
+}
+.no-data-div img{
+  width: 150px;
+}
