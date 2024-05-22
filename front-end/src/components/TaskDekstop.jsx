@@ -40,6 +40,14 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
 
   const priorityValues = { HIGH: 1, MEDIUM: 2, LOW: 3 };
 
+  const getClassName = (priority) => {
+    return priority === "HIGH"
+      ? "text-high"
+      : priority === "MEDIUM"
+        ? "text-medium"
+        : "text-low"; // Default to 'low'
+  };
+
   return (
     <div
       className="column-div"
@@ -111,7 +119,13 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                           <Col className="col-4" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
                           </Col>
-                          <Col className="col-1" id="priority-format">
+                          {/* <Col className="col-1" id="priority-format">
+                            {task.priority}
+                          </Col> */}
+                          <Col
+                            className={`col-1 ${getClassName(task.priority)}`}
+                            id="priority-format"
+                          >
                             {task.priority}
                           </Col>
                         </Row>
@@ -248,7 +262,10 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                           <Col className="col-4" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
                           </Col>
-                          <Col className="col-1" id="priority-format">
+                          <Col
+                            className={`col-1 ${getClassName(task.priority)}`}
+                            id="priority-format"
+                          >
                             {task.priority}
                           </Col>
                         </Row>
@@ -382,7 +399,10 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                           <Col className="col-4" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
                           </Col>
-                          <Col className="col-1" id="priority-format">
+                          <Col
+                            className={`col-1 ${getClassName(task.priority)}`}
+                            id="priority-format"
+                          >
                             {task.priority}
                           </Col>
                         </Row>

@@ -30,6 +30,18 @@
   padding-right: 0px;
 }
 
+.text-high {
+  color: #b22222;
+}
+
+.text-medium {
+  color: #ff8c00;
+}
+
+.text-low {
+  color: #228b22;
+}
+
 /* #task-name-sedebar {
   overflow-x: hidden;
   overflow-y: auto;
