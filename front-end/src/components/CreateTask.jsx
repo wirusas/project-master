@@ -44,7 +44,6 @@ export const CreateTask = ({ refreshTasks, show, onClose }) => {
           status: "TODO",
         });
         onClose();
-        //navigate(`/tasks/${projectId}`)
       }
     } catch (error) {
       console.error("Error posting task:", error);
@@ -85,21 +84,6 @@ export const CreateTask = ({ refreshTasks, show, onClose }) => {
               onChange={handleFormChange}
               required
             />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="taskStatus">
-            {/* <Form.Select
-              name="status"
-              value={formTask.status}
-              onChange={handleFormChange}
-              required */}
-            {/* > */}
-            {/* <option value="TODO">To Do</option>
-              <option value="IN_PROGRESS">In Progress</option>
-              <option value="DONE">Done</option> */}
-            {/* <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-            </Form.Select> */}
           </Form.Group>
           <Form.Group className="mb-3" controlId="taskPriority">
             <h4 style={{ color: "#7749F8" }}>Priority</h4>
