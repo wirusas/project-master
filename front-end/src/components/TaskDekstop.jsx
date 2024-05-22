@@ -22,8 +22,6 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
 
   const handleAddTask = () => {
     navigate(`/create-task/${projectId}`);
-
-    // setShow(true);
   };
 
   const handleSearchChange = (e) => {
@@ -34,7 +32,21 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
     onFilterChange(e.target.value);
   };
 
-  // const {projectId} = useParams();
+  const MAX_LENGTH = 11;
+
+  const truncateText = (text, maxLength) => {
+    return text.length > maxLength ? text.substring(0, maxLength) + ".." : text;
+  };
+
+  const priorityValues = { HIGH: 1, MEDIUM: 2, LOW: 3 };
+
+  const getClassName = (priority) => {
+    return priority === "HIGH"
+      ? "text-high"
+      : priority === "MEDIUM"
+        ? "text-medium"
+        : "text-low"; // Default to 'low'
+  };
 
   return (
     <div
@@ -65,7 +77,10 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
 
             {tasks
               .filter((task) => task.status === "TODO")
-
+              .sort(
+                (a, b) =>
+                  priorityValues[a.priority] - priorityValues[b.priority]
+              )
               .map((task) => {
                 // Define formatDate function
                 const formatDate = (timestamp) => {
@@ -94,18 +109,23 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                       <Card.Title
                         style={{
                           textAlign: "left",
-                          textDecoration: "underline",
                           marginLeft: "20px",
                         }}
                       >
                         <Row>
-                          <Col className="col-6" id="task-name-task-desktop">
-                            {task.name}
+                          <Col className="col-5" id="task-name-task-desktop">
+                            {truncateText(task.name, MAX_LENGTH)}
                           </Col>
-                          <Col className="col-3" id="date-format">
+                          <Col className="col-4" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
                           </Col>
-                          <Col className="col-1" id="priority-format">
+                          {/* <Col className="col-1" id="priority-format">
+                            {task.priority}
+                          </Col> */}
+                          <Col
+                            className={`col-1 ${getClassName(task.priority)}`}
+                            id="priority-format"
+                          >
                             {task.priority}
                           </Col>
                         </Row>
@@ -125,6 +145,7 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                           paddingLeft: "10px",
                           paddingRight: "10px",
                           overflowY: "auto",
+                          overflowX: "auto",
                         }}
                       >
                         {task.description}
@@ -200,7 +221,10 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
             <h3 style={{ textAlign: "left" }}>In Progress</h3>
             {tasks
               .filter((task) => task.status === "IN_PROGRESS")
-
+              .sort(
+                (a, b) =>
+                  priorityValues[a.priority] - priorityValues[b.priority]
+              )
               .map((task) => {
                 // Define formatDate function
                 const formatDate = (timestamp) => {
@@ -229,18 +253,20 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                       <Card.Title
                         style={{
                           textAlign: "left",
-                          textDecoration: "underline",
                           marginLeft: "20px",
                         }}
                       >
                         <Row>
-                          <Col className="col-6" id="task-name-task-desktop">
-                            {task.name}
+                          <Col className="col-5" id="task-name-task-desktop">
+                            {truncateText(task.name, MAX_LENGTH)}
                           </Col>
-                          <Col className="col-3" id="date-format">
+                          <Col className="col-4" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
                           </Col>
-                          <Col className="col-1" id="priority-format">
+                          <Col
+                            className={`col-1 ${getClassName(task.priority)}`}
+                            id="priority-format"
+                          >
                             {task.priority}
                           </Col>
                         </Row>
@@ -259,6 +285,7 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                           paddingLeft: "10px",
                           paddingRight: "10px",
                           overflowY: "auto",
+                          overflowX: "auto",
                         }}
                       >
                         {task.description}
@@ -332,7 +359,10 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
             <h3 style={{ textAlign: "left" }}>Done</h3>
             {tasks
               .filter((task) => task.status === "DONE")
-
+              .sort(
+                (a, b) =>
+                  priorityValues[a.priority] - priorityValues[b.priority]
+              )
               .map((task) => {
                 // Define formatDate function
                 const formatDate = (timestamp) => {
@@ -361,18 +391,20 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                       <Card.Title
                         style={{
                           textAlign: "left",
-                          textDecoration: "underline",
                           marginLeft: "20px",
                         }}
                       >
                         <Row>
-                          <Col className="col-6" id="task-name-task-desktop">
-                            {task.name}
+                          <Col className="col-5" id="task-name-task-desktop">
+                            {truncateText(task.name, MAX_LENGTH)}
                           </Col>
-                          <Col className="col-3" id="date-format">
+                          <Col className="col-4" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
                           </Col>
-                          <Col className="col-1" id="priority-format">
+                          <Col
+                            className={`col-1 ${getClassName(task.priority)}`}
+                            id="priority-format"
+                          >
                             {task.priority}
                           </Col>
                         </Row>
@@ -390,6 +422,7 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                           paddingLeft: "10px",
                           paddingRight: "10px",
                           overflowY: "auto",
+                          overflowX: "auto",
                         }}
                       >
                         {task.description}
@@ -451,7 +484,6 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
           </Col>
         </Row>
       </Container>
-      {/* {showModal && <CreateTask show={showModal} onHide={() => setShowModal(false)} />} */}
     </div>
   );
 };
