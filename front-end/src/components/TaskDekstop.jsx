@@ -145,6 +145,7 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                           paddingLeft: "10px",
                           paddingRight: "10px",
                           overflowY: "auto",
+                          overflowX: "auto",
                         }}
                       >
                         {task.description}
@@ -284,6 +285,7 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                           paddingLeft: "10px",
                           paddingRight: "10px",
                           overflowY: "auto",
+                          overflowX: "auto",
                         }}
                       >
                         {task.description}
@@ -420,6 +422,7 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                           paddingLeft: "10px",
                           paddingRight: "10px",
                           overflowY: "auto",
+                          overflowX: "auto",
                         }}
                       >
                         {task.description}
