@@ -8,7 +8,7 @@ import { CreateProject } from "./CreateProject";
 import { EditProject } from "./EditProject";
 import { DeleteProject } from "./DeleteProject";
 import { ToastContainer, toast } from "react-toastify";
-import NoDataLogo from "../assets/no-data.png"
+import NoDataLogo from "../assets/no-data.png";
 
 const BASE_URL = "http://localhost:8080";
 const PROJECTS_PER_PAGE = 9;
@@ -19,7 +19,7 @@ export const ProjectsList = ({ searchQuery, filterState }) => {
   const [hasNextPage, setHasNextPage] = useState(true);
   const [hasPrevPage, setHasPrevPage] = useState(false);
   const [notFound, setNotFound] = useState(false);
- 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -94,48 +94,60 @@ export const ProjectsList = ({ searchQuery, filterState }) => {
           <SideBar />
         </div>
         <div className="project-list">
-        {notFound ? (
-          <div className="no-data-div "><img src= {NoDataLogo}/></div>
+          {notFound ? (
+            <div className="no-data-div ">
+              <img src={NoDataLogo} />
+            </div>
           ) : (
-          <div className="project-cards-container">
-          {projectList && projectList.map((project) =>  (
-                <div className="project-card-div" key={project.id}>
-                  <div className="project-name-progressbar-div">
-                    <Link className="project-name" to={`/tasks/${project.id}`}>
-                      <div>
-                        <p>{project.projectName}</p>
+            <div
+              className="project-cards-container"
+              style={{
+                // border: " 2px solid red ",
+                width: "1150px",
+                height: "735px",
+              }}
+            >
+              {projectList &&
+                projectList.map((project) => (
+                  <div className="project-card-div" key={project.id}>
+                    <div className="project-name-progressbar-div">
+                      <Link
+                        className="project-name"
+                        to={`/tasks/${project.id}`}
+                      >
+                        <div>
+                          <p>{project.projectName}</p>
+                        </div>
+                      </Link>
+                      <div className="progress-bar">
+                        <ProgressBar
+                          className="progress-bar"
+                          now={getProgressValue(project.projectState)}
+                          variant={getVariant(project.projectState)}
+                          label={`${getProgressValue(project.projectState)}%`}
+                          style={{
+                            backgroundColor:
+                              project.projectState === "TO DO"
+                                ? "#dde0e5"
+                                : "transparent",
+                            backgroundImage:
+                              project.projectState === "DONE"
+                                ? "linear-gradient(to right, #dde0e5, #dde0e5)"
+                                : "",
+                          }}
+                        />
                       </div>
-                    </Link>
-                    <div className="progress-bar">
-                      <ProgressBar
-                        className="progress-bar"
-                        now={getProgressValue(project.projectState)}
-                        variant={getVariant(project.projectState)}
-                        label={`${getProgressValue(project.projectState)}%`}
-                        style={{
-                          backgroundColor:
-                            project.projectState === "TO DO"
-                              ? "#dde0e5"
-                              : "transparent",
-                          backgroundImage:
-                            project.projectState === "DONE"
-                              ? "linear-gradient(to right, #dde0e5, #dde0e5)"
-                              : "",
-                        }}
-                      />
+                    </div>
+                    <div className="project-description-container">
+                      <p>{project.description}</p>
+                    </div>
+                    <div className="edit-delete-div">
+                      <EditProject projectId={project.id} />
+                      <DeleteProject projectId={project.id} />
                     </div>
                   </div>
-                  <div className="project-description-container">
-                    <p>{project.description}</p>
-                  </div>
-                  <div className="edit-delete-div">
-                    <EditProject projectId={project.id} />
-                    <DeleteProject projectId={project.id} />
-                  </div>
-                </div>
-              )
-            )}
-          </div>
+                ))}
+            </div>
           )}
           <div className="pagination">
             <button

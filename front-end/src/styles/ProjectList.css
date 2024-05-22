@@ -1,7 +1,6 @@
 .sidebar-projects-container {
   display: grid;
   grid-template-columns: 1fr 5fr;
-   
 }
 
 .project-cards-container {
@@ -10,23 +9,21 @@
   gap: 1rem;
   margin-right: 1.5rem;
   background: #f4e4e5;
-  padding: .8rem;
-  border-radius: 20px;
+  padding: 0.8rem;
+  border-radius: 10px;
   margin-left: -2rem;
   min-height: 300px;
- 
 }
 
 .project-card-div {
-  padding: .5rem;
+  padding: 0.5rem;
   border-radius: 10px;
   background: white;
   max-width: 350px;
-  border: 4px solid #db5e9a; 
-  min-height: 250px;
+  border: 4px solid #db5e9a;
+  /* min-height: 250px; */
+  max-height: 260px;
   margin: 0 auto;
-
-  
 }
 
 .project-description-container {
@@ -35,44 +32,40 @@
   font-size: 0.8125rem;
   border-bottom: 2px solid #db5e9a;
   border-top: 2px solid #db5e9a;
-  margin-top: .5rem;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   min-height: 160px;
   max-width: 350px;
   word-wrap: break-word;
-   
 }
 
-.project-name-progressbar-div{
-  padding-left: .8rem;
-  
+.project-name-progressbar-div {
+  padding-left: 0.8rem;
 }
 
-.progress-bar{
+.progress-bar {
   width: 80%;
-  height: .5rem;
- border-radius: 5px;
- font-size: .5rem;
-  
+  height: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.5rem;
 }
 
-.project-name p{
+.project-name p {
   text-decoration: underline;
   width: 50%;
   text-align: left;
   margin-bottom: 2.5px;
 }
 
-.project-name{
+.project-name {
   color: black;
   width: 50%;
   text-align: left;
   margin-bottom: 2.5px;
-   
 }
- 
-.project-name:hover{
+
+.project-name:hover {
   color: black;
   width: 50%;
   text-align: left;
@@ -81,10 +74,8 @@
 }
 
 .edit-delete-div {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   text-align: right;
-  
-  
 }
 
 .create-project {
@@ -111,8 +102,7 @@
   padding: 3px 15px;
   cursor: pointer;
   border-radius: 5px;
-  margin-right: .5rem;
-
+  margin-right: 0.5rem;
 }
 
 .prev-button:hover,
@@ -121,24 +111,20 @@
 }
 .pagination {
   width: 130px;
-  margin:  0 auto;
-  margin-top: .5rem;
-  
+  margin: 0 auto;
+  margin-top: 0.5rem;
 }
-
-
 
 @media (max-width: 1340px) {
   .sidebar-projects-container {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    }
+  }
   .project-cards-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-              
   }
-  .project-description-container{
+  .project-description-container {
     min-height: 150px;
   }
 }
@@ -148,15 +134,13 @@
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 1rem;
-    
-   }
+  }
   .project-cards-container {
     display: grid;
     grid-template-columns: 1fr;
     max-width: 380px;
-              
   }
-  .project-description-container{
+  .project-description-container {
     min-height: 150px;
   }
 }
@@ -166,17 +150,16 @@
     display: block;
     margin: 0 auto;
     width: 350px;
-   
-   }
-  
-   .project-cards-container{
+  }
+
+  .project-cards-container {
     margin: 0 auto;
-   }
+  }
 }
-.no-data-div{
+.no-data-div {
   padding-bottom: 400px;
   margin-right: 200px;
 }
-.no-data-div img{
+.no-data-div img {
   width: 150px;
 }
