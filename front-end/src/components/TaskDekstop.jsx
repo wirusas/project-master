@@ -100,10 +100,10 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                         }}
                       >
                         <Row>
-                          <Col className="col-6" id="task-name-task-desktop">
+                          <Col className="col-5" id="task-name-task-desktop">
                             {truncateText(task.name, MAX_LENGTH)}
                           </Col>
-                          <Col className="col-3" id="date-format">
+                          <Col className="col-4" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
                           </Col>
                           <Col className="col-1" id="priority-format">
@@ -234,10 +234,10 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                         }}
                       >
                         <Row>
-                          <Col className="col-6" id="task-name-task-desktop">
+                          <Col className="col-5" id="task-name-task-desktop">
                             {truncateText(task.name, MAX_LENGTH)}
                           </Col>
-                          <Col className="col-3" id="date-format">
+                          <Col className="col-4" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
                           </Col>
                           <Col className="col-1" id="priority-format">
@@ -365,10 +365,10 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
                         }}
                       >
                         <Row>
-                          <Col className="col-6" id="task-name-task-desktop">
+                          <Col className="col-5" id="task-name-task-desktop">
                             {truncateText(task.name, MAX_LENGTH)}
                           </Col>
-                          <Col className="col-3" id="date-format">
+                          <Col className="col-4" id="date-format">
                             {task.dateCreated && formatDate(task.dateCreated)}
                           </Col>
                           <Col className="col-1" id="priority-format">
