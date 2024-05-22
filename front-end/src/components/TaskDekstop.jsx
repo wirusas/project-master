@@ -38,6 +38,8 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
     return text.length > maxLength ? text.substring(0, maxLength) + ".." : text;
   };
 
+  const priorityValues = { HIGH: 1, MEDIUM: 2, LOW: 3 };
+
   return (
     <div
       className="column-div"
@@ -67,7 +69,10 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
 
             {tasks
               .filter((task) => task.status === "TODO")
-
+              .sort(
+                (a, b) =>
+                  priorityValues[a.priority] - priorityValues[b.priority]
+              )
               .map((task) => {
                 // Define formatDate function
                 const formatDate = (timestamp) => {
@@ -201,7 +206,10 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
             <h3 style={{ textAlign: "left" }}>In Progress</h3>
             {tasks
               .filter((task) => task.status === "IN_PROGRESS")
-
+              .sort(
+                (a, b) =>
+                  priorityValues[a.priority] - priorityValues[b.priority]
+              )
               .map((task) => {
                 // Define formatDate function
                 const formatDate = (timestamp) => {
@@ -332,7 +340,10 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
             <h3 style={{ textAlign: "left" }}>Done</h3>
             {tasks
               .filter((task) => task.status === "DONE")
-
+              .sort(
+                (a, b) =>
+                  priorityValues[a.priority] - priorityValues[b.priority]
+              )
               .map((task) => {
                 // Define formatDate function
                 const formatDate = (timestamp) => {
