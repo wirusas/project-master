@@ -32,7 +32,7 @@ export const TaskDesktop = ({ tasks, onEditTask, refreshTasks }) => {
     onFilterChange(e.target.value);
   };
 
-  const MAX_LENGTH = 14;
+  const MAX_LENGTH = 11;
 
   const truncateText = (text, maxLength) => {
     return text.length > maxLength ? text.substring(0, maxLength) + ".." : text;
