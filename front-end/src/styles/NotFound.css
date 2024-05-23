@@ -1,0 +1,25 @@
+.not-found{
+    background-color: rgb(20, 19, 19);
+    background-image: url(../assets/error404.png);
+    background-repeat: no-repeat;
+    background-position-y: 30px ;
+    background-position-x: 130px;
+    height: 1000px;
+   
+   
+    
+}
+.not-found-back-button{
+   margin-top: 400px;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    transition: width 1.5s, height 1.5s;
+    font-size: 20px;
+    font-weight: 700;
+    
+}
+.not-found-back-button:hover{
+    height: 300px;
+    width:  300px;
+}

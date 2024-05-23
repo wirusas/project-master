@@ -49,7 +49,7 @@ export const TasksHeader = ({ onSearchHandler, searchQuery, onFilterChangeHandle
           style={{ borderBottom: "1px solid rgba(70, 43, 146, 0.50)" }}
         >
           <a
-            href="/"
+            href="http://localhost:3000/projects"
             className="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1"
           >
             <img src={logo} height="78" alt="Logo" />
@@ -61,7 +61,7 @@ export const TasksHeader = ({ onSearchHandler, searchQuery, onFilterChangeHandle
           >
             <li className="nav-item">
               <a
-                href="#"
+                href="http://localhost:3000/projects"
                 className="nav-link px-2"
                 style={{ color: "#5227CC" }}
               >
